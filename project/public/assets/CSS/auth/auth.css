@@ -1,0 +1,152 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.auth-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 100%
+}
+
+.auth-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4361ee;
+}
+
+.auth-card .card-body {
+    padding: 2rem;
+}
+
+.auth-btn {
+    background-color: #4361ee;
+    border: none;
+    padding: 0.6rem;
+    font-weight: 500;
+}
+
+.auth-btn:hover {
+    background-color: #3a56d4;
+}
+
+.form-control {
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.15);
+    border-color: #4361ee;
+}
+
+.language-switcher {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 5px;
+}
+
+.language-switcher .btn {
+    border-radius: 5px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.auth-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.social-login {
+display: flex;
+justify-content: center;
+margin: 1rem 0;
+gap: 20px; 
+}
+
+.social-btn {
+width: 150px;
+height: 45px;
+border-radius: 5px; 
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-weight: 700;
+text-decoration: none;
+font-size: 1rem;
+transition: all 0.3s ease-in-out;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.2);
+}
+
+.google-btn {
+background: linear-gradient(145deg, #DB4437, #c1351d);  
+}
+
+.facebook-btn {
+background: linear-gradient(145deg, #4267B2, #3b5998); 
+}
+
+.social-btn:hover {
+opacity: 0.9;
+transform: scale(1.05);  
+box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.2); 
+}
+
+.social-btn i {
+margin-right: 8px;  
+}
+
+.social-btn:active {
+transform: scale(0.98); 
+}
+
+
+.form-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+.divider span {
+    padding: 0 15px;
+    color: #6c757d;
+}
+
+@media (max-width: 576px) {
+    .auth-card .card-body {
+        padding: 1.5rem;
+    }
+}

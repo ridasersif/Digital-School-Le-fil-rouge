@@ -1,0 +1,131 @@
+📁 resources/
+└── 📁 views/
+    ├── 📁 layouts/
+    │   ├── 📄 app.blade.php                # Layout principal
+    │   ├── 📄 auth.blade.php              # Layout pour authentification
+    │   ├── 📄 admin.blade.php             # Layout pour admin dashboard
+    │   ├── 📄 instructor.blade.php        # Layout pour formateur dashboard
+    │   └── 📄 front.blade.php             # Layout pour front-office
+    │
+    ├── 📁 partials/
+    │   ├── 📄 header.blade.php            # En-tête du site
+    │   ├── 📄 footer.blade.php            # Pied de page
+    │   ├── 📄 admin-sidebar.blade.php     # Sidebar admin
+    │   ├── 📄 instructor-sidebar.blade.php # Sidebar formateur
+    │   ├── 📄 messages.blade.php          # Messages flash/notifications
+    │   └── 📄 language-switcher.blade.php # Sélecteur de langue (FR/AR)
+    │
+    ├── 📁 components/
+    │   ├── 📄 course-card.blade.php       # Carte de cours
+    │   ├── 📄 rating.blade.php            # Système d'évaluation
+    │   ├── 📄 notification.blade.php      # Notification
+    │   ├── 📄 stats-card.blade.php        # Carte de statistiques
+    │   ├── 📄 search-bar.blade.php        # Barre de recherche
+    │   └── 📄 pagination.blade.php        # Pagination personnalisée
+    │
+    ├── 📁 auth/
+    │   ├── 📄 login.blade.php             # Page connexion
+    │   ├── 📄 register.blade.php          # Page inscription
+    │   ├── 📄 forgot-password.blade.php   # Mot de passe oublié
+    │   └── 📄 reset-password.blade.php    # Réinitialisation mot de passe
+    │
+    ├── 📁 front/
+    │   ├── 📄 home.blade.php              # Page d'accueil
+    │   ├── 📄 about.blade.php             # À propos
+    │   ├── 📄 contact.blade.php           # Contact
+    │   ├── 📄 faq.blade.php               # FAQ
+    │   ├── 📁 courses/
+    │   │   ├── 📄 index.blade.php         # Liste des cours
+    │   │   ├── 📄 show.blade.php          # Détail d'un cours
+    │   │   └── 📄 category.blade.php      # Cours par catégorie
+    │   └── 📁 instructors/
+    │       └── 📄 profile.blade.php       # Profil formateur public
+    │
+    ├── 📁 student/
+    │   ├── 📄 dashboard.blade.php         # Tableau de bord étudiant
+    │   ├── 📄 profile.blade.php           # Profil étudiant
+    │   ├── 📁 courses/
+    │   │   ├── 📄 my-courses.blade.php    # Mes cours
+    │   │   ├── 📄 enrolled.blade.php      # Cours inscrits
+    │   │   ├── 📄 completed.blade.php     # Cours terminés
+    │   │   └── 📄 wishlist.blade.php      # Liste de souhaits
+    │   ├── 📁 learning/
+    │   │   ├── 📄 course.blade.php        # Page d'apprentissage
+    │   │   ├── 📄 lesson.blade.php        # Leçon spécifique
+    │   │   ├── 📄 quiz.blade.php          # Page de quiz
+    │   │   └── 📄 certificate.blade.php   # Certificat
+    │   └── 📁 messages/
+    │       ├── 📄 inbox.blade.php         # Boîte de réception
+    │       └── 📄 conversation.blade.php  # Conversation
+    │
+    ├── 📁 instructor/
+    │   ├── 📄 dashboard.blade.php         # Tableau de bord formateur
+    │   ├── 📄 profile.blade.php           # Profil formateur
+    │   ├── 📁 courses/
+    │   │   ├── 📄 index.blade.php         # Liste des cours
+    │   │   ├── 📄 create.blade.php        # Créer un cours
+    │   │   ├── 📄 edit.blade.php          # Modifier un cours
+    │   │   └── 📄 stats.blade.php         # Statistiques cours
+    │   ├── 📁 lessons/
+    │   │   ├── 📄 index.blade.php         # Liste des leçons
+    │   │   ├── 📄 create.blade.php        # Créer une leçon
+    │   │   └── 📄 edit.blade.php          # Modifier une leçon
+    │   ├── 📁 quizzes/
+    │   │   ├── 📄 index.blade.php         # Liste des quiz
+    │   │   ├── 📄 create.blade.php        # Créer un quiz
+    │   │   └── 📄 edit.blade.php          # Modifier un quiz
+    │   ├── 📁 students/
+    │   │   ├── 📄 index.blade.php         # Liste des étudiants
+    │   │   └── 📄 progress.blade.php      # Progression des étudiants
+    │   ├── 📁 reviews/
+    │   │   └── 📄 index.blade.php         # Avis des étudiants
+    │   ├── 📁 earnings/
+    │   │   ├── 📄 index.blade.php         # Revenus
+    │   │   └── 📄 withdrawal.blade.php    # Retraits
+    │   └── 📁 messages/
+    │       ├── 📄 inbox.blade.php         # Boîte de réception
+    │       └── 📄 conversation.blade.php  # Conversation
+    │
+    └── 📁 admin/
+        ├── 📄 dashboard.blade.php         # Tableau de bord admin
+        ├── 📁 users/
+        │   ├── 📄 index.blade.php         # Liste utilisateurs
+        │   ├── 📄 students.blade.php      # Gestion étudiants 
+        │   ├── 📄 instructors.blade.php   # Gestion formateurs
+        │   ├── 📄 admins.blade.php        # Gestion admins
+        │   ├── 📄 create.blade.php        # Créer utilisateur
+        │   └── 📄 edit.blade.php          # Modifier utilisateur
+        ├── 📁 courses/
+        │   ├── 📄 index.blade.php         # Liste des cours
+        │   ├── 📄 pending.blade.php       # Cours en attente
+        │   ├── 📄 approved.blade.php      # Cours approuvés
+        │   └── 📄 edit.blade.php          # Modifier un cours
+        ├── 📁 categories/
+        │   ├── 📄 index.blade.php         # Liste des catégories
+        │   ├── 📄 create.blade.php        # Créer catégorie
+        │   └── 📄 edit.blade.php          # Modifier catégorie
+        ├── 📁 tags/
+        │   ├── 📄 index.blade.php         # Liste des tags
+        │   ├── 📄 create.blade.php        # Créer tag
+        │   └── 📄 edit.blade.php          # Modifier tag
+        ├── 📁 reviews/
+        │   ├── 📄 index.blade.php         # Liste des avis
+        │   └── 📄 moderation.blade.php    # Modération des avis
+        ├── 📁 payments/
+        │   ├── 📄 index.blade.php         # Liste des paiements
+        │   └── 📄 settings.blade.php      # Paramètres de paiement
+        ├── 📁 messages/
+        │   ├── 📄 index.blade.php         # Liste des messages
+        │   ├── 📄 compose.blade.php       # Composer un message
+        │   └── 📄 read.blade.php          # Lire un message
+        ├── 📁 settings/
+        │   ├── 📄 general.blade.php       # Paramètres généraux
+        │   ├── 📄 appearance.blade.php    # Apparence du site
+        │   ├── 📄 email.blade.php         # Paramètres email
+        │   ├── 📄 languages.blade.php     # Gestion des langues
+        │   └── 📄 security.blade.php      # Paramètres de sécurité
+        └── 📁 reports/
+            ├── 📄 sales.blade.php         # Rapport des ventes
+            ├── 📄 users.blade.php         # Rapport des utilisateurs
+            ├── 📄 courses.blade.php       # Rapport des cours
+            └── 📄 engagement.blade.php    # Rapport d'engagement
