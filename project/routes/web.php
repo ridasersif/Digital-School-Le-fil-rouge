@@ -5,13 +5,34 @@ use App\Http\Controllers\Auth\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Middleware\CheckAuthentication;
+use App\Http\Controllers\Admin\CategoryController;
+
 // require __DIR__.'/Auth.php';
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.dashboard');
 });
+
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+
+
+
+Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
+    Route::get('dashboard.Admin.index', function () {
+        return view('admin.statistics');
+    })->name('admin.index'); 
+    Route::resource('categories', CategoryController::class);
+});
+
+
+    
+
+
+
+
+
 
 Route::get('/terms', function () {
     return view('terms'); 
@@ -37,6 +58,8 @@ Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('
 Route::get('login/google', [SocialiteController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [SocialiteController::class, 'handleCallback']);
 
+Route::get('select-role', [SocialiteController::class, 'showRoleSelection'])->name('select-role');
+Route::post('select-role', [SocialiteController::class, 'saveRole'])->name('save-role');
 
 
 

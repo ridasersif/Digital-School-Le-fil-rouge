@@ -3,17 +3,14 @@
     ├── 📁 layouts/
     │   ├── 📄 app.blade.php                # Layout principal
     │   ├── 📄 auth.blade.php              # Layout pour authentification
-    │   ├── 📄 admin.blade.php             # Layout pour admin dashboard
-    │   ├── 📄 instructor.blade.php        # Layout pour formateur dashboard
+    │   ├── 📄 dashboard.blade.php             # Layout pour admin dashboard       # Layout pour formateur dashboard
     │   └── 📄 front.blade.php             # Layout pour front-office
     │
     ├── 📁 partials/
     │   ├── 📄 header.blade.php            # En-tête du site
     │   ├── 📄 footer.blade.php            # Pied de page
-    │   ├── 📄 admin-sidebar.blade.php     # Sidebar admin
-    │   ├── 📄 instructor-sidebar.blade.php # Sidebar formateur
-    │   ├── 📄 messages.blade.php          # Messages flash/notifications
-    │   └── 📄 language-switcher.blade.php # Sélecteur de langue (FR/AR)
+    │   ├── 📄 sidebar.blade.php           # Sidebar 
+    │   └── 📄 messages.blade.php          # Messages flash/notifications
     │
     ├── 📁 components/
     │   ├── 📄 course-card.blade.php       # Carte de cours

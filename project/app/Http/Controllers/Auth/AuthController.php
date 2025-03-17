@@ -24,11 +24,19 @@ class AuthController extends Controller
   
     public function register(RegisterRequest $request)
     {
+        $role = $request->role;
+        if ($role== 3) {
+            $status = 'active';
+        } elseif ($role == 2) {
+            $status = 'inactive';
+        }
+
         $user =User::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
-            'role_id'=>$request->role
+            'role_id'=>$role,
+            'status'=>$status
 
         ]);
         Auth::login($user);

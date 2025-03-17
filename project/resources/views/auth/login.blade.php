@@ -2,7 +2,7 @@
 
 @section('title', 'Connexion')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}">
 @endpush
 @section('content')
 <div class="card auth-card">
