@@ -204,9 +204,6 @@
     }
 });
 
-
-
-    
     function deleteCategory(event) {
         const categoryId = event.target.getAttribute('data-id');
         const row = document.getElementById('category-' + categoryId);
@@ -224,26 +221,23 @@
                 fetch(`/categories/${categoryId}`, {
                     method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                      'Content-Type': 'application/json',
+                      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                })
+                  })
+                  
                 .then(response => {
-                    if (response.ok) {
-                        row.remove(); 
-                        Swal.fire(
-                            'Supprimée!',
-                            'La catégorie a été supprimée avec succès.',
-                            'success'
-                        );
-                    } else {
-                        Swal.fire(
-                            'Erreur!',
-                            'Une erreur est survenue. Veuillez réessayer.',
-                            'error'
-                        );
-                    }
-                })
+                    console.log('Status:', response.status);
+                    return response.json().then(data => {
+                      console.log('Response data:', data);
+                      if (response.ok) {
+                        row.remove();
+                        Swal.fire('Supprimée!', 'La catégorie a été supprimée avec succès.', 'success');
+                      } else {
+                        Swal.fire('Erreur!', `Erreur: ${JSON.stringify(data)}`, 'error');
+                      }
+                    });
+                  })
                 .catch(error => {
                     console.error('Erreur:', error);
                     Swal.fire(

@@ -194,6 +194,26 @@
             </div>
         </div>
     </nav>
+    @if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: "{{ session('error') }}",
+                position: 'top-end',
+                toast: true,
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                background: 'var(--card-bg)',
+                color: 'var(--text-color)'
+            });
+        });
+    </script>
+    @endif
+
+
 
     <!-- Hero Section -->
     <section class="hero-section text-center">
@@ -603,6 +623,7 @@
     </footer>
      <!-- Bootstrap JS Bundle with Popper -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Script pour gérer le mode sombre/clair -->
     <script>

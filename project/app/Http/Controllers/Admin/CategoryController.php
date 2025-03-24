@@ -43,12 +43,17 @@ class CategoryController extends Controller
             'created_by' => Auth::id()
         ]);
     
-        return redirect()->route('categories.index',compact('isUpdate'))->with('success', 'Category modifie avec succès!');
+        return redirect()->route('categories.index')->with('success', 'Category modifie avec succès!');
     }
     public function destroy(Category $category)
     {
-        $category->delete();
-        return response()->json(['success' => true]);
-   
+       
+            try {
+                $category->delete();
+                return response()->json(['success' => true]);
+            } catch (\Exception $e) {
+                return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+            }
+    
     }
 }

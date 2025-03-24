@@ -7,19 +7,28 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Middleware\CheckAuthentication;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Middleware\CheckRole;
 
 // require __DIR__.'/Auth.php';
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('layouts.dashboard');
+// });
+
+Route::get('/home', function () {
     return view('home');
 })->name('home');
 
 
 
 Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
-    Route::get('/dashboard', function () {
-        return view('admin.statistics');
-    })->name('admin.index'); 
-    Route::resource('categories', CategoryController::class);
+
+    Route::middleware([CheckRole::class.':1'])->group(function(){
+        Route::get('dashboard', function () {
+            return view('admin.statistics');
+        })->name('admin.index'); 
+        Route::resource('categories', CategoryController::class);
+    });
+    
 });
 
 
