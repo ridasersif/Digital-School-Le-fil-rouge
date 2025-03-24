@@ -6,9 +6,10 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -36,8 +37,6 @@ class AuthController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
             'role_id'=>$role,
-            'status'=>$status
-
         ]);
         Auth::login($user);
         return redirect()->route('home');
@@ -50,7 +49,7 @@ class AuthController extends Controller
     }
 
    
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
             return redirect()->route('home');
