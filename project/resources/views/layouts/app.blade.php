@@ -26,6 +26,8 @@
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <!-- Chart.js -->
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- Inclure Iconify dans votre projet -->
+   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     @stack('scripts')
 </body>
 </html>

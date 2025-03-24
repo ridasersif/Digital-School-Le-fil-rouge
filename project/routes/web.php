@@ -10,17 +10,13 @@ use App\Http\Controllers\Admin\CategoryController;
 
 // require __DIR__.'/Auth.php';
 Route::get('/', function () {
-    return view('layouts.dashboard');
-});
-
-Route::get('/home', function () {
     return view('home');
 })->name('home');
 
 
 
 Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
-    Route::get('dashboard.Admin.index', function () {
+    Route::get('/dashboard', function () {
         return view('admin.statistics');
     })->name('admin.index'); 
     Route::resource('categories', CategoryController::class);

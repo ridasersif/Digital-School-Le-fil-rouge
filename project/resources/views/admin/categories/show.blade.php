@@ -9,16 +9,10 @@
             </div>
             <div class="modal-body p-4">
                 <div class="text-center mb-4">
-                
-                    @if($category->avatar)
-                        <img src="{{ asset( 'storage/'.$category->avatar) }}" alt="Avatar de {{ $category->nom }}" 
-                             class="rounded-circle border border-3 border-primary shadow-sm" width="120" height="120">
-                    @else
-                        <div class="d-flex justify-content-center align-items-center bg-light rounded-circle mx-auto" 
-                             style="width: 120px; height: 120px">
-                            <i class="fas fa-book text-primary" style="font-size: 3rem"></i>
-                        </div>
-                    @endif
+                     <iconify-icon
+                         icon="{{ $category->icon }}" width="120" height="120"
+                          class="rounded-circle border border-3 border-primary shadow-sm">
+                    </iconify-icon>
                 </div>
                 <div class="card border-0 bg-light mb-3">
                     <div class="card-body">
@@ -51,9 +45,9 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-times me-1"></i>Fermer
                 </button>
-                <a href="" class="btn btn-warning">
+                <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#updatecategoryModal-{{ $category->id }}">
                     <i class="fas fa-edit me-1"></i>Modifier
-                </a>
+                </button>
             </div>
         </div>
     </div>

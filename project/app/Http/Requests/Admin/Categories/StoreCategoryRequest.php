@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Categories;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,8 +23,9 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'nom' => 'required|unique:categories,nom', 
-            'avatar' => 'nullable |image',
+            'icon' => 'required|string',
             'description' => 'required|string',
+            
         ];
     }
     /**
@@ -36,11 +37,17 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'nom.required' => 'Le nom de la catégorie est requis.',
-            // 'avatar.required' => 'Le image de la catégorie est requis.',
             'description.required' => 'Le description de la catégorie est requis.',
             'nom.unique' => 'Cette catégorie existe déjà.',
-            'avatar.image' => 'L\'avatar doit être une image valide.',
+            'icon.required' => 'L\'icône de la catégorie est requise.',
+            'icon.string' => 'L\'icône doit être une chaîne de caractères.',
             'description.string' => 'La description doit être une chaîne de caractères.',
         ];
     }
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        session()->flash('is_create', true); 
+        parent::failedValidation($validator);
+    }
+
 }

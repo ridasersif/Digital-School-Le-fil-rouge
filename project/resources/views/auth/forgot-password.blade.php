@@ -12,7 +12,7 @@
             <h4>Mot de passe oublié</h4>
         </div>
 
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('password.email') }}" id="resetPasswordForm">
             @csrf
 
             <div class="mb-3">
@@ -27,8 +27,9 @@
             </div>
 
             <div class="d-grid gap-2 mb-3">
-                <button type="submit" class="btn btn-primary auth-btn">
-                    Envoyer le lien de réinitialisation
+                <button type="submit" class="btn btn-primary auth-btn" id="submitButton">
+                    <span id="buttonText">Envoyer le lien de réinitialisation</span>
+                    <span id="loading" class="spinner-border spinner-border-sm" style="display: none;"></span>
                 </button>
             </div>
 
@@ -51,7 +52,7 @@
             </div>
             <div class="modal-body">
                 <p style="font-size: 1.1rem; color: #495057;">Nous avons envoyé un lien de réinitialisation à l'adresse email suivante :</p>
-                <h5 class="fw-bold" style="font-size: 1.2rem; color: #007bff;">{{ session('email') }}</h5>
+                <a href="mailto:{{ session('email') }}"> <h5 class="fw-bold" style="font-size: 1.2rem; color: #007bff;">{{ session('email') }}</h5></a>
                 <p style="font-size: 1rem; color: #495057;">Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.</p>
             </div>
             <div class="modal-footer">
@@ -62,10 +63,21 @@
 </div>
 
 @endif
+
 @push('scripts')
 <!-- Ajouter le script Bootstrap et jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('assets/JS/Auth/forgot-password.js') }}"></script>
 
+<script>
+    document.getElementById("resetPasswordForm").addEventListener("submit", function() {
+        // Show loading spinner
+        document.getElementById("loading").style.display = "inline-block";
+        // Hide button text
+        document.getElementById("buttonText").style.display = "none";
+    });
+</script>
+
 @endpush
+
 @endsection

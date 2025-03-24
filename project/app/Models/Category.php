@@ -9,7 +9,7 @@ class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
-    protected $fillable = ['nom', 'created_by','avatar','description'];
+    protected $fillable = ['nom', 'created_by','icon','description'];
 
     public function admin()
     {

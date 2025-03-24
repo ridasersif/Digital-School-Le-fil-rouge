@@ -42,5 +42,6 @@
 
 @push('scripts')
 <script src="{{ asset('assets/JS/dashboard/dashboard.js') }}"></script>
+
 @stack('statisticsJs')
 @endpush
