@@ -7,53 +7,45 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
 
 use App\Http\Requests\Admin\Categories\UpdateCategoryRequest;
+use App\Interfaces\Admin\CategoryInterface;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Catch_;
 
 class CategoryController extends Controller
 {
+    public $categoryRepository;
+     /**
+     * constrecure .
+     */
+    public function __construct(CategoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::orderBy('id', 'desc')->paginate(4);
-        return view('admin.categories.index', compact('categories',));
+        $categories = $this->categoryRepository->getCategories();
+        return view('admin.categories.index', compact('categories'));
     }
     /**
      * Store a newly created resource in storage.
      */
      public function store(StoreCategoryRequest $request)
      {
-      
-         Category::create([
-             'nom' => $request->nom,
-             'icon' => $request->icon, 
-             'description' => $request->description,
-             'created_by' => Auth::id()
-         ]);
-         return redirect()->route('categories.index')->with('success', 'Category créée avec succès!');
+        $this->categoryRepository->saveCategory($request);
+        return redirect()->route('categories.index')->with('success', 'Catégorie créée avec succès!');
+
      }
-    public function update(UpdateCategoryRequest $request, Category $category)
-    {
-        $category->update([
-            'nom' => $request->nom,
-            'icon' => $request->icon, 
-            'description' => $request->description,
-            'created_by' => Auth::id()
-        ]);
-    
-        return redirect()->route('categories.index')->with('success', 'Category modifie avec succès!');
-    }
-    public function destroy(Category $category)
-    {
-       
-            try {
-                $category->delete();
-                return response()->json(['success' => true]);
-            } catch (\Exception $e) {
-                return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
-            }
-    
-    }
+     public function update(UpdateCategoryRequest $request, $id)
+     {
+         $this->categoryRepository->updateCategory($request, $id);
+         return redirect()->route('categories.index')->with('success', 'Catégorie modifiée avec succès!');
+     }
+     public function destroy($id)
+     {
+         $this->categoryRepository->deleteCategory($id);
+         return response()->json(['success' => true]);
+     }
 }
