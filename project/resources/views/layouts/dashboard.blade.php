@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/CSS/dashboard/dashboard.css') }}">
 @endpush
 @section('content')
     <!-- Sidebar -->
-    @include('partials.sidebar')
+    @include('partials.dashboard.sidebar')
      <!-- endSidebar -->
     <!-- Main Content -->
     <div class="main-content">
         <!-- navBare -->
-        @include('partials.navbar_dashboard')
+        @include('partials.dashboard.navbar_dashboard')
          <!-- endnavBare -->
         <!-- Begin Page Content -->
         <div class="container-fluid fade-in">

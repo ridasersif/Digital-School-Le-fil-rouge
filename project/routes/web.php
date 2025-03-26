@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\SocialiteController;
 use Illuminate\Support\Facades\Route;
@@ -14,13 +13,12 @@ use App\Http\Middleware\CheckRole;
 //     return view('layouts.dashboard');
 // });
 
-Route::get('/home', function () {
-    return view('home');
+Route::get('/', function () {
+    return view('frontend.home');
 })->name('home');
 
-
-
 Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
+    Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
     Route::middleware([CheckRole::class.':1'])->group(function(){
         Route::get('dashboard', function () {
@@ -40,11 +38,11 @@ Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
 
 
 Route::get('/terms', function () {
-    return view('terms'); 
+    return view('frontend.terms'); 
 })->name('terms');
 
 Route::get('/privacy', function () {
-    return view('privacy'); 
+    return view('frontend.privacy'); 
 })->name('privacy');
 
 

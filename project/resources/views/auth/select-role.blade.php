@@ -2,7 +2,7 @@
 
 @section('title', 'Choisir un rôle')
 
-@section('content')
+@section('contents')
 <div class="card auth-card">
     <div class="card-body">
         <h4>Choisissez votre rôle</h4>

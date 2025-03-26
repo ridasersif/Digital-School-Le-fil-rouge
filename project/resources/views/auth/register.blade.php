@@ -2,7 +2,7 @@
 
 @section('title', 'Inscription')
 
-@section('content')
+@section('contents')
 <div class="card auth-card">
     <div class="card-body">
         <div class="text-center mb-4">
@@ -118,6 +118,6 @@
 </div>
 @endsection
 
-@push('scripts')
+@push('script')
 <script src="{{ asset('assets/JS/Auth/register.js') }}"></script>
 @endpush

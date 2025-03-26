@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'categories')
+@section('title', 'Categories')
 @push('styles')
 {{-- <link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}"> --}}
 @endpush

@@ -2,7 +2,7 @@
 
 @section('title', 'Réinitialiser le mot de passe')
 
-@section('content')
+@section('contents')
 <div class="card auth-card">
     <div class="card-body">
         <div class="text-center mb-4">
@@ -65,7 +65,7 @@
     </div>
 </div>
 
-@push('scripts')
+@push('script')
 <script src="{{ asset('assets/JS/Auth/reset-password.js') }}"></script>
 @endpush
 @endsection

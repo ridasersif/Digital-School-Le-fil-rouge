@@ -1,10 +1,7 @@
 @extends('layouts.auth')
 
 @section('title', 'Connexion')
-@push('styles')
-<link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}">
-@endpush
-@section('content')
+@section('contents')
 <div class="card auth-card">
     <div class="card-body">
         <div class="text-center mb-4">
@@ -83,6 +80,6 @@
 </div>
 @endsection
 
-@push('scripts')
+@push('script')
 <script src="{{ asset('assets/JS/Auth/login.js') }}"></script>
 @endpush

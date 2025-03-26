@@ -2,7 +2,7 @@
 
 @section('title', 'Mot de passe oublié')
 
-@section('content')
+@section('contents')
 <div class="card auth-card">
     <div class="card-body">
         <div class="text-center mb-4">
@@ -64,7 +64,7 @@
 
 @endif
 
-@push('scripts')
+@push('script')
 <!-- Ajouter le script Bootstrap et jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('assets/JS/Auth/forgot-password.js') }}"></script>

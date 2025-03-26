@@ -1,0 +1,120 @@
+
+       :root {
+            --primary-color: #5e35b1;
+            --primary-hover: #4527a0;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --card-border: rgba(0,0,0,0.125);
+            --nav-bg: #fff;
+            --footer-bg: #212529;
+        }
+        
+        [data-bs-theme="dark"] {
+            --text-color: #f8f9fa;
+            --bg-color: #212529;
+            --card-bg: #343a40;
+            --card-border: rgba(255,255,255,0.125);
+            --nav-bg: #212529;
+            --footer-bg: #111;
+        } 
+   
+          
+
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .navbar {
+            background-color: var(--nav-bg) !important;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-color: var(--card-border);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+        
+        .footer {
+            background-color: var(--footer-bg);
+            color: #fff;
+        }
+        
+        .course-card {
+            height: 100%;
+        }
+        
+        .course-image {
+            height: 160px;
+            object-fit: cover;
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1500/500');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+
+        [data-bs-theme="dark"] .navbar {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        [data-bs-theme="dark"] .nav-link, 
+        [data-bs-theme="dark"] .navbar-brand {
+            color: #fff !important;
+        }
+
+        [data-bs-theme="dark"] .dropdown-menu {
+            background-color: #343a40;
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        [data-bs-theme="dark"] .dropdown-item {
+            color: #f8f9fa;
+        }
+
+        [data-bs-theme="dark"] .dropdown-item:hover {
+            background-color: #212529;
+        }
+
+        [data-bs-theme="dark"] .bg-light {
+            background-color: #343a40 !important;
+        }
+           /* Style de l'image de profil dans la navbar */
+    .img-profile {
+        width: 40px; /* Ajustez selon vos besoins */
+        height: 40px;
+        border-radius: 50%; /* Rend l'image circulaire */
+        object-fit: cover; /* Assure que l'image s'ajuste bien */
+        border: 2px solid var(--primary-color); /* Ajoute une bordure élégante */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-darck{
+        margin-top: 12px;
+    }

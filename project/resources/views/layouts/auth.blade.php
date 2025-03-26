@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
@@ -16,28 +16,42 @@
     <!-- Custom CSS -->
    <link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}">
     @stack('styles')
-</head>
-<body>
-    <div class="container">
-        <div class="language-switcher">
-            {{-- <a href="{{ route('locale.switch', 'fr') }}" class="btn">FR</a>
-            <a href="{{ route('locale.switch', 'ar') }}" class="btn">AR</a> --}}
-        </div>
-        
-        <div class="row justify-content-center">
-            <div class="col-md-5 col-sm-10">
-                @yield('content')
-                
-                <div class="auth-footer">
-                    <p>&copy; {{ date('Y') }} {{ config('app.name', 'E-Learning') }}. Tous droits réservés.</p>
+</head> --}}
+
+
+@extends('layouts.app')
+    @push('styles')
+
+        <link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}">
+        @stack('style')
+
+    @endpush
+
+    @section('content')
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5 col-sm-10">
+                    @yield('contents')
+                    
+                    <div class="auth-footer">
+                        <p>&copy; {{ date('Y') }} {{ config('app.name', 'E-Learning') }}. Tous droits réservés.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endsection
+<body>
+
+   
 
     <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
     
-    @stack('scripts')
-</body>
-</html>
+   
+    @push('scripts')
+
+     @stack('script') 
+
+    @endpush
+{{-- </body>
+</html> --}}
