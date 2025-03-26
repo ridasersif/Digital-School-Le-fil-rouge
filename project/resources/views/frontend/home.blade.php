@@ -1,30 +1,10 @@
 
-@extends('layouts.app')
+@extends('layouts.frontend')
 @section('title', 'Home Page')
-@push('styles')
-<link rel="stylesheet" href="{{ asset('assets/CSS/frontend/front.css') }}">
+@push('style')
+{{--  --}}
 @endpush
-@section('content')
-    <!-- Navbar -->
-    @include('partials.frontend.navbar')
-    @if(session('error'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: "{{ session('error') }}",
-                position: 'top-end',
-                toast: true,
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                background: 'var(--card-bg)',
-                color: 'var(--text-color)'
-            });
-        });
-    </script>
-    @endif
+@section('contents')
     <!-- Hero Section -->
     <section class="hero-section text-center">
         <div class="container">
@@ -381,15 +361,10 @@
             <a href="all-courses.html" class="btn btn-outline-light btn-lg px-4">Voir tous les cours</a>
         </div>
     </section>
-
-    <!-- Footer -->
-    @include('partials.frontend.footer')
-     <!-- Bootstrap JS Bundle with Popper -->
 @endsection
 
-@push('scripts')
-<script src="{{ asset('assets/JS/frontend/front.js') }}"></script>
-
+@push('script')
+{{--  --}}
 @endpush
 
 
