@@ -385,7 +385,7 @@
                 </li>
                 
                 <li class="nav-item dropdown mx-1">
-                    <a class="nav-link text-dark position-relative dropdown-toggle {{ request()->path() == '/categries' ? 'active' : '' }} " href="categries" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link text-dark position-relative dropdown-toggle" href="categries" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">
                         Catégories
                         <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x bg-primary"></span>
                     </a>
