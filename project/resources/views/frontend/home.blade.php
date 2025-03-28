@@ -29,7 +29,7 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <i class="fas fa-laptop-code fa-3x text-primary mb-3"></i>
+                            <i class="fas fa-laptop-code fa-3x mb-3" style="color: #6d28d2;"></i>
                             <h5 class="card-title">Développement</h5>
                             <p class="card-text small">650+ cours</p>
                         </div>
@@ -38,7 +38,8 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                            <i class="fas fa-robot fa-3x mb-3" style="color: #6d28d2;"></i>
+
                             <h5 class="card-title">IA</h5>
                             <p class="card-text small">320+ cours</p>
                         </div>
@@ -47,7 +48,7 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                            <i class="fas fa-chart-line fa-3x  mb-3" style="color: #6d28d2;"></i>
                             <h5 class="card-title">Business</h5>
                             <p class="card-text small">480+ cours</p>
                         </div>
@@ -56,7 +57,7 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <i class="fas fa-pencil-ruler fa-3x text-primary mb-3"></i>
+                            <i class="fas fa-pencil-ruler fa-3x mb-3" style="color: #6d28d2;"></i>
                             <h5 class="card-title">Design</h5>
                             <p class="card-text small">360+ cours</p>
                         </div>
@@ -65,7 +66,7 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <i class="fas fa-bullhorn fa-3x text-primary mb-3"></i>
+                            <i class="fas fa-bullhorn fa-3x mb-3" style="color: #6d28d2;"></i>
                             <h5 class="card-title">Marketing</h5>
                             <p class="card-text small">290+ cours</p>
                         </div>
@@ -74,7 +75,7 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <i class="fas fa-language fa-3x text-primary mb-3"></i>
+                            <i class="fas fa-language fa-3x mb-3" style="color: #6d28d2;"></i>
                             <h5 class="card-title">Langues</h5>
                             <p class="card-text small">410+ cours</p>
                         </div>
@@ -353,7 +354,8 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-5 bg-primary text-white text-center">
+    <section class="py-5 text-white text-center" style="background-color: #6d28d2;">
+
         <div class="container">
             <h2 class="mb-4">Prêt à développer vos compétences?</h2>
             <p class="lead mb-4">Rejoignez plus de 500 000 étudiants qui apprennent déjà sur notre plateforme</p>
@@ -366,6 +368,3 @@
 @push('script')
 {{--  --}}
 @endpush
-
-
-</html>

@@ -17,6 +17,18 @@ Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
 
+Route::get('/securiteProfile', function () {
+    return view('profile.securiteProfile');
+})->name('securiteProfile');
+
+Route::get('/meProfile', function () {
+    return view('profile.showProfile');
+})->name('meProfile');
+Route::get('/imageProfile', function () {
+    return view('profile.imageProfile');
+})->name('imageProfile');
+
+
 Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 

@@ -39,6 +39,3 @@
 <script src="{{ asset('assets/JS/frontend/front.js') }}"></script>
 @stack('script')
 @endpush
-
-
-</html>
