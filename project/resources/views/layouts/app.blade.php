@@ -36,5 +36,56 @@
    <!-- Inclure Iconify dans votre projet -->
    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
    @stack('scripts')
+   <script>
+     setTimeout(() => {
+    let alert = document.querySelector('.alert-success');
+    if (alert) {
+        alert.style.transition = "opacity 0.5s";
+        alert.style.opacity = "0";
+        setTimeout(() => alert.remove(), 500);
+    }
+}, 3000);
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', function() {
+            let input = this.previousElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+                this.classList.remove("bi-eye");
+                this.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                this.classList.remove("bi-eye-slash");
+                this.classList.add("bi-eye");
+            }
+        });
+    });
+
+    // Function for handling form submission and showing the spinner
+    function handleFormSubmit(formSelector) {
+        document.querySelector(formSelector).addEventListener("submit", function(event) {
+            let button = this.querySelector("button[type='submit']");
+            let spinner = button.querySelector(".spinner-border");
+
+            if (spinner) {
+                spinner.classList.remove("d-none");
+                spinner.classList.add("d-inline-block");
+            }
+            button.disabled = true;
+        });
+    }
+
+    // Handling email modal form submit
+    handleFormSubmit("form[action='{{ route('update.email') }}']");
+
+    // Handling password change form submit
+    handleFormSubmit("form[action='{{ route('update.password') }}']");
+});
+
+
+ 
+
+   </script>
 </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Middleware\CheckAuthentication;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 
 // require __DIR__.'/Auth.php';
@@ -17,20 +18,30 @@ Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
 
-Route::get('/securiteProfile', function () {
-    return view('profile.securiteProfile');
-})->name('securiteProfile');
 
-Route::get('/meProfile', function () {
-    return view('profile.showProfile');
-})->name('meProfile');
-Route::get('/imageProfile', function () {
-    return view('profile.imageProfile');
-})->name('imageProfile');
 
 
 Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+             
+         //update Profil
+    Route::get('/securiteProfile', function () {
+        return view('profile.securiteProfile');
+    })->name('securiteProfile');
+    
+    
+    Route::get('/meProfile', function () {
+        return view('profile.showProfile');
+    })->name('meProfile');
+    
+    
+    Route::get('/imageProfile', function () {
+        return view('profile.imageProfile');
+    })->name('imageProfile');
+
+    Route::post('/update-email',[ProfileController::class,'updateEmail'])->name('update.email');
+    Route::post('/update-password',[ProfileController::class,'updatePassword'])->name('update.password');
+    Route::post('/update-profile',[ProfileController::class,'updateProfile'])->name('update.Profile');
 
     Route::middleware([CheckRole::class.':1'])->group(function(){
         Route::get('dashboard', function () {

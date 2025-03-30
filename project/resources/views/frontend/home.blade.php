@@ -90,7 +90,7 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Cours populaires</h2>
-                <a href="all-courses.html" class="btn btn-outline-primary">Voir tous les cours</a>
+                <a href="#" class="btn btn-outline-primary">Voir tous les cours</a>
             </div>
             <div class="row g-4">
                 <!-- Course 1 -->
