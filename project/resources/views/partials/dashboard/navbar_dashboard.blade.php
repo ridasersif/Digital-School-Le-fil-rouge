@@ -85,15 +85,23 @@
         
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-2 d-none d-lg-inline text-gray-600 small">Mohamed Alami</span>
-                <img class="img-profile rounded-circle" src="{{ asset('assets/images/profil.png') }}" alt="Profile">
+                <span class="me-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
+                @if(auth()->user()->profile && auth()->user()->profile->avatar)
+                <img class="rounded-circle me-2 border border-2 border-primary" 
+                     src="{{ asset('storage/' . auth()->user()->profile->avatar) }}" 
+                     style="width: 36px; height: 36px; object-fit: cover;">
+                @else
+                    <div class="divProfilNav" style="">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                @endif
             </a>
             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('meProfile')}}">
                     <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
                     Profil
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('securiteProfile')}}">
                     <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
                     Paramètres
                 </a>

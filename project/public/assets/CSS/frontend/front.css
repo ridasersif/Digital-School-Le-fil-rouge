@@ -198,7 +198,34 @@
     .nav-link:hover .span-actev {
         width: 100%;
     }
-    
+    .divProfilNav{
+        width: 36px; height: 36px; 
+                border-radius: 50%; 
+                background-color: var(--profile-bg, #495057); 
+                color: var(--profile-text, #f8f9fa); 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                font-size: 18px; 
+                font-weight: 700; 
+                text-transform: uppercase; 
+                text-align: center;
+
+    }
+    .divProfilModal{
+               width: 60px; height: 60px; 
+                border-radius: 50%; 
+                background-color: var(--profile-bg, #495057); 
+                color: var(--profile-text, #f8f9fa); 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                font-size: 18px; 
+                font-weight: 700; 
+                text-transform: uppercase; 
+                text-align: center;
+
+    }
     @media (max-width: 991px) {
         .dropdown-menu-message-notifiction {
             margin-right: -300px; 

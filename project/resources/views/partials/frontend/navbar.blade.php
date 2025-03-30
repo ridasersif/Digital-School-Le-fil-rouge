@@ -246,15 +246,30 @@
                 </li>
                 <!-- Profil Utilisateur -->
                 <li class="nav-item dropdown me-3">
+                    {{-- auth()->user()->profile && --}}
                     <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-2 border border-2 border-primary" src="{{ asset('assets/images/profil.png') }}" alt="Profile" style="width: 36px; height: 36px; object-fit: cover;">
-                        <span class="d-none d-lg-inline">Mohamed Alami</span>
+                        @if(auth()->user()->profile && auth()->user()->profile->avatar)
+                        <img class="rounded-circle me-2 border border-2 border-primary" 
+                             src="{{ asset('storage/' . auth()->user()->profile->avatar) }}" 
+                             style="width: 36px; height: 36px; object-fit: cover;">
+                        @else
+                            <div class="divProfilNav" style="">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                        @endif
+                        <span class="d-none d-lg-inline">{{auth()->user()->name}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-message-notifiction dropdown-menu-end shadow-lg border-0">
                         <div class="p-4 text-center text-white" style="background-color: #6d28d2;">
-                            <img class="rounded-circle mb-2 border border-3 border-white" src="{{ asset('assets/images/profil.png') }}" alt="Profile" style="width: 80px; height: 80px; object-fit: cover;">
-                            <h6 class="mb-0">Mohamed Alami</h6>
-                            <small class="text-white-50">Étudiant Premium</small>
+                            @if(auth()->user()->profile && auth()->user()->profile->avatar)
+                            <img class="rounded-circle mb-2 border border-3 border-white" src="{{ asset('storage/' . auth()->user()->profile->avatar) }}" alt="Profile" style="width: 80px; height: 80px; object-fit: cover;">
+                            @else
+                                <div class="divProfilModal" style="">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+                            <h6 class="mb-0">{{auth()->user()->name}}</h6>
+                            <small class="text-white-50">{{auth()->user()->role->name}}</small>
                         </div>
                         <div class="p-2">
                             <a class="dropdown-item px-3 py-2 rounded" href="{{route('meProfile')}}">

@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
 
 class UpdateEmailRequest extends FormRequest
 {
@@ -11,14 +11,29 @@ class UpdateEmailRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
+        /** 
+         * @var User|null $user
+         */
+        $user = auth()->user();
+
         return [
-            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'required|string',
         ];
     }
 
+    /**
+     * Get the custom error messages for the validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

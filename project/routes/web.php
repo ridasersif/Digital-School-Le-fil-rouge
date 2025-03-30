@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Middleware\CheckAuthentication;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UpdateImageController;
 use App\Http\Middleware\CheckRole;
 
 // require __DIR__.'/Auth.php';
@@ -42,6 +43,8 @@ Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
     Route::post('/update-email',[ProfileController::class,'updateEmail'])->name('update.email');
     Route::post('/update-password',[ProfileController::class,'updatePassword'])->name('update.password');
     Route::post('/update-profile',[ProfileController::class,'updateProfile'])->name('update.Profile');
+    Route::post('/update-Avatar',[ProfileController::class,'updateAvatar'])->name('update.Avatar');
+    // Route::post('/update-Avatar',[UpdateImageController::class,'updateAvatar'])->name('update.Avatar');
 
     Route::middleware([CheckRole::class.':1'])->group(function(){
         Route::get('dashboard', function () {

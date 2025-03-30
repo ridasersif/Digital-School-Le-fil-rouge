@@ -31,6 +31,13 @@
         font-size: 36px;
         margin: 0 auto 20px;
     }
+    .image-avatar {
+    border: 2px solid #6d28d2;
+    border-radius: 50%;
+    padding: 2px;
+    max-width: 150px;
+    object-fit: cover;
+    }
     .sidebar-header {
         font-size: 1.5rem;
         font-weight: bold;
@@ -93,6 +100,8 @@
     .btn-save:hover {
         background-color: #23272b;
     }
+   
+
 
     /* Responsive */
     @media (max-width: 991.98px) {
@@ -111,13 +120,25 @@
     <div class="row g-0">
         <!-- Sidebar - Identique à votre screenshot -->
         <div class="col-lg-3 sidebar">
-            <div class="profile-avatar">RS</div>
-            <div class="sidebar-header">Rida Sersif</div>
+            @if (auth()->user()->profile && auth()->user()->profile->avatar)
+             <img src="{{ asset('storage/' . auth()->user()->profile->avatar) }}" alt="Profile Image" class="img-fluid mb-3 profile-avatar image-avatar">
+            @else
+             <div class="profile-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+            @endif
+           
+            <div class="sidebar-header">{{auth()->user()->name}}</div>
             <ul class="sidebar-menu">
-                <li><a href="{{route('meProfile')}}">Voir le profil public</a></li>
-                <li><a href="{{route('imageProfile')}}">Photo</a></li>
-                <li><a href="{{route('securiteProfile')}}">Sécurité du compte</a></li>
+                <li>
+                    <a href="{{ route('meProfile') }}" class="{{ request()->routeIs('meProfile') ? 'active' : '' }}">Voir le profil public</a>
+                </li>
+                <li>
+                    <a href="{{ route('imageProfile') }}" class="{{ request()->routeIs('imageProfile') ? 'active' : '' }}">Photo</a>
+                </li>
+                <li>
+                    <a href="{{ route('securiteProfile') }}" class="{{ request()->routeIs('securiteProfile') ? 'active' : '' }}">Sécurité du compte</a>
+                </li>
             </ul>
+            
         </div>
         
         <!-- Content Area qui sera rempli par les vues enfants -->

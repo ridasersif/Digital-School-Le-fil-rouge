@@ -80,7 +80,7 @@
                 <label class="form-label fw-medium">Profil Facebook</label>
                 <div class="input-group">
                     <span class="input-group-text input-group-text-custom">facebook.com/</span>
-                    <input type="text" name="facebook" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('facebook', auth()->user()->profile ? auth()->user()->profile->facebook : '') }}">
+                    <input type="text" name="facebook_profile" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('facebook_profile', auth()->user()->profile ? auth()->user()->profile->facebook_profile : '') }}">
                 </div>
                 @error('facebook')
                     <div class="text-danger">{{ $message }}</div>
