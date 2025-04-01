@@ -44,6 +44,8 @@ Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
     Route::post('/update-password',[ProfileController::class,'updatePassword'])->name('update.password');
     Route::post('/update-profile',[ProfileController::class,'updateProfile'])->name('update.Profile');
     Route::post('/update-Avatar',[ProfileController::class,'updateAvatar'])->name('update.Avatar');
+    Route::post('/delete-Avatar', [ProfileController::class, 'deleteAvatar'])->name('delete.Avatar');
+
     // Route::post('/update-Avatar',[UpdateImageController::class,'updateAvatar'])->name('update.Avatar');
 
     Route::middleware([CheckRole::class.':1'])->group(function(){

@@ -76,6 +76,24 @@ class ProfileController extends Controller
 
         return redirect()->back()->withErrors(['avatar' => 'Veuillez sélectionner une image.']);
     }
+    public function deleteAvatar(Request $request)
+{
+    $user = Auth::user();
+
+  
+    if ($user->profile && $user->profile->avatar) {
+      
+        Storage::delete('public/' . $user->profile->avatar);
+        
+      
+        $user->profile->update(['avatar' => null]);
+        
+        return redirect()->route('imageProfile')->with('success', 'Image de profil supprimée avec succès.');
+    }
+
+    return redirect()->route('imageProfile')->with('error', 'Aucune image de profil à supprimer.');
+}
+
 
 
 

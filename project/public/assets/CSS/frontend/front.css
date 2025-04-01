@@ -210,6 +210,8 @@
                 font-weight: 700; 
                 text-transform: uppercase; 
                 text-align: center;
+                border: 2px solid var(--primary-color);
+                margin: 0 5px;
 
     }
     .divProfilModal{

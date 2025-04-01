@@ -12,7 +12,7 @@
             </div>
         </div>
     </form>
-    <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav ms-auto align-items-center d-flex flex-row">
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
@@ -83,9 +83,9 @@
         
         <div class="topbar-divider d-none d-sm-block"></div>
         
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
+        <li class="nav-item dropdown no-arrow align-items-center d-flex flex-row">
+            <a class="nav-link dropdown-toggle d-flex align-items-center " href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
                 @if(auth()->user()->profile && auth()->user()->profile->avatar)
                 <img class="rounded-circle me-2 border border-2 border-primary" 
                      src="{{ asset('storage/' . auth()->user()->profile->avatar) }}" 
@@ -95,6 +95,7 @@
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
                 @endif
+                <span class="me-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{route('meProfile')}}">
