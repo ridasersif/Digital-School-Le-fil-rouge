@@ -17,7 +17,7 @@ class AddUserRoleSeeder extends Seeder
         DB::table('users')->insert([[
             'name'=>'Admin User',
             'email'=>'admin@gamil.com',
-            'password'=>Hash::make('123'),
+            'password'=>Hash::make('123456789'),
             'role_id'=>1,
 
             ],

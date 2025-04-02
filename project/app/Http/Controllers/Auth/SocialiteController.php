@@ -33,13 +33,13 @@ class SocialiteController extends Controller
                     'social_id' => $user->id,
                     'social_type' => 'google',
                     'password' => Hash::make('password'),
-                    'role_id' => 4
+                    'role_id' => 3
                 ]);
                 Auth::login($newUser);
                 return redirect()->route('select-role');
             }
         } catch (\Exception $e) {
-
+            dd($e->getMessage());
             return redirect()->route('login')->with('error', 'error de Google: ' . $e->getMessage());
         }
     }

@@ -17,6 +17,7 @@ class RolesSeeder extends Seeder
             ['name' => 'admin'],
             ['name' => 'formateur'],
             ['name' => 'etudiant'],
+            ['name' => 'user'],
             
         ]);
     }

@@ -11,10 +11,13 @@
            
         </div>
 
+      
         <!-- Bouton mobile modifié avec icône X -->
         <button class="navbar-toggler border-0" onclick="toggleMenu()" type="button">
             <i id="menu-icon" class="fas fa-bars" style="font-size: 1.5rem;"></i>
         </button>
+
+        
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <!-- Menu principal -->
