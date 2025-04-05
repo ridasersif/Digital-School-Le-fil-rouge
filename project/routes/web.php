@@ -7,13 +7,13 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Middleware\CheckAuthentication;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UpdateImageController;
 use App\Http\Middleware\CheckRole;
+use App\Http\Controllers\Admin\AdminController;
 
 // require __DIR__.'/Auth.php';
-// Route::get('/', function () {
-//     return view('layouts.dashboard');
-// });
+Route::get('/test', function () {
+    return view('welcome');
+});
 
 Route::get('/', function () {
     return view('frontend.home');
@@ -46,13 +46,30 @@ Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
     Route::post('/update-Avatar',[ProfileController::class,'updateAvatar'])->name('update.Avatar');
     Route::post('/delete-Avatar', [ProfileController::class, 'deleteAvatar'])->name('delete.Avatar');
 
-    // Route::post('/update-Avatar',[UpdateImageController::class,'updateAvatar'])->name('update.Avatar');
 
     Route::middleware([CheckRole::class.':1'])->group(function(){
         Route::get('dashboard', function () {
             return view('admin.statistics');
         })->name('admin.index'); 
+
+    
+
+        Route::prefix('admin')->name('admin.')->group(function () {
+        
+            // Route to display all users
+            Route::get('/users', [AdminController::class, 'showAllUsers'])->name('users.index');
+            
+            // Route to delete a user
+            Route::delete('/users/delete/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
+            
+            // Route to edit a admin
+            Route::get('/users/edit/{id}', [AdminController::class, 'editUser'])->name('users.edit');
+            Route::post('/users/update/{id}', [AdminController::class, 'updateUser'])->name('users.update');
+        });
+        Route::post('/users/toggle-status', [AdminController::class, 'toggleStatus'])->name('users.toggleStatus');
+
         Route::resource('categories', CategoryController::class);
+
     });
     
 });

@@ -39,7 +39,7 @@ class SocialiteController extends Controller
                 return redirect()->route('select-role');
             }
         } catch (\Exception $e) {
-            dd($e->getMessage());
+          
             return redirect()->route('login')->with('error', 'error de Google: ' . $e->getMessage());
         }
     }

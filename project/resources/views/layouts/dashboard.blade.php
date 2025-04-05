@@ -1,4 +1,4 @@
-@extends('layouts.app')
+ @extends('layouts.app')
 
 
 @push('styles')
@@ -47,4 +47,4 @@
 <script src="{{ asset('assets/JS/dashboard/dashboard.js') }}"></script>
 
 @stack('statisticsJs')
-@endpush
+@endpush 

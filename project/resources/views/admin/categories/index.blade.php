@@ -7,9 +7,9 @@
 @section('contents')
 
    <!-- Bouton pour ouvrir le modal -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0">Catégories</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
             <i class="fas fa-plus-circle fa-sm text-white-50"></i> Ajouter catégorie
         </a>
     </div>
