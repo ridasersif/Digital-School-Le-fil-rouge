@@ -1,7 +1,12 @@
-<nav class="navbar navbar-expand topbar mb-4 static-top">
-    <form class=" d-sm-inline-block form-inline mr-auto ml-md-3 my-md-0 mw-100 navbar-search">
+
+ <nav class="navbar navbar-expand topbar mb-4 static-top">
+    <button id="sidebarToggleBtn" class="btn btn-link d-md-none rounded-circle me-3">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <form class="d-sm-inline-block form-inline me-auto ml-md-3 my-md-0 mw-100 navbar-search">
         <div class="input-group">
-            <input type="text" class="form-control  border-0 small" placeholder="Rechercher..." aria-label="Search">
+            <input type="text" class="form-control border-0 small" placeholder="Rechercher..." aria-label="Search">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                     <i class="fas fa-search fa-sm"></i>
@@ -82,18 +87,17 @@
         <div class="topbar-divider d-none d-sm-block"></div>
         
         <li class="nav-item dropdown no-arrow align-items-center d-flex flex-row">
-            <a class="nav-link dropdown-toggle d-flex align-items-center " href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @if(auth()->user()->profile && auth()->user()->profile->avatar)
-                <img class="rounded-circle me-2 border border-2 border-primary" 
+                <img class="rounded-circle me-2 border border-2 border-primary profile-image" 
                      src="{{ asset('storage/' . auth()->user()->profile->avatar) }}" 
-                     style="width: 36px; height: 36px; object-fit: cover;">
+                     alt="Profile image">
                 @else
-                    <div class="divProfilNav" style="">
+                    <div class="divProfilNav">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
                 @endif
-                <span class="me-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
+                <span class="me-2 d-none d-lg-inline text-gray-600 small user-name">{{auth()->user()->name}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{route('meProfile')}}">
@@ -117,4 +121,3 @@
         </li>
     </ul>
 </nav>
-

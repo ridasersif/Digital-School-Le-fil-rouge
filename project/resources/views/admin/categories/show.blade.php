@@ -14,7 +14,7 @@
                           class="rounded-circle border border-3 border-primary shadow-sm">
                     </iconify-icon>
                 </div>
-                <div class="card border-0 bg-light mb-3">
+                <div class="card border-0  mb-3">
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-4 text-secondary fw-bold">Nom:</div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer bg-light">
+            <div class="modal-footer ">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-times me-1"></i>Fermer
                 </button>

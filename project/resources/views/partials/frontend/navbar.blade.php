@@ -117,10 +117,10 @@
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-message-notifiction dropdown-menu-end p-0 shadow-lg border-0">
-                        <div class="p-3 text-white" style="background-color: #6d28d2;">
+                        <div class="p-3 text-white" >
                             <h6 class="mb-0"><i class="fas fa-bell me-2"></i> Notifications</h6>
                         </div>
-                        <div style="max-height: 400px; overflow-y: auto;">
+                        <div style="max-height: 200px; overflow-y: auto;">
                             <a class="dropdown-item p-3 border-bottom" href="#">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0">
@@ -300,28 +300,7 @@
 </nav>
 
     <!-- Modal -->
-
-
-<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">Confirmation de déconnexion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Êtes-vous sûr de vouloir vous déconnecter ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <form method="post" action="{{route('logout')}}">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Oui, se déconnecter</button>
-                </form>
-            </div>
-        </div>
-    </div> 
-</div>
+    @include('partials.logout')
 
 <script>
     function toggleMenu() {

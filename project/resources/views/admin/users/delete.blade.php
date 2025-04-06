@@ -1,26 +1,17 @@
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">
-                    <i class="fas fa-exclamation-triangle me-2"></i>Confirmation
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation de suppression</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
-            <div class="modal-body text-center p-4">
-                <div class="mb-3">
-                    <i class="fas fa-user-times fa-3x text-danger mb-3"></i>
-                    <p class="mb-0">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
-                    <p class="text-muted small mt-2">Cette action est irréversible.</p>
-                </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <span id="userNameToDelete" class="fw-bold"></span> ?</p>
+                <p class="text-danger mb-0"><i class="fas fa-exclamation-triangle me-2"></i> Cette action est irréversible.</p>
             </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-1"></i>Annuler
-                </button>
-                <button type="button" class="btn btn-sm btn-danger" id="confirmDeleteBtn">
-                    <i class="fas fa-trash me-1"></i>Supprimer
-                </button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger btn-sm" id="confirmDeleteBtn">Supprimer</button>
             </div>
         </div>
     </div>
