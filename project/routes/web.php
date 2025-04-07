@@ -56,17 +56,28 @@ Route::middleware([CheckAuthentication::class,'auth'])->group( function () {
 
         Route::prefix('admin')->name('admin.')->group(function () {
         
-            // Route to display all users
+            // Route pour afficher tous les utilisateurs
             Route::get('/users', [AdminController::class, 'showAllUsers'])->name('users.index');
+
+            // Route pour afficher tous les enseignants (asatida)
+            Route::get('/instructors', [AdminController::class, 'showAllInstructors'])->name('instructors.index');
+
+            // Route pour afficher tous les élèves (talamin)
+            Route::get('/students', [AdminController::class, 'showAllStudents'])->name('students.index');
+
+            // Route pour afficher tous les utilisateurs inactifs
+            Route::get('/users/inactive', [AdminController::class, 'showInactiveUsers'])->name('users.inactive');
+
             
             // Route to delete a user
             Route::delete('/users/delete/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
             
             // Route to edit a admin
-            Route::get('/users/edit/{id}', [AdminController::class, 'editUser'])->name('users.edit');
-            Route::post('/users/update/{id}', [AdminController::class, 'updateUser'])->name('users.update');
+            // Route::get('/users/edit/{id}', [AdminController::class, 'editUser'])->name('users.edit');
+            // Route::post('/users/update/{id}', [AdminController::class, 'updateUser'])->name('users.update');
+            Route::post('/users/toggle-status', [AdminController::class, 'toggleStatus'])->name('users.toggleStatus');
         });
-        Route::post('/users/toggle-status', [AdminController::class, 'toggleStatus'])->name('users.toggleStatus');
+      
 
         Route::resource('categories', CategoryController::class);
 

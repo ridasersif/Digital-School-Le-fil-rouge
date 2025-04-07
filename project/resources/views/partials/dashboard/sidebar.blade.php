@@ -65,26 +65,26 @@
             </a>
             <div id="usersSubmenu" class="collapse submenu">
                 <ul class="nav flex-column submenu-items">
-                    <li class="nav-item">
+                    <li class="nav-item {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.users.index') }}">
                             <i class="fas fa-users fa-sm"></i>
                             <span class="nav-text">Tous les utilisateurs</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <li class="nav-item {{ request()->routeIs('admin.students.index') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.students.index') }}">
                             <i class="fas fa-user-graduate fa-sm"></i>
                             <span class="nav-text">Étudiants</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <li class="nav-item {{ request()->routeIs('admin.instructors.index') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.instructors.index') }}">
                             <i class="fas fa-chalkboard-teacher fa-sm"></i>
                             <span class="nav-text">Formateurs</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <li class="nav-item {{ request()->routeIs('admin.users.inactive') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.users.inactive') }}">
                             <i class="fas fa-user-slash fa-sm "></i>
                             <span class="nav-text">Utilisateurs inactifs</span>
                         </a>
