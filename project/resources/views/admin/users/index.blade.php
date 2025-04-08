@@ -13,6 +13,7 @@ $userType === 'inactive' ? 'Liste des utilisateurs inactifs' :
 @endpush
 
 @section('contents')
+  
     <div class="d-flex align-items-center justify-content-between mb-4">
       
         @section('title',  $userType === 'inactive' ? 'Liste des utilisateurs inactifs' : ($userType === 'instructors' ? 'Liste des instructeurs' : ($userType === 'students' ? 'Liste des étudiants' : 'Liste des utilisateurs')))
@@ -47,6 +48,9 @@ $userType === 'inactive' ? 'Liste des utilisateurs inactifs' :
                             </thead>
                             <tbody>
                                 @foreach($users as $user)
+                                @php
+                                $isCurrentUser = auth()->user()->id === $user->id;
+                                @endphp
                                 <tr>
                                     <td class="text-center">{{ $user->id }}</td>
                                     <td class="text-center">{{ $user->name }}</td>
@@ -64,23 +68,30 @@ $userType === 'inactive' ? 'Liste des utilisateurs inactifs' :
                                      <td class="text-center">{{ ucfirst($user->role->name) }}</td>
                                     @endif
                                     <td class="text-center">
-                                        <button class="badge border-0 bg-{{ $user->status == 'active' ? 'success' : 'danger' }} toggle-status-btn" 
-                                            data-id="{{ $user->id }}" 
-                                            data-name="{{ $user->name }}" 
-                                            data-status="{{ $user->status }}"
-                                            data-url="{{ route('admin.users.toggleStatus', $user->id) }}">
-                                        {{ $user->status == 'active' ? 'Actif' : 'Inactif' }}
-                                    </button>
                                     
+                                       @if ($isCurrentUser)
+                                           <span class="text-muted">---</span>
+                                       @else
+                                            <button class="badge border-0 bg-{{ $user->status == 'active' ? 'success' : 'danger' }} toggle-status-btn" 
+                                                data-id="{{ $user->id }}" 
+                                                data-name="{{ $user->name }}" 
+                                                data-status="{{ $user->status }}"
+                                                data-url="{{ route('admin.users.toggleStatus', $user->id) }}">
+                                                {{ $user->status == 'active' ? 'Actif' : 'Inactif' }}
+                                            </button>
+                                       @endif
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-action-group">
                                             <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#userModal-{{ $user->id }}">
                                                 <i class="fas fa-eye fa-sm" aria-hidden="true"></i>
                                             </button>
-                                            <button class="btn btn-danger btn-sm delete-user" data-id="{{ $user->id }}" data-name="{{ $user->name }}">
-                                                <i class="fas fa-trash fa-sm" aria-hidden="true"></i>
-                                            </button>
+                                            @if (!$isCurrentUser)
+                                                <button class="btn btn-danger btn-sm delete-user" data-id="{{ $user->id }}" data-name="{{ $user->name }}">
+                                                    <i class="fas fa-trash fa-sm" aria-hidden="true"></i>
+                                                </button>
+                                            @endif
+                                          
                                         </div>
                                     </td>
                                 </tr>

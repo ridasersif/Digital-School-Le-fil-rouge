@@ -12,9 +12,9 @@ class ProfileRepository implements ProfileInterface
         $profile = $user->profile;
 
         if (!$profile) {
-            $profile = new Profile([
-                'user_id' => $user->id,
-            ]);
+            $profile = new Profile();
+            $profile->user_id = $user->id;
+            $profile->save();
         }
 
         // Mise à jour des informations du profil avec les données réelles de la variable $data

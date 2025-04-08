@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html lang="fr" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un nouveau cours</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+@extends('layouts.dashboard')
+
+@section('title', 'Categories')
+@push('styles')
+{{-- <link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}"> --}}
+@endpush
+@section('contents')
+
+   <!-- Bouton pour ouvrir le modal -->
+   
+    @if(session('success'))
+        <div class="alert alert-success" role="alert" id="successAlert">
+            {{ session('success') }}
+        </div>
+    @endif
+   <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
         
-        :root {
+        /* :root {
             --primary-color: #3a86ff;
             --secondary-color: #4361ee;
             --accent-color: #4cc9f0;
@@ -19,20 +26,13 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
         }
-        
-        body {
-            background-color: var(--bg-color);
-            font-family: 'Roboto', sans-serif;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+         */
+      
         
         .creation-card {
             border-radius: 18px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.07);
             border: none;
-            background-color: var(--card-bg);
-            margin-top: 20px;
         }
         
         /* Design des étapes */
@@ -42,18 +42,21 @@
             align-items: center;
             margin-bottom: 40px;
             position: relative;
+          
         }
         
         .steps-progress::before {
             content: "";
             position: absolute;
-            top: 50%;
+            top: 30%;
             left: 0;
             right: 0;
             height: 3px;
             background-color: var(--border-color);
             transform: translateY(-50%);
             z-index: 1;
+         
+          
         }
         
         .step-item {
@@ -63,6 +66,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+           
         }
         
         .step-circle {
@@ -78,6 +82,8 @@
             font-size: 18px;
             margin-bottom: 10px;
             transition: all 0.3s ease;
+            background-color: var(--primary-color);
+           
         }
         
         .step-title {
@@ -85,29 +91,31 @@
             color: var(--text-muted);
             font-weight: 500;
             transition: all 0.3s ease;
+            
         }
         
         .step-item.active .step-circle {
             background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            border-color: rgb(9, 150, 9);
             color: white;
             transform: scale(1.15);
-            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+            background: rgb(19, 232, 19);
         }
         
         .step-item.active .step-title {
-            color: var(--primary-color);
+            color:rgb(19, 232, 19);
             font-weight: 700;
         }
         
         .step-item.completed .step-circle {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
+            background: rgb(3, 105, 3);
+            border-color: rgb(9, 150, 9);
             color: white;
+
         }
         
         .step-item.completed .step-title {
-            color: var(--accent-color);
+            color: rgb(3, 105, 3);
         }
         
         /* Design du contenu */
@@ -128,7 +136,7 @@
         
         .card-title {
             color: var(--primary-color);
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             font-weight: 600;
             text-align: center;
         }
@@ -152,16 +160,13 @@
             box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15);
         }
         
-        .form-text {
-            color: var(--text-muted);
-        }
-        
         /* Design des types de contenu */
         .content-cards {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-bottom: 30px;
+           
         }
         
         .content-type-btn {
@@ -207,12 +212,10 @@
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
+           
         }
         
         .btn {
-            border-radius: 12px;
-            padding: 12px 25px;
-            font-weight: 600;
             transition: all 0.3s ease;
         }
         
@@ -223,7 +226,7 @@
         }
         
         .next-btn:hover {
-            background-color: var(--secondary-color);
+            background-color:rgba(50, 80, 215, 0.3);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
         }
@@ -235,14 +238,17 @@
         }
         
         .back-btn:hover {
-            background-color: #f1f5f9;
-            color: var(--text-color);
+            color: var(--text-color); 
+            transform: translateY(-3px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+
         }
         
         /* Contenu ajouté */
         .added-content-section {
             margin-top: 35px;
-            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
         }
@@ -261,12 +267,12 @@
         }
         
         .added-content {
-            background-color: white;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.05);
             border-left: 4px solid var(--primary-color);
+            border-top: 1px solid var(--primary-color);
             transition: all 0.3s ease;
         }
         
@@ -285,6 +291,7 @@
         .video-badge {
             background-color: #e0f2fe;
             color: #3a86ff;
+            
         }
         
         .pdf-badge {
@@ -312,7 +319,9 @@
         
         .action-btn:hover {
             color: var(--text-color);
-            background-color: #f1f5f9;
+            background-color: #aacdef;
+            border-color: #449fef;
+            color: #449fef;
         }
         
         .delete-btn:hover {
@@ -401,11 +410,14 @@
             color: var(--text-muted);
         }
     </style>
-</head>
-<body>
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
+   
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0">Ajouter un cours</h1>
+            <a href="{{route('instructor.courses.index')}}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class=" "></i> Router vers la liste des cours
+            </a>
+        </div>
+        
                 <div class="creation-card card">
                     <div class="card-body p-4">
                         <!-- Indicateur d'étapes amélioré -->
@@ -582,10 +594,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modale pour ajouter du contenu -->
     <div class="modal fade" id="contentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -1042,6 +1050,9 @@
                 document.querySelector('.creation-card .card-body').innerHTML = successMsg;
             });
         });
-    </script>
-</body>
-</html>
+    </script>   
+@endsection
+
+@push('scripts')
+<script src="{{ asset('assets/JS/dashboard/admin/categories.js') }}"></script>
+@endpush

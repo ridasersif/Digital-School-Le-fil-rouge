@@ -13,7 +13,7 @@ class CoursController extends Controller
      */
     public function index()
     {
-        //
+        return view('instructor.courses.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class CoursController extends Controller
      */
     public function create()
     {
-        //
+        return view('instructor.courses.create');
     }
 
     /**

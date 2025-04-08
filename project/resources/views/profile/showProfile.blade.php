@@ -86,7 +86,75 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+          
+            
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">Profil LinkedIn</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-text-custom">linkedin.com/in/</span>
+                    <input type="text" name="linkedin_profile" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('linkedin_profile', auth()->user()->profile ? auth()->user()->profile->linkedin_profile : '') }}">
+                </div>
+                @error('linkedin')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">Profil Twitter</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-text-custom">twitter.com/</span>
+                    <input type="text" name="twitter_profile" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('twitter_profile', auth()->user()->profile ? auth()->user()->profile->twitter_profile : '') }}">
+                </div>
+                @error('twitter')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">Profil YouTube</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-text-custom">youtube.com/c/</span>
+                    <input type="text" name="youtube_profile" class="form-control form-input-custom py-2" placeholder="votre.channel" value="{{ old('youtube_profile', auth()->user()->profile ? auth()->user()->profile->youtube_profile : '') }}">
+                </div>
+                @error('youtube')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">Profil Instagram</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-text-custom">instagram.com/</span>
+                    <input type="text" name="instagram_profile" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('instagram_profile', auth()->user()->profile ? auth()->user()->profile->instagram_profile : '') }}">
+                </div>
+                @error('instagram')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">Profil GitHub</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-text-custom">github.com/</span>
+                    <input type="text" name="github_profile" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('github_profile', auth()->user()->profile ? auth()->user()->profile->github_profile : '') }}">
+                </div>
+                @error('github')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-medium">Profil TikTok</label>
+                <div class="input-group">
+                    <span class="input-group-text input-group-text-custom">tiktok.com/@</span>
+                    <input type="text" name="github_profile" class="form-control form-input-custom py-2" placeholder="votre.pseudo" value="{{ old('github_profile', auth()->user()->profile ? auth()->user()->profile->github_profile : '') }}">
+                </div>
+                @error('github')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            
         </div>
+       
 
         <!-- Bouton de soumission -->
         <div class="d-flex justify-content-end mt-4">

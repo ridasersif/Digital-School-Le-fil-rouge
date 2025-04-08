@@ -66,12 +66,14 @@
                 </li>
 
                 @auth
+                   
                     @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
                         <li class="nav-item mx-1">
-                            <a class="nav-link position-relative text-dark " href="{{route('admin.index')}}">
-                                <i class="fas fa-tachometer-alt me-1"  style="color: #6d28d2;"></i>
-                                 Dashboard
-                                 <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x"  style="background-color: #6d28d2;"></span>
+                            <a class="nav-link position-relative text-dark" 
+                            href="{{ auth()->user()->role_id == 1 ? route('admin.index') : route('instructor.index') }}">
+                                <i class="fas fa-tachometer-alt me-1" style="color: #6d28d2;"></i>
+                                Dashboard
+                                <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x" style="background-color: #6d28d2;"></span>
                             </a>
                         </li>
                     @endif
