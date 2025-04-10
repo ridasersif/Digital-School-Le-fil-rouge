@@ -83,7 +83,7 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
                 return view('instructor.statistics');
             })->name('index');
             // Route pour afficher les cours de l'instructeur
-            Route::resource('courses', CoursController::class);
+            Route::resource('course', CoursController::class);
             Route::get('contents/index', [ContentController::class, 'index'])->name('contents.index');
             Route::get('contents/create', [ContentController::class, 'create'])->name('contents.create');
             Route::get('contents/review', [ContentController::class, 'review'])->name('contents.review');

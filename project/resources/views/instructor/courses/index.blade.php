@@ -16,7 +16,7 @@
    
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0">Listes des cours</h1>
-            <a href="{{route('instructor.courses.create')}}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" >
+            <a href="{{route('instructor.course.create')}}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" >
                 <i class="fas fa-plus-circle fa-sm text-white-50"></i> Créer un cours
             </a>
         </div>
@@ -94,19 +94,44 @@
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <!-- Voir -->
-                                                    <a href="{{ route('instructor.courses.show', $cours->id) }}" class="btn btn-sm btn-outline-info rounded-circle mx-1" data-bs-toggle="tooltip" title="Voir">
+                                                    <a href="{{ route('instructor.course.show', $cours->id) }}" class="btn btn-sm btn-outline-info rounded-circle mx-1" data-bs-toggle="tooltip" title="Voir">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                         
                                                     <!-- Modifier -->
-                                                    <a href="{{ route('instructor.courses.edit', $cours->id) }}" class="btn btn-sm btn-outline-warning rounded-circle mx-1" data-bs-toggle="tooltip" title="Modifier">
+                                                    <a href="{{ route('instructor.course.edit', $cours->id) }}" class="btn btn-sm btn-outline-warning rounded-circle mx-1" data-bs-toggle="tooltip" title="Modifier">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                         
                                                     <!-- Supprimer -->
-                                                    <a href="#" class="btn btn-sm btn-outline-danger rounded-circle mx-1" data-bs-toggle="tooltip" title="Supprimer">
+                                                                                                
+                                                    <a href="#" class="btn btn-sm btn-outline-danger rounded-circle mx-1" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cours->id }}" data-bs-toggle="tooltip" title="Supprimer">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </a>
+
+                                                    <!-- Modal de Confirmation -->
+                                                    <div class="modal fade" id="deleteModal-{{ $cours->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Êtes-vous sûr de vouloir supprimer ce cours ? Cette action est irréversible.</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form action="{{ route('instructor.course.destroy', $cours->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </td>
                                         </tr>

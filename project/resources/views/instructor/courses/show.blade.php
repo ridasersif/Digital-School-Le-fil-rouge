@@ -322,7 +322,7 @@
         border-radius: 8px;
         transition: all 0.3s ease;
     }
-    
+
     .create-button:hover {
         background-color: rgba(67, 97, 238, 0.2);
         text-decoration: none;
@@ -484,7 +484,7 @@
             <h1 class="page-title">Détails du cours</h1>
             <p class="page-subtitle">Visualisez toutes les informations de votre cours</p>
         </div>
-        <a href="{{ route('instructor.courses.index') }}" class="back-button">
+        <a href="{{ route('instructor.course.index') }}" class="back-button">
             <i class="fas fa-arrow-left"></i> Retour à la liste
         </a>
     </div>
@@ -494,9 +494,9 @@
         <div class="col-lg-4 order-lg-2 mb-4">
             <div class="info-card">
                 <!-- Image du cours -->
-                @if($cours->image)
+                @if($course->image)
                     <div class="course-image-wrapper">
-                        <img src="{{ asset('storage/' . $cours->image) }}" alt="{{ $cours->titre }}" class="course-image">
+                        <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->titre }}" class="course-image">
                     </div>
                 @else
                     <div class="empty-state">
@@ -507,11 +507,11 @@
 
                 <div class="card-body">
                     <!-- Titre du cours -->
-                    <h2 class="course-title">{{ $cours->titre }}</h2>
+                    <h2 class="course-title">{{ $course->titre }}</h2>
                     
                     <!-- Prix -->
-                    @if($cours->price > 0)
-                        <div class="price-badge paid">{{ $cours->price }} DH</div>
+                    @if($course->price > 0)
+                        <div class="price-badge paid">{{ $course->price }} DH</div>
                     @else
                         <div class="price-badge free">Gratuit</div>
                     @endif
@@ -526,8 +526,8 @@
                             <div class="meta-content">
                                 <div class="meta-label">Catégorie</div>
                                 <div class="meta-value">
-                                    @if($cours->category)
-                                        {{ $cours->category->nom }}
+                                    @if($course->category)
+                                        {{ $course->category->nom }}
                                     @else
                                         Non catégorisé
                                     @endif
@@ -544,13 +544,13 @@
                                 <div class="meta-label">Statut</div>
                                 <div class="meta-value">
                                     @php
-                                        $statusClass = match($cours->status) {
+                                        $statusClass = match($course->status) {
                                             'published' => 'published',
                                             'pending' => 'pending',
                                             'draft' => 'draft',
                                         };
                                         
-                                        $statusText = match($cours->status) {
+                                        $statusText = match($course->status) {
                                             'published' => 'Publié',
                                             'pending' => 'En attente',
                                             'draft' => 'Brouillon',
@@ -568,7 +568,7 @@
                             </div>
                             <div class="meta-content">
                                 <div class="meta-label">Date de création</div>
-                                <div class="meta-value">{{ $cours->created_at->format('d/m/Y') }}</div>
+                                <div class="meta-value">{{ $course->created_at->format('d/m/Y') }}</div>
                             </div>
                         </li>
                         
@@ -579,14 +579,14 @@
                             </div>
                             <div class="meta-content">
                                 <div class="meta-label">Dernière mise à jour</div>
-                                <div class="meta-value">{{ $cours->updated_at->format('d/m/Y') }}</div>
+                                <div class="meta-value">{{ $course->updated_at->format('d/m/Y') }}</div>
                             </div>
                         </li>
                     </ul>
                     
                     <!-- Bouton d'édition -->
                     <div class="mt-4">
-                        <a href="{{ route('instructor.courses.edit', $cours->id) }}" class="edit-button">
+                        <a href="{{ route('instructor.course.edit', $course->id) }}" class="edit-button">
                             <i class="fas fa-edit"></i> Modifier ce cours
                         </a>
                     </div>
@@ -597,15 +597,15 @@
         <!-- Colonne de gauche (contenu principal) -->
         <div class="col-lg-8 order-lg-1">
             <!-- Vidéo d'introduction -->
-            @if($cours->video_intro)
+            @if($course->video_intro)
                 <div class="info-card mb-4">
                     <div class="card-header">
                         <h3 class="card-title">Vidéo d'introduction</h3>
                     </div>
                     <div class="card-body">
                         <div class="video-container">
-                            <video controls poster="{{ $cours->image ? asset('storage/' . $cours->image) : '' }}">
-                                <source src="{{ asset('storage/' . $cours->video_intro) }}" type="video/mp4">
+                            <video controls poster="{{ $course->image ? asset('storage/' . $course->image) : '' }}">
+                                <source src="{{ asset('storage/' . $course->video_intro) }}" type="video/mp4">
                                 Votre navigateur ne supporte pas la lecture de vidéos.
                             </video>
                         </div>
@@ -637,7 +637,7 @@
                 <div class="card-body">
                     
                     <div class="course-description">
-                            {!! nl2br(e($cours->description)) !!}
+                            {!! nl2br(e($course->description)) !!}
                     </div>
                   
                 </div>
@@ -672,9 +672,9 @@
                     
                     <!-- Contenu des vidéos -->
                     <div class="resource-content active" id="videos-content">
-                        @if($cours->videos && $cours->videos->count() > 0)
+                        @if($course->videos && $course->videos->count() > 0)
                             <ul class="resource-list">
-                                @foreach($cours->videos as $video)
+                                @foreach($course->videos as $video)
                                     <li class="resource-item">
                                         <div class="resource-icon">
                                             <i class="fas fa-video"></i>
@@ -704,7 +704,7 @@
                     
                     <!-- Contenu des PDF -->
                     <div class="resource-content" id="pdfs-content">
-                        @if($cours->pdfs && $cours->pdfs->count() > 0)
+                        @if($course->pdfs && $course->pdfs->count() > 0)
                             <ul class="resource-list">
                                 @foreach($cours->pdfs as $pdf)
                                     <li class="resource-item">

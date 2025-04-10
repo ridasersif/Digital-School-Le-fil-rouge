@@ -144,24 +144,24 @@
                 <div id="coursesSubmenu" class="collapse submenu">
                     <ul class="nav flex-column submenu-items">
                         <li class="nav-item {{ request()->routeIs('instructor.courses.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.courses.index') }}">
+                            <a class="nav-link" href="{{ route('instructor.course.index') }}">
                                 <i class="fas fa-list fa-sm"></i>
                                 <span class="nav-text">Tous les cours</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ request()->routeIs('instructor.courses.create') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.courses.create') }}">
+                        <li class="nav-item {{ request()->routeIs('instructor.course.create') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('instructor.course.create') }}">
                                 <i class="fas fa-plus fa-sm"></i>
                                 <span class="nav-text">Créer un cours</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ request()->routeIs('instructor.courses.drafts') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->routeIs('instructor.course.drafts') ? 'active' : '' }}">
                             <a class="nav-link" href="">
                                 <i class="fas fa-pencil-alt fa-sm"></i>
                                 <span class="nav-text">Brouillons</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ request()->routeIs('instructor.courses.pending') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->routeIs('instructor.course.pending') ? 'active' : '' }}">
                             <a class="nav-link" href="">
                                 <i class="fas fa-hourglass-half fa-sm"></i>
                                 <span class="nav-text">En attente</span>

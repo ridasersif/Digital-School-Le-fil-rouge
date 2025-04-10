@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCoursRequest;
 use App\Http\Requests\UpdateCoursRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CoursController extends Controller
 {
@@ -15,9 +16,10 @@ class CoursController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+      
+    $user = Auth::user();
     $formateur = $user->formateur;
-    $courses = $formateur ? $formateur->cours()->withCount('contents')->orderBy('created_at', 'desc')->paginate(3) : collect();
+    $courses = $formateur ? $formateur->cours()->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
 
     return view('instructor.courses.index', compact('courses'));
     }
@@ -27,8 +29,9 @@ class CoursController extends Controller
      */
     public function create()
     {
+        $isUpdate=false;
         $categories = Category::all(); 
-        return view('instructor.courses.create',compact('categories'));
+        return view('instructor.courses.create',compact('categories','isUpdate'));
     }
 
     /**
@@ -58,7 +61,7 @@ class CoursController extends Controller
         ]);
 
         
-        return redirect()->route('instructor.courses.index')->with('success', 'Le cours a été enregistré dans la base de données, mais il est encore vide. Vous pouvez ajouter du contenu plus tard.');
+        return redirect()->route('instructor.course.index')->with('success', 'Le cours a été enregistré dans la base de données, mais il est encore vide. Vous pouvez ajouter du contenu plus tard.');
 
     }
 
@@ -72,7 +75,7 @@ class CoursController extends Controller
         $formateur = $user->formateur;
         
         if ($formateur && $formateur->id === $course->formateur_id) {
-            return view('instructor.courses.show', ['cours' => $course]);
+            return view('instructor.courses.show', compact('course'));
         }
         
         // Rediriger si l'utilisateur n'est pas autorisé
@@ -83,24 +86,60 @@ class CoursController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cours $cours)
+    public function edit(Cours $course)
     {
-        //
+        $isUpdate=true;
+        $categories = Category::all(); 
+        return view('instructor.courses.create',compact('course','categories','isUpdate'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCoursRequest $request, Cours $cours)
+    public function update(UpdateCoursRequest $request, Cours $course)
     {
-        //
+       
+        $videoPath = $course->video_intro;  
+        if ($request->hasFile('video_intro')) {
+            if ($videoPath) {
+                Storage::disk('public')->delete($videoPath);
+            }
+            $videoPath = $request->file('video_intro')->store('cours/videos', 'public');
+        }
+        $imagePath = $course->image;  
+        if ($request->hasFile('image')) {
+            if ($imagePath) {
+                Storage::disk('public')->delete($imagePath);
+            }
+            $imagePath = $request->file('image')->store('cours/images', 'public');
+        }
+        $course->update([
+            'titre' => $request->input('titre'),
+            'description' => $request->input('description'),
+            'category_id' => $request->input('category_id'),
+            'price' => $request->input('price'),
+            'video_intro' => $videoPath,
+            'image' => $imagePath,
+        ]);
+    
+        // Redirect back with a success message
+        return redirect()->route('instructor.course.index')->with('success', 'Le cours a été mis à jour avec succès.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cours $cours)
+    public function destroy(Cours $course)
     {
-        //
+        if ($course->video_intro) {
+            Storage::disk('public')->delete($course->video_intro);
+        }
+        if ($course->image) {
+            Storage::disk('public')->delete($course->image);
+        }
+        $course->delete();
+        return redirect()->route('instructor.course.index')->with('success', 'Le cours a été supprimé avec succès.');
     }
+    
 }

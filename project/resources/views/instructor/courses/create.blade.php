@@ -1,163 +1,241 @@
-@extends('instructor.courses.cours')
 
-@section('title', 'Créer un cours')
+ @extends('instructor.courses.cours')
+
+@section('title',  $isUpdate ? 'Modifier le cours' : 'Créer un cours')
+
 @push('styles')
-{{-- <link rel="stylesheet" href="{{ asset('assets/CSS/auth/auth.css') }}"> --}}
-@endpush
-@section('courses')
+<style>
+    .preview-container {
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px dashed #ccc;
+        padding: 10px;
+        display: none;
+    }
 
-   <!-- Bouton pour ouvrir le modal -->
-   
+    .video-preview,
+    .image-preview {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .image-preview {
+        max-height: 200px;
+    }
+</style>
+@endpush
+
+@section('courses')
     @if(session('success'))
         <div class="alert alert-success" role="alert" id="successAlert">
             {{ session('success') }}
         </div>
     @endif
- 
-   
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0">Ajouter un cours</h1>
-            <a href="{{route('instructor.courses.index')}}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class=" "></i> Router vers la liste des cours
-            </a>
-        </div>
-        
-                <div class="creation-card card">
-                    <div class="card-body p-4">
-                        <!-- Indicateur d'étapes amélioré -->
-                        <div class="steps-progress">
-                            <div class="step-item active" data-step="1">
-                                <div class="step-circle">
-                                    <i class="fas fa-info-circle"></i>
-                                </div>
-                                <div class="step-title">Informations de base</div>
-                            </div>
-                            <div class="step-item" data-step="2">
-                                <div class="step-circle">
-                                    <i class="fas fa-plus-circle"></i>
-                                </div>
-                                <div class="step-title">Ajouter du contenu</div>
-                            </div>
-                            <div class="step-item" data-step="3">
-                                <div class="step-circle">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="step-title">Revue et publication</div>
-                            </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0">{{ $isUpdate ? 'Modifier le cours' : 'Créer un cours' }}</h1>
+        <a href="{{ route('instructor.course.index') }}" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-arrow-left me-1"></i> Retour à la liste
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-4">
+            <h3 class="card-title">{{ $isUpdate ? 'Modifier le cours' : 'Créer un nouveau cours' }}</h3>
+
+            <form id="createCourseForm" method="POST"
+            action="{{ $isUpdate ? route('instructor.course.update', $course) : route('instructor.course.store') }}"
+
+                  enctype="multipart/form-data">
+                @csrf
+                @if($isUpdate)
+                    @method('PUT')
+                @endif
+
+                <!-- Titre -->
+                <div class="mb-3">
+                    <label class="form-label">Titre du cours</label>
+                    <input type="text" name="titre"
+                           class="form-control @error('titre') is-invalid @enderror"
+                           placeholder="Entrez un titre attractif pour le cours"
+                           value="{{ old('titre', $course->titre ?? '') }}">
+                    @error('titre')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label">Description du cours</label>
+                    <textarea name="description"
+                              class="form-control @error('description') is-invalid @enderror"
+                              rows="4"
+                              placeholder="Décrivez le contenu et les objectifs du cours">{{ old('description', $course->description ?? '') }}</textarea>
+                    @error('description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Catégorie -->
+                <div class="mb-3">
+                    <label class="form-label">Catégorie</label>
+                    <select name="category_id"
+                            class="form-select @error('category_id') is-invalid @enderror">
+                        <option value="">Choisir une catégorie</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}"
+                                    {{ old('category_id', $course->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                                {{ $category->nom }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Prix -->
+                <div class="mb-3">
+                    <label class="form-label">Prix du cours (MAD)</label>
+                    <input type="number" name="price"
+                           class="form-control @error('price') is-invalid @enderror"
+                           placeholder="Ex: 199" min="0"
+                           value="{{ old('price', $course->price ?? '') }}">
+                    @error('price')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Vidéo d'introduction -->
+              <!-- Vidéo d'introduction -->
+                <div class="mb-3">
+                    <label class="form-label">Vidéo d'introduction</label>
+                    <input type="file" name="video_intro" id="video_intro"
+                        class="form-control @error('video_intro') is-invalid @enderror"
+                        accept="video/*">
+                    @error('video_intro')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <div id="videoPreviewContainer" class="preview-container" 
+                        style="{{ ($isUpdate && !empty($course->video_intro)) ? 'display: block;' : '' }}">
+                        <h6>Aperçu de la vidéo:</h6>
+                        <video id="videoPreview" class="video-preview" controls>
+                            @if($isUpdate && !empty($course->video_intro))
+                                <source src="{{ asset('storage/' . $course->video_intro) }}" type="video/mp4">
+                                Votre navigateur ne supporte pas la vidéo.
+                            @endif
+                        </video>
+                    </div>
+                </div>
+
+                <!-- Image de couverture -->
+                <!-- Image de couverture -->
+                <div class="mb-4">
+                    <label class="form-label">Image de couverture</label>
+                    <input type="file" name="image" id="course_image"
+                        class="form-control @error('image') is-invalid @enderror"
+                        accept="image/*">
+                    <div class="form-text">Taille recommandée : 1280×720 pixels</div>
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <div id="imagePreviewContainer" class="preview-container"
+                        style="{{ ($isUpdate && !empty($course->image)) ? 'display: block;' : '' }}">
+                        <h6>Aperçu de l'image:</h6>
+                        <img id="imagePreview" class="image-preview"
+                            src="{{ ($isUpdate && !empty($course->image)) ? asset('storage/' . $course->image) : '' }}"
+                            alt="Aperçu de l'image">
+                    </div>
+                </div>
+
+                <!-- Formateur ID -->
+                <input type="hidden" name="formateur_id" value="{{ auth()->user()->id }}">
+
+                <!-- Bouton d'enregistrement -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+                <!-- louding -->
+                <div id="loading-indicator" class="mt-3 text-center" style="display: none;">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="spinner-border text-success me-2" role="status">
+                            <span class="visually-hidden">Chargement...</span>
                         </div>
-                        
-                        <h3 class="card-title">Créer un nouveau cours</h3>
-                        
-                        <!-- Étape 1: Informations de base -->
-                        <div id="step1" class="step-content active">
-                            <form id="createCourseForm" method="POST" action="{{ route('instructor.courses.store') }}" enctype="multipart/form-data">
-                                @csrf
-                            
-                                <!-- Titre -->
-                                <div class="mb-3">
-                                    <label class="form-label">Titre du cours</label>
-                                    <input type="text" name="titre" class="form-control @error('titre') is-invalid @enderror" placeholder="Entrez un titre attractif pour le cours">
-                                    @error('titre')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            
-                                <!-- Description -->
-                                <div class="mb-3">
-                                    <label class="form-label">Description du cours</label>
-                                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" placeholder="Décrivez le contenu et les objectifs du cours"></textarea>
-                                    @error('description')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            
-                                <!-- Category -->
-                                
-                                    <div class=" mb-3">
-                                        <label class="form-label">Catégorie</label>
-                                        <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
-                                            <option value="">Choisir une catégorie</option>
-                                            @foreach($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->nom}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('category_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                       
-                            
-                                <!-- Prix -->
-                                <div class="mb-3">
-                                    <label class="form-label">Prix du cours (MAD)</label>
-                                    <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" placeholder="Ex: 199" min="0">
-                                    @error('price')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            
-                                <!-- Vidéo d’introduction -->
-                                <div class="mb-3">
-                                    <label class="form-label">Vidéo d’introduction</label>
-                                    <input type="file" name="video_intro" class="form-control @error('video_intro') is-invalid @enderror" accept="video/*">
-                                    @error('video_intro')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            
-                                <!-- Image de couverture -->
-                                <div class="mb-4">
-                                    <label class="form-label">Image de couverture</label>
-                                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
-                                    <div class="form-text">Taille recommandée : 1280×720 pixels</div>
-                                    @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            
-                                <!-- Hidden Formateur ID -->
-                                <input type="hidden" name="formateur_id" value="{{ auth()->user()->id }}">
-                            
-                                <!-- Submit Button -->
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationModal">
-                                        Enregistrer <i class="fas fa-save ms-1"></i>
-                                    </button>
-                                </div>
-                            
-                                <!-- Modal -->
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content border-0">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmationModalLabel">Enregistrement du cours</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-                                            </div>
-                                            <div class="modal-body text-secondary">
-                                                Ce cours sera <strong>enregistré comme brouillon</strong> dans la base de données. <br>
-                                                Vous pourrez le modifier ou le compléter plus tard. <br><br>
-                                                <small class="text-muted">Personne d’autre n’y aura accès pour l’instant.</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Annuler</button>
-                                                <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            
-                            
-                        </div>
-                       
+                        <span class="text-success">Envoi en cours... Veuillez patienter pendant le téléchargement des fichiers.</span>
+                    </div>
+                    <div class="progress mt-2">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%"></div>
                     </div>
                 </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
- 
+            </form>
+
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
-<script src="{{ asset('assets/JS/dashboard/admin/categories.js') }}"></script>
+    <script>
+        document.getElementById('course_image').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const imagePreview = document.getElementById('imagePreview');
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                        document.getElementById('imagePreviewContainer').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Aperçu vidéo
+            document.getElementById('video_intro').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const videoPreview = document.getElementById('videoPreview');
+                        // Supprimer les anciens sources s'ils existent
+                        while (videoPreview.firstChild) {
+                            videoPreview.removeChild(videoPreview.firstChild);
+                        }
+                        
+                        // Créer une nouvelle source pour la vidéo
+                        const source = document.createElement('source');
+                        source.src = e.target.result;
+                        source.type = file.type;
+                        videoPreview.appendChild(source);
+                        
+                        // Recharger la vidéo pour qu'elle prenne en compte la nouvelle source
+                        videoPreview.load();
+                        document.getElementById('videoPreviewContainer').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Ajouter l'indicateur de chargement lors de la soumission du formulaire
+            document.getElementById('createCourseForm').addEventListener('submit', function() {
+            // Afficher l'indicateur de chargement
+            document.getElementById('loading-indicator').style.display = 'block';
+            
+            // Animation de la barre de progression pour simuler le chargement
+            let width = 0;
+            const progressBar = document.querySelector('.progress-bar');
+            
+            const interval = setInterval(function() {
+                if (width >= 95) {
+                    clearInterval(interval);
+                } else {
+                    width += Math.random() * 5;
+                    if (width > 95) width = 95; // Ne jamais atteindre 100% avant que le serveur réponde
+                    progressBar.style.width = width + '%';
+                }
+            }, 500);
+        });
+    </script>
 @endpush
+
