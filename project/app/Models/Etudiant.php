@@ -9,4 +9,5 @@ class Etudiant extends Model
 {
     /** @use HasFactory<\Database\Factories\EtudiantFactory> */
     use HasFactory;
+    protected $fillable = ['user_id'];
 }

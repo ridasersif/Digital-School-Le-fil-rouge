@@ -10,6 +10,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Etudiant;
+use App\Models\Formateur;
 
 class AuthController extends Controller
 {
@@ -37,7 +39,17 @@ class AuthController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
             'role_id'=>$role,
+            'status'=>$status,
         ]);
+        if ($role ==2) {
+            Formateur::create([
+                'user_id' => $user->id
+            ]);
+        } elseif($role == 3) {
+            Etudiant::create([
+                'user_id' => $user->id
+            ]);
+        }
         Auth::login($user);
         return redirect()->route('home');
     }

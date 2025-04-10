@@ -11,7 +11,7 @@ class StoreCoursRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +22,13 @@ class StoreCoursRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'required|unique:categories,nom', 
-            'avatar' => 'nullable|image',
-            'description' => 'nullable|string',
+            'titre' => 'required|string|max:255', 
+            'description' => 'required|string|max:1000',
+            'category_id' => 'required|integer|exists:categories,id', 
+            'price' => 'required|numeric|min:0', 
+            'video_intro' => 'nullable|mimes:mp4,mov,avi,wmv|max:50000', 
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+            'formateur_id' => 'required|exists:users,id', 
         ];
     }
     /**
@@ -35,10 +39,12 @@ class StoreCoursRequest extends FormRequest
     public function messages()
     {
         return [
-            'nom.required' => 'Le nom de la catégorie est requis.',
-            'nom.unique' => 'Cette catégorie existe déjà.',
-            'avatar.image' => 'L\'avatar doit être une image valide.',
-            'description.string' => 'La description doit être une chaîne de caractères.',
+            'titre.required' => 'Le titre du cours est obligatoire.',
+            'description.required' => 'La description du cours est obligatoire.',
+            'category_id.required' => 'La catégorie du cours est obligatoire.',
+            'price.required' => 'Le prix du cours est obligatoire.',
+            'video_intro.mimes' => 'Le format de la vidéo d’introduction n\'est pas valide.',
+            'image.mimes' => 'Le format de l\'image de couverture n\'est pas valide.',
         ];
     }
 }

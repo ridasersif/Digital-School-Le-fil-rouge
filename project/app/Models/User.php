@@ -48,4 +48,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+    public function formateur()
+    {
+        return $this->hasOne(Formateur::class);
+    }
 }

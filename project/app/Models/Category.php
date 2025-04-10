@@ -15,4 +15,8 @@ class Category extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function cours()
+    {
+        return $this->hasMany(Cours::class);
+    }
 }

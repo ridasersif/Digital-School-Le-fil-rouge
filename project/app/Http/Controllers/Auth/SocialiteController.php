@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Etudiant;
+use App\Models\Formateur;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -33,7 +35,7 @@ class SocialiteController extends Controller
                     'social_id' => $user->id,
                     'social_type' => 'google',
                     'password' => Hash::make('password'),
-                    'role_id' => 3
+                    'role_id' => 4
                 ]);
                 Auth::login($newUser);
                 return redirect()->route('select-role');
@@ -63,10 +65,16 @@ class SocialiteController extends Controller
         $user->role_id = $request->role;
         if ($user->role_id == 3) {
             $user->status = 'active';
+            Etudiant::create([
+                'user_id' => $user->id
+            ]);
+
         } elseif ($user->role_id == 2) {
             $user->status = 'inactive';
+            Formateur::create([
+                'user_id' => $user->id
+            ]);
         }
-
         $user->update([
             'role_id' => $user->role_id,
             'status' => $user->status,

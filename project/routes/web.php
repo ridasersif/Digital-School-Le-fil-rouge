@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CoursController;
+use App\Http\Controllers\ContentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\AdminController;
+use App\Models\Content;
+use Illuminate\Routing\Route as RoutingRoute;
 
 // require __DIR__.'/Auth.php';
 Route::get('/test', function () {
@@ -81,12 +84,13 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
             })->name('index');
             // Route pour afficher les cours de l'instructeur
             Route::resource('courses', CoursController::class);
+            Route::get('contents/index', [ContentController::class, 'index'])->name('contents.index');
+            Route::get('contents/create', [ContentController::class, 'create'])->name('contents.create');
+            Route::get('contents/review', [ContentController::class, 'review'])->name('contents.review');
+
         });
     });
 });
-
-
-
 
 
 
