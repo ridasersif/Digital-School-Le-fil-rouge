@@ -341,107 +341,20 @@
         margin-bottom: 1.5rem;
     }
 
-    .resource-tab {
+     .resource-tab {
         padding: 0.75rem 1.5rem;
         cursor: pointer;
         font-weight: 500;
         color: var(--text-secondary);
         border-bottom: 3px solid transparent;
         transition: all 0.3s ease;
-    }
+    } 
 
     .resource-tab.active {
         color: var(--primary-color);
         border-bottom-color: var(--primary-color);
-    }
+    } 
 
-    .resource-tab:hover:not(.active) {
-        color: var(--text-primary);
-    }
-
-    .resource-content {
-        display: none;
-    }
-
-    .resource-content.active {
-        display: block;
-    }
-
-    .resource-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .resource-item {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 0.75rem;
-        background-color: var(--light-color);
-        transition: all 0.3s ease;
-    }
-
-    .resource-item:hover {
-        background-color: var(--hover-bg);
-        transform: translateX(5px);
-    }
-
-    .resource-icon {
-        width: 40px;
-        height: 40px;
-        background-color: rgba(67, 97, 238, 0.1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-        color: var(--primary-color);
-    }
-
-    .resource-details {
-        flex: 1;
-    }
-
-    .resource-title {
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.25rem;
-    }
-
-    .resource-meta {
-        display: flex;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-    }
-
-    .resource-meta span {
-        margin-right: 1rem;
-        display: flex;
-        align-items: center;
-    }
-
-    .resource-meta i {
-        margin-right: 0.3rem;
-        font-size: 0.8rem;
-    }
-
-    .resource-actions {
-        display: flex;
-    }
-
-    .resource-action {
-        padding: 0.5rem;
-        color: var(--text-secondary);
-        transition: all 0.2s ease;
-        border-radius: 4px;
-    }
-
-    .resource-action:hover {
-        color: var(--primary-color);
-        background-color: rgba(67, 97, 238, 0.1);
-    }
 
     /* Responsive */
     @media (max-width: 992px) {
@@ -473,279 +386,783 @@
             font-size: 0.9rem;
         }
     }
+
+     /****************************************** Style pour les nouvelles cartes de contenu *****************************************/
+     .content-card {
+        display: flex;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.1);
+        border: 1px solid rgba(67, 97, 238, 0.3);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        flex-shrink: 0; 
+    }
+
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Zone d'image à gauche */
+    .content-image {
+        width: 180px;
+        min-width: 180px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(67, 97, 238, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+     
+    }
+
+    .content-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .content-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        opacity: 0.5;
+    }
+
+    /* Zone du contenu principal */
+    .content-main {
+        flex: 1;
+        padding: 1.5rem;
+        position: relative;
+    }
+
+    /* En-tête avec titre et statut */
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.75rem;
+        background-color: 
+    }
+
+    .content-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+        padding-right: 1rem;
+    }
+
+    /* Badges de statut améliorés */
+    .content-status {
+        padding: 0.3rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        background-color: 
+    }
+
+    .status-published {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-pending {
+        background-color: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .status-draft {
+        background-color: rgba(107, 114, 128, 0.1);
+        color: #6b7280;
+        border: 1px solid rgba(107, 114, 128, 0.3);
+    }
+
+    /* Description */
+    .content-description {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Zone des métadonnées */
+    .content-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+    }
+
+    .meta-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .meta-icon {
+        width: 30px;
+        height: 30px;
+        background-color: rgba(67, 97, 238, 0.1);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.75rem;
+        color: var(--primary-color);
+        font-size: 0.85rem;
+    }
+
+    .meta-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .meta-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 0.15rem;
+    }
+
+    .meta-value {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    /* Zone des actions */
+    .content-actions {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        background-color: rgba(67, 97, 238, 0.1);
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+        color: var(--primary-color);
+        background-color: rgba(67, 97, 238, 0.1);
+        border-color: rgba(67, 97, 238, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .action-btn form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+   
+    .empty-content {
+        padding: 3rem 2rem;
+        text-align: center;
+        background-color: rgba(241, 243, 249, 0.5);
+        border-radius: 12px;
+        border: 1px dashed var(--border-color);
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+    }
+
+    .empty-text {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+  
+    .resource-content {
+        display: none;
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 15px;
+    }
+
+    .resource-content.active {
+        display: block;
+    }
+
+    /* Barre de défilement personnalisée */
+    .resource-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .resource-content::-webkit-scrollbar-track {
+        background: #f1f3f9;
+        border-radius: 10px;
+    }
+
+    .resource-content::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        opacity: 0.5;
+        border-radius: 10px;
+    }
+
+    .resource-content::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-color);
+    }
+
+    /* Responsive : défilement horizontal pour petits écrans */
+    @media (max-width: 768px) {
+        .resource-content {
+            display: none;
+            max-height: none;
+            overflow-y: hidden;
+            overflow-x: auto;
+            padding-right: 0;
+            padding-bottom: 15px;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        .content-header {
+        display: block;
+        }
+        .content-header .content-title{
+         margin-bottom: 1rem;
+        }
+       
+
+        .resource-content.active {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+        }
+        .resource-content::-webkit-scrollbar {
+            height: 6px;
+            width: auto;
+        }
+
+        .content-card {
+            width: 300px;
+            flex-direction: column;
+            margin-bottom: 0;
+        }
+
+        .content-image {
+            width: 100%;
+            height: 160px;
+        }
+
+        .content-actions {
+            position: relative;
+            margin-top: 1rem;
+            bottom: auto;
+            right: auto;
+            justify-content: flex-end;
+        }
+        .empty-content {
+            min-width: 300px;
+        }
+    }
 </style>
 @endpush
 
 @section('contents')
-<div class="page-container">
-    <!-- En-tête de page -->
-    <div class="page-header">
-        <div>
-            <h1 class="page-title">Détails du cours</h1>
-            <p class="page-subtitle">Visualisez toutes les informations de votre cours</p>
-        </div>
-        <a href="{{ route('instructor.course.index') }}" class="back-button">
-            <i class="fas fa-arrow-left"></i> Retour à la liste
-        </a>
+    @if(session('success'))
+    <div class="alert alert-success" role="alert" id="successAlert">
+        {{ session('success') }}
     </div>
+    @endif
+    <div class="page-container">
+        <!-- En-tête de page -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Détails du cours</h1>
+                <p class="page-subtitle">Visualisez toutes les informations de votre cours</p>
+            </div>
+            <a href="{{ route('instructor.course.index') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
 
-    <div class="row">
-        <!-- Colonne de droite (informations du cours) -->
-        <div class="col-lg-4 order-lg-2 mb-4">
-            <div class="info-card">
-                <!-- Image du cours -->
-                @if($course->image)
-                    <div class="course-image-wrapper">
-                        <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->titre }}" class="course-image">
-                    </div>
-                @else
-                    <div class="empty-state">
-                        <i class="fas fa-image"></i>
-                        <p>Aucune image disponible</p>
-                    </div>
-                @endif
-
-                <div class="card-body">
-                    <!-- Titre du cours -->
-                    <h2 class="course-title">{{ $course->titre }}</h2>
-                    
-                    <!-- Prix -->
-                    @if($course->price > 0)
-                        <div class="price-badge paid">{{ $course->price }} DH</div>
+        <div class="row">
+            <!-- Colonne de droite (informations du cours) -->
+            <div class="col-lg-4 order-lg-2 mb-4">
+                <div class="info-card">
+                    <!-- Image du cours -->
+                    @if($course->image)
+                        <div class="course-image-wrapper">
+                            <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->titre }}" class="course-image">
+                        </div>
                     @else
-                        <div class="price-badge free">Gratuit</div>
+                        <div class="empty-state">
+                            <i class="fas fa-image"></i>
+                            <p>Aucune image disponible</p>
+                        </div>
                     @endif
 
-                    <!-- Métadonnées -->
-                    <ul class="meta-list mt-4">
-                        <!-- Catégorie -->
-                        <li class="meta-item">
-                            <div class="meta-icon">
-                                <i class="fas fa-folder"></i>
-                            </div>
-                            <div class="meta-content">
-                                <div class="meta-label">Catégorie</div>
-                                <div class="meta-value">
-                                    @if($course->category)
-                                        {{ $course->category->nom }}
-                                    @else
-                                        Non catégorisé
-                                    @endif
+                    <div class="card-body">
+                        <!-- Titre du cours -->
+                        <h2 class="course-title">{{ $course->titre }}</h2>
+                        
+                        <!-- Prix -->
+                        @if($course->price > 0)
+                            <div class="price-badge paid">{{ $course->price }} DH</div>
+                        @else
+                            <div class="price-badge free">Gratuit</div>
+                        @endif
+
+                        <!-- Métadonnées -->
+                        <ul class="meta-list mt-4">
+                            <!-- Catégorie -->
+                            <li class="meta-item">
+                                <div class="meta-icon">
+                                    <i class="fas fa-folder"></i>
                                 </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Statut -->
-                        <li class="meta-item">
-                            <div class="meta-icon">
-                                <i class="fas fa-tag"></i>
-                            </div>
-                            <div class="meta-content">
-                                <div class="meta-label">Statut</div>
-                                <div class="meta-value">
-                                    @php
-                                        $statusClass = match($course->status) {
-                                            'published' => 'published',
-                                            'pending' => 'pending',
-                                            'draft' => 'draft',
-                                        };
-                                        
-                                        $statusText = match($course->status) {
-                                            'published' => 'Publié',
-                                            'pending' => 'En attente',
-                                            'draft' => 'Brouillon',
-                                        };
-                                    @endphp
-                                    <span class="status-badge {{ $statusClass }}">{{ $statusText }}</span>
+                                <div class="meta-content">
+                                    <div class="meta-label">Catégorie</div>
+                                    <div class="meta-value">
+                                        @if($course->category)
+                                            {{ $course->category->nom }}
+                                        @else
+                                            Non catégorisé
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                            
+                            <!-- Statut -->
+                            <li class="meta-item">
+                                <div class="meta-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="meta-content">
+                                    <div class="meta-label">Statut</div>
+                                    <div class="meta-value">
+                                        @php
+                                            $statusClass = match($course->status) {
+                                                'published' => 'published',
+                                                'pending' => 'pending',
+                                                'draft' => 'draft',
+                                            };
+                                            
+                                            $statusText = match($course->status) {
+                                                'published' => 'Publié',
+                                                'pending' => 'En attente',
+                                                'draft' => 'Brouillon',
+                                            };
+                                        @endphp
+                                        <span class="status-badge {{ $statusClass }}">{{ $statusText }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <!-- Date de création -->
+                            <li class="meta-item">
+                                <div class="meta-icon">
+                                    <i class="far fa-calendar"></i>
+                                </div>
+                                <div class="meta-content">
+                                    <div class="meta-label">Date de création</div>
+                                    <div class="meta-value">{{ $course->created_at->format('d/m/Y') }}</div>
+                                </div>
+                            </li>
+                            
+                            <!-- Dernière mise à jour -->
+                            <li class="meta-item">
+                                <div class="meta-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <div class="meta-content">
+                                    <div class="meta-label">Dernière mise à jour</div>
+                                    <div class="meta-value">{{ $course->updated_at->format('d/m/Y') }}</div>
+                                </div>
+                            </li>
+                        </ul>
                         
-                        <!-- Date de création -->
-                        <li class="meta-item">
-                            <div class="meta-icon">
-                                <i class="far fa-calendar"></i>
+                        <!-- Bouton d'édition -->
+                        <div class="mt-4">
+                            <a href="{{ route('instructor.course.edit', $course->id) }}" class="edit-button">
+                                <i class="fas fa-edit"></i> Modifier ce cours
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colonne de gauche (contenu principal) -->
+            <div class="col-lg-8 order-lg-1">
+                <!-- Vidéo d'introduction -->
+                @if($course->video_intro)
+                    <div class="info-card mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Vidéo d'introduction</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="video-container">
+                                <video controls poster="{{ $course->image ? asset('storage/' . $course->image) : '' }}">
+                                    <source src="{{ asset('storage/' . $course->video_intro) }}" type="video/mp4">
+                                    Votre navigateur ne supporte pas la lecture de vidéos.
+                                </video>
                             </div>
-                            <div class="meta-content">
-                                <div class="meta-label">Date de création</div>
-                                <div class="meta-value">{{ $course->created_at->format('d/m/Y') }}</div>
-                            </div>
-                        </li>
-                        
-                        <!-- Dernière mise à jour -->
-                        <li class="meta-item">
-                            <div class="meta-icon">
-                                <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="meta-content">
-                                <div class="meta-label">Dernière mise à jour</div>
-                                <div class="meta-value">{{ $course->updated_at->format('d/m/Y') }}</div>
-                            </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                @else
+                    <div class="info-card mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Vidéo d'introduction</h3>
+                        </div>
+                        <div class="card-body">
+
+                                    <div class="empty-state">
+                                        <i class="fas fa-video-slash fa-2x"></i>
+                                        <p>Aucune vidéo disponible</p>
+                                    </div>
+                        </div>
                     
-                    <!-- Bouton d'édition -->
-                    <div class="mt-4">
-                        <a href="{{ route('instructor.course.edit', $course->id) }}" class="edit-button">
-                            <i class="fas fa-edit"></i> Modifier ce cours
-                        </a>
+                    </div>
+                
+                @endif
+            
+
+                <!-- Description du cours -->
+                <div class="info-card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">À propos de ce cours</h3>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="course-description">
+                                {!! nl2br(e($course->description)) !!}
+                        </div>
+                    
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Colonne de gauche (contenu principal) -->
-        <div class="col-lg-8 order-lg-1">
-            <!-- Vidéo d'introduction -->
-            @if($course->video_intro)
-                <div class="info-card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Vidéo d'introduction</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="video-container">
-                            <video controls poster="{{ $course->image ? asset('storage/' . $course->image) : '' }}">
-                                <source src="{{ asset('storage/' . $course->video_intro) }}" type="video/mp4">
-                                Votre navigateur ne supporte pas la lecture de vidéos.
-                            </video>
-                        </div>
-                    </div>
+        <!-- Section des ressources (PDF/Vidéos) -->
+        <hr>
+        <div class="mt-4">
+            <div class="info-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Contenu du cours</h3>
+                    
+                    <a href="{{ route('instructor.content.create', ['cours_id' => $course->id]) }}" class="create-button btn d-flex align-items-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        <span>Ajouter un contenu</span>
+                    </a>
+                    
                 </div>
-            @else
-                <div class="info-card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Vidéo d'introduction</h3>
-                    </div>
-                    <div class="card-body">
-
-                                <div class="empty-state">
-                                    <i class="fas fa-video-slash fa-2x"></i>
-                                    <p>Aucune vidéo disponible</p>
-                                </div>
-                    </div>
                 
-                </div>
-            
-            @endif
-        
-
-            <!-- Description du cours -->
-            <div class="info-card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">À propos de ce cours</h3>
-                </div>
                 <div class="card-body">
-                    
-                    <div class="course-description">
-                            {!! nl2br(e($course->description)) !!}
-                    </div>
-                  
-                </div>
-            </div>
-        </div>
-    </div>
+                    <div class="resources-section">
+                        <!-- Onglets -->
+                        <div class="resource-tabs">
+                            <div class="resource-tab active" data-tab="videos">
+                                <i class="fas fa-video mr-2"></i> Vidéos
+                            </div>
+                            <div class="resource-tab" data-tab="pdfs">
+                                <i class="fas fa-file-pdf mr-2"></i> Documents PDF
+                            </div>
+                        </div>
+                        <!-- contenus vidéo -->
+                        <div class="resource-content active" id="videos-content">
+                            @if($course->contents->where('type', 'video')->count() > 0 || $course->contents->where('type', 'link')->count() > 0)
+                                @foreach($course->contents as $content)
+                                    @if(($content->type == 'video' || $content->type == 'link') && $content->type != 'pdf')
+                                        <div class="content-card">
+                                            <!-- Image ou icône -->
+                                            <div class="content-image">
+                                                @if($content->image)
+                                                    <img src="{{ asset('storage/' . $content->image) }}" alt="{{ $content->titre }}">
+                                                @else
+                                                    <div class="content-icon">
+                                                        <i class="fas fa-video"></i>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            
+                                            <!-- Contenu principal -->
+                                            <div class="content-main">
+                                                <!-- En-tête avec titre et statut -->
+                                                <div class="content-header">
+                                                    <h4 class="content-title">{{ $content->titre }}</h4>
+                                                    @php
+                                                        $statusClass = match($content->status) {
+                                                            'published' => 'status-published',
+                                                            'pending' => 'status-pending',
+                                                            'draft' => 'status-draft',
+                                                            default => 'status-draft'
+                                                        };
+                                                        
+                                                        $statusText = match($content->status) {
+                                                            'published' => 'Publié',
+                                                            'pending' => 'En attente',
+                                                            'draft' => 'Brouillon',
+                                                            default => 'Brouillon'
+                                                        };
+                                                    @endphp
+                                                    <span class="content-status {{ $statusClass }}">{{ $statusText }}</span>
+                                                </div>
+                                                
+                                                <!-- Description -->
+                                                <div class="content-description">
+                                                    {{ $content->description }}
+                                                </div>
+                                                
+                                                <!-- Métadonnées -->
+                                                <div class="content-meta">
 
-    <!-- Section des ressources (PDF/Vidéos) -->
-    <hr>
-    <div class="mt-4">
-        <div class="info-card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title mb-0">Contenu du cours</h3>
-                
-                <a href="#" class="create-button btn  d-flex align-items-center gap-2">
-                    <i class="fas fa-plus"></i>
-                    <span>Ajouter un contenu</span>
-                </a>
-            </div>
-            
-            <div class="card-body">
-                <div class="resources-section">
-                    <!-- Onglets -->
-                    <div class="resource-tabs">
-                        <div class="resource-tab active" data-tab="videos">
-                            <i class="fas fa-video mr-2"></i> Vidéos
-                        </div>
-                        <div class="resource-tab" data-tab="pdfs">
-                            <i class="fas fa-file-pdf mr-2"></i> Documents PDF
-                        </div>
-                    </div>
-                    
-                    <!-- Contenu des vidéos -->
-                    <div class="resource-content active" id="videos-content">
-                        @if($course->videos && $course->videos->count() > 0)
-                            <ul class="resource-list">
-                                @foreach($course->videos as $video)
-                                    <li class="resource-item">
-                                        <div class="resource-icon">
-                                            <i class="fas fa-video"></i>
-                                        </div>
-                                        <div class="resource-details">
-                                            <div class="resource-title">{{ $video->title }}</div>
-                                            <div class="resource-meta">
-                                                <span><i class="far fa-clock"></i> {{ $video->duration }} min</span>
-                                                <span><i class="far fa-calendar-alt"></i> {{ $video->created_at->format('d/m/Y') }}</span>
+                                                    <!-- Durée -->
+                                                    <div class="meta-group">
+                                                        <div class="meta-icon">
+                                                            <i class="fas fa-clock"></i>
+                                                        </div>
+                                                        <div class="meta-text">
+                                                            <span class="meta-label">Durée</span>
+                                                            <span class="meta-value"> {{ $content->duree ? $content->duree . ' minutes' : 'Non spécifiée' }}</span>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                
+                                                    
+                                                    <!-- Date d'ajout -->
+                                                    <div class="meta-group">
+                                                        <div class="meta-icon">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </div>
+                                                        <div class="meta-text">
+                                                            <span class="meta-label">Ajouté le</span>
+                                                            <span class="meta-value">{{ $content->created_at->format('d/m/Y') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Dernière mise à jour -->
+                                                    <div class="meta-group">
+                                                        <div class="meta-icon">
+                                                            <i class="fas fa-sync-alt"></i>
+                                                        </div>
+                                                        <div class="meta-text">
+                                                            <span class="meta-label">Mis à jour le</span>
+                                                            <span class="meta-value">{{ $content->updated_at->format('d/m/Y') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                                <!-- Actions -->
+                                                <div class="content-actions">
+                                                    <a href="{{ asset('storage/' . $content->chemin) }}" class="action-btn" target="_blank" title="Voir">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('instructor.contents.edit', $content->id) }}" class="action-btn" title="Éditer">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                
+                                                    <div class="action-btn">
+                                                        <button type="button"
+                                                            class="btn"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteModal-{{ $content->id }}"
+                                                            title="Supprimer">
+        
+                                                            <i class="fas fa-trash" data-bs-toggle="tooltip"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
-                                        <div class="resource-actions">
-                                            <a href="{{ asset('storage/' . $video->file_path) }}" class="resource-action" target="_blank" title="Voir">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </div>
-                                    </li>
+                                    @endif
                                 @endforeach
-                            </ul>
-                        @else
-                            <div class="empty-state">
-                                <i class="fas fa-video-slash"></i>
-                                <p>Aucune vidéo disponible pour ce cours</p>
-                            </div>
-                        @endif
-                    </div>
-                    
-                    <!-- Contenu des PDF -->
-                    <div class="resource-content" id="pdfs-content">
-                        @if($course->pdfs && $course->pdfs->count() > 0)
-                            <ul class="resource-list">
-                                @foreach($cours->pdfs as $pdf)
-                                    <li class="resource-item">
-                                        <div class="resource-icon">
-                                            <i class="fas fa-file-pdf"></i>
+                            @else
+                                <div class="empty-content">
+                                    <div class="empty-icon">
+                                        <i class="fas fa-video-slash"></i>
+                                    </div>
+                                    <p class="empty-text">Aucune vidéo disponible pour ce cours</p>
+                                    <a href="{{ route('instructor.content.create', ['cours_id' => $course->id, 'type' => 'video']) }}" class="create-button">
+                                        <i class="fas fa-plus-circle mr-2"></i>
+                                        Ajouter une vidéo
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- contenus PDF -->
+                        <div class="resource-content" id="pdfs-content">
+                            @if($course->contents->where('type', 'pdf')->count() > 0)
+                                @foreach($course->contents->where('type', 'pdf') as $content)
+                                    <div class="content-card">
+                                        <!-- Image ou icône -->
+                                        <div class="content-image">
+                                            @if($content->image)
+                                                <img src="{{ asset('storage/' . $content->image) }}" alt="{{ $content->titre }}">
+                                            @else
+                                                <div class="content-icon">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </div>
+                                            @endif
                                         </div>
-                                        <div class="resource-details">
-                                            <div class="resource-title">{{ $pdf->title }}</div>
-                                            <div class="resource-meta">
-                                                <span><i class="fas fa-file-alt"></i> {{ $pdf->page_count }} pages</span>
-                                                <span><i class="far fa-calendar-alt"></i> {{ $pdf->created_at->format('d/m/Y') }}</span>
+                                        
+                                        <!-- Contenu principal -->
+                                        <div class="content-main">
+                                            <!-- En-tête avec titre et statut -->
+                                            <div class="content-header">
+                                                <h4 class="content-title">{{ $content->titre }}</h4>
+                                                @php
+                                                    $statusClass = match($content->status) {
+                                                        'published' => 'status-published',
+                                                        'pending' => 'status-pending',
+                                                        'draft' => 'status-draft',
+                                                        default => 'status-draft'
+                                                    };
+                                                    
+                                                    $statusText = match($content->status) {
+                                                        'published' => 'Publié',
+                                                        'pending' => 'En attente',
+                                                        'draft' => 'Brouillon',
+                                                        default => 'Brouillon'
+                                                    };
+                                                @endphp
+                                                <span class="content-status {{ $statusClass }}">{{ $statusText }}</span>
+                                            </div>
+                                            
+                                            <!-- Description -->
+                                            <div class="content-description">
+                                                {{ $content->description }}
+                                            </div>
+                                            
+                                            <!-- Métadonnées -->
+                                            <div class="content-meta">
+                                                <!-- Nombre de pages -->
+                                                <div class="meta-group">
+                                                    <div class="meta-icon">
+                                                        <i class="fas fa-file-alt"></i>
+                                                    </div>
+                                                    <div class="meta-text">
+                                                        <span class="meta-label">Nombre de pages</span>
+                                                        <span class="meta-value">{{ $content->nombre_pages ?? 'Non spécifié' }}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Date d'ajout -->
+                                                <div class="meta-group">
+                                                    <div class="meta-icon">
+                                                        <i class="far fa-calendar-alt"></i>
+                                                    </div>
+                                                    <div class="meta-text">
+                                                        <span class="meta-label">Ajouté le</span>
+                                                        <span class="meta-value">{{ $content->created_at->format('d/m/Y') }}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Dernière mise à jour -->
+                                                <div class="meta-group">
+                                                    <div class="meta-icon">
+                                                        <i class="fas fa-sync-alt"></i>
+                                                    </div>
+                                                    <div class="meta-text">
+                                                        <span class="meta-label">Mis à jour le</span>
+                                                        <span class="meta-value">{{ $content->updated_at->format('d/m/Y') }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Actions -->
+                                            <div class="content-actions">
+                                                <a href="{{ asset('storage/' . $content->chemin) }}" class="action-btn" target="_blank" title="Voir">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('instructor.contents.edit', $content->id) }}" class="action-btn" title="Éditer">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <div class="action-btn">
+                                                    <button type="button"
+                                                        class="btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal-{{ $content->id }}"
+                                                        title="Supprimer">
+                                                        <i class="fas fa-trash" data-bs-toggle="tooltip"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="resource-actions">
-                                            <a href="{{ asset('storage/' . $pdf->file_path) }}" class="resource-action" target="_blank" title="Voir">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ asset('storage/' . $pdf->file_path) }}" class="resource-action" download title="Télécharger">
-                                                <i class="fas fa-download"></i>
-                                            </a>
-                                        </div>
-                                    </li>
+                                    </div>
                                 @endforeach
-                            </ul>
-                        @else
-                            <div class="empty-state">
-                                <i class="fas fa-file-pdf"></i>
-                                <p>Aucun document PDF disponible pour ce cours</p>
-                            </div>
-                        @endif
+                            @else
+                                <div class="empty-content">
+                                    <div class="empty-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <p class="empty-text">Aucun document PDF disponible pour ce cours</p>
+                                    <a href="{{ route('instructor.content.create', ['cours_id' => $course->id, 'type' => 'pdf']) }}" class="create-button">
+                                        <i class="fas fa-plus-circle mr-2"></i>
+                                        Ajouter un document PDF
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+
                     </div>
-                </div>
-                
-                <!-- Espace pour ajouter du contenu supplémentaire -->
-                <div class="mt-4" id="additional-content-space">
-                    <!-- Vous pouvez ajouter ici des formulaires pour ajouter de nouveaux PDF ou vidéos -->
+                    
+                    <!-- Espace pour ajouter du contenu supplémentaire -->
+                    <div class="mt-4" id="additional-content-space">
+                        <!-- Vous pouvez ajouter ici des formulaires pour ajouter de nouveaux PDF ou vidéos -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+ 
+    @foreach($course->contents as $content)
+          <!-- Modal de Confirmation -->
+          <div class="modal fade" id="deleteModal-{{ $content->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-exclamation-triangle text-warning display-4"></i>
+                        </div>
+                        <p class="text-center">Êtes-vous sûr de vouloir supprimer ce content ?<br>Cette action est irréversible.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center border-top-0">
+                        <form action="{{ route('instructor.contents.destroy', $content->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-danger ms-2">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end Modal de Confirmation -->
+    @endforeach
+
 @endsection
 
 @push('scripts')

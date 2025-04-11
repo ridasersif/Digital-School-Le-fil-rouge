@@ -11,8 +11,14 @@ class Cours extends Model
     use HasFactory;
 
     protected $fillable = [
-        'titre', 'description', 'image', 'video_intro',
-        'status', 'formateur_id', 'category_id', 'price'
+        'titre',
+        'description',
+        'image',
+        'video_intro',
+        'status',
+        'formateur_id',
+        'category_id',
+        'price'
     ];
 
     public function formateur()
@@ -27,6 +33,6 @@ class Cours extends Model
 
     public function contents()
     {
-        return $this->hasMany(Content::class);
+        return $this->hasMany(Content::class)->latest();
     }
 }

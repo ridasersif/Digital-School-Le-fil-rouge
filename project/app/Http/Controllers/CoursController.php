@@ -75,9 +75,10 @@ class CoursController extends Controller
         $formateur = $user->formateur;
         
         if ($formateur && $formateur->id === $course->formateur_id) {
+            $course->load('contents');
+            // dd($course);
             return view('instructor.courses.show', compact('course'));
         }
-        
         // Rediriger si l'utilisateur n'est pas autorisé
         return redirect()->route('instructor.courses.index')
             ->with('error', 'Vous n\'êtes pas autorisé à voir ce cours.');
@@ -132,6 +133,7 @@ class CoursController extends Controller
      */
     public function destroy(Cours $course)
     {
+        
         if ($course->video_intro) {
             Storage::disk('public')->delete($course->video_intro);
         }

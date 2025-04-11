@@ -82,9 +82,16 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
             Route::get('dashboard', function () {
                 return view('instructor.statistics');
             })->name('index');
-            // Route pour afficher les cours de l'instructeur
+            // Route pour gere les cours de l'instructeur
             Route::resource('course', CoursController::class);
-            Route::get('contents/index', [ContentController::class, 'index'])->name('contents.index');
+
+            Route::get('/content/create/{cours_id}', [ContentController::class, 'create'])->name('content.create');
+            Route::post('/content', [ContentController::class, 'store'])->name('content.store');
+            Route::delete('/contents/{content}', [ContentController::class, 'destroy'])->name('contents.destroy');
+            Route::get('/contents/{content}', [ContentController::class, 'edit'])->name('contents.edit');
+
+            
+
             Route::get('contents/create', [ContentController::class, 'create'])->name('contents.create');
             Route::get('contents/review', [ContentController::class, 'review'])->name('contents.review');
 

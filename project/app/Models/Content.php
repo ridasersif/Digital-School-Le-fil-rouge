@@ -10,8 +10,8 @@ class Content extends Model
     /** @use HasFactory<\Database\Factories\ContentFactory> */
     use HasFactory;
 
-    protected $fillable = ['titre', 'description', 'type', 'chemin', 'cours_id'];
-
+    protected $fillable = ['titre', 'description', 'type', 'chemin', 'cours_id','duree','image','nombre_pages'];
+ 
     public function cours()
     {
         return $this->belongsTo(Cours::class);
