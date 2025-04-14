@@ -152,7 +152,10 @@
                 <input type="hidden" name="formateur_id" value="{{ auth()->user()->id }}">
 
                 <!-- Bouton d'enregistrement -->
-                <div class="text-center">
+                <div class="text-center d-flex justify-content-between">
+                    <a class="btn btn-backe btn-outline-secondary" href="{{ route('instructor.course.index') }}">
+                        <i class="fas fa-arrow-left me-2"></i>Retour
+                    </a>
                     <button type="submit" class="btn btn-primary">
                         {{ $isUpdate ? 'Mettre à jour le cours' : 'Créer le cours' }}
                     </button>

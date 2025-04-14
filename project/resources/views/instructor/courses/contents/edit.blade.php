@@ -285,12 +285,9 @@
                 </div>
             </div>
         
-            <div class="mt-4 d-flex justify-content-between">
-                <a class="btn btn-backe btn-outline-secondary" href="{{ route('instructor.course.index') }}">
-                    <i class="fas fa-arrow-left me-2"></i>Précédent
-                </a>
+            <div class="mt-4 d-flex justify-content-center">
                 <button type="submit" class="btn btn-save">
-                    Mettre à jour le contenu<i class="fas fa-arrow-right ms-2"></i>
+                    <i class="fas fa-save me-2"></i>Mettre à jour le contenu
                 </button>
             </div>
             <!-- loading -->

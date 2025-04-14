@@ -84,8 +84,29 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
                 return view('instructor.statistics');
             })->name('index');
             // Route pour gere les cours de l'instructeur
-            Route::resource('course', CoursController::class);
+            // Route::get('course/AllCoursDrafts', [CoursController::class,'AllCoursDrafts'])->name('course.AllCoursDrafts');
+            // Route::get('course/AllCoursPending', [CoursController::class,'AllCoursPending'])->name('course.AllCoursPending');
+            // Route::get('course/AllCoursPublished', action: [CoursController::class,'AllCoursPublished'])->name('course.AllCoursPublished');
+            // Route::resource('course', CoursController::class);
+         
 
+            // Route dynamique par statut
+            Route::get('course/{status}', [CoursController::class, 'index'])
+                ->whereIn('status', ['all', 'draft', 'pending', 'published'])
+                ->name('course.byStatus');
+
+            // Redirect /instructor/course vers tous les cours
+            Route::get('course', function () {
+                return redirect()->route('instructor.course.byStatus', ['status' => 'all']);
+            })->name('course.index');
+
+            // CRUD Resource pour les cours
+            Route::resource('course', CoursController::class)->except(['index']);
+
+
+
+            Route::post('/instructor/course/update-status/{id}', [CoursController::class, 'updateStatus'])->name('course.updateStatus');
+           
             Route::get('/content/create/{cours_id}', [ContentController::class, 'create'])->name('content.create');
             Route::post('/content', [ContentController::class, 'store'])->name('content.store');
             Route::delete('/contents/{content}', [ContentController::class, 'destroy'])->name('contents.destroy');

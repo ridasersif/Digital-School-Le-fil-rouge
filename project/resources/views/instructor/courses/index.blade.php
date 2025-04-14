@@ -60,6 +60,7 @@
                                            
                                             <td>{{ $cours->price }}</td>
                                             <td><img src="{{ asset('storage/' . $cours->image) }}" alt="Image" width="80" height="80"  class="rounded shadow-sm"></td>
+                                            <!-- Modifiez la partie du badge de statut pour le rendre cliquable -->
                                             <td>
                                                 @php
                                                     $statusClass = match($cours->status) {
@@ -67,19 +68,62 @@
                                                         'pending' => 'bg-warning text-dark',
                                                         'draft' => 'bg-secondary',
                                                     };
-                                            
+                                                
                                                     $statusText = match($cours->status) {
                                                         'published' => 'Publié',
                                                         'pending' => 'En attente',
                                                         'draft' => 'Brouillon',
                                                     };
                                                 @endphp
-                                        
-                                                <span class="badge {{ $statusClass }} rounded-pill px-3 py-2">
-                                                    {{ $statusText }}
-                                                </span>
 
+                                                <!-- Badge cliquable seulement pour le statut brouillon -->
+                                                    @if($cours->status == 'draft'|| $cours->status == 'pending')
+                                                        <span class="badge {{ $statusClass }} rounded-pill px-3 py-2 status-badge" 
+                                                            style="cursor: pointer;" 
+                                                            data-course-id="{{ $cours->id }}" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#statusModal-{{ $cours->id }}">
+                                                            {{ $statusText }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge {{ $statusClass }} rounded-pill px-3 py-2 status-badge" >
+                                                        {{ $statusText }}
+                                                        </span>
+                                                    @endif
+                                                <!-- Modal pour confirmer le changement de statut -->
+                                                <div class="modal fade" id="statusModal-{{ $cours->id }}" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="statusModalLabel">Confirmation de modification</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @if($cours->status == 'draft')
+                                                                    <p class="text-center">
+                                                                        Voulez-vous soumettre ce cours pour examen ? Le statut sera changé de <strong>"Brouillon"</strong> à <strong>"En attente"</strong>.
+                                                                    </p>
+                                                                @else
+                                                                    <p class="text-center">
+                                                                        Voulez-vous annuler la soumission de ce cours ? Le statut sera changé de <strong>"En attente"</strong> à <strong>"Brouillon"</strong>.
+                                                                    </p>
+                                                                @endif
+                                                            </div>
+                                                            <div class="modal-footer justify-content-center border-top-0">
+                                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                                <!-- Formulaire pour changer le statut -->
+                                                                <form method="POST" action="{{ route('instructor.course.updateStatus', $cours->id) }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="status" value="pending">
+                                                                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
+
+
                                             <td>{{ $cours->contents_count }}</td>
                                             
                                             <!-- Action Icons -->
@@ -145,6 +189,56 @@
               
             </div>
         </div>
+
+    
+ 
+<script>
+    let selectedCourseId = null;
+
+    document.querySelectorAll('.change-status').forEach(badge => {
+        badge.addEventListener('click', () => {
+            const status = badge.getAttribute('data-current-status');
+
+            // Vérifie si c’est encore un brouillon
+            if (status === 'draft') {
+                selectedCourseId = badge.getAttribute('data-id');
+                const modal = new bootstrap.Modal(document.getElementById('confirmStatusModal'));
+                modal.show();
+            }
+        });
+    });
+
+    document.getElementById('confirmChangeBtn').addEventListener('click', () => {
+        if (selectedCourseId) {
+            fetch(`/instructor/course/change-status/${selectedCourseId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({ status: 'pending' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mise à jour directe sans reload
+                    const badge = document.querySelector(`.change-status[data-id='${selectedCourseId}']`);
+                    badge.classList.remove('bg-secondary');
+                    badge.classList.add('bg-warning', 'text-dark');
+                    badge.innerText = 'En attente';
+                    badge.setAttribute('data-current-status', 'pending');
+
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('confirmStatusModal'));
+                    modal.hide();
+                }
+            });
+        }
+    });
+</script>
+
+
+
+  
         
   
 
@@ -153,6 +247,7 @@
 
 @push('scripts')
 <script src="{{ asset('assets/JS/dashboard/admin/categories.js') }}"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialiser les tooltips
@@ -183,6 +278,62 @@
                 row.style.display = found ? '' : 'none';
             }
         });
+
+        // Gestionnaire pour le changement de statut
+        // document.querySelectorAll('.update-status').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         const courseId = this.getAttribute('data-course-id');
+                
+        //         // Requête fetch pour mettre à jour le statut
+        //         fetch(`/instructor/course/${courseId}/update-status`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        //             },
+        //             body: JSON.stringify({
+        //                 status: 'pending'
+        //             })
+        //         })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Erreur lors de la mise à jour');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(data => {
+        //             if (data.success) {
+        //                 // Mettre à jour l'affichage du badge sans rechargement
+        //                 const badgeElement = document.querySelector(`span.status-badge[data-course-id="${courseId}"]`);
+        //                 badgeElement.classList.remove('bg-secondary');
+        //                 badgeElement.classList.add('bg-warning', 'text-dark');
+        //                 badgeElement.textContent = 'En attente';
+        //                 badgeElement.removeAttribute('data-bs-toggle');
+        //                 badgeElement.removeAttribute('data-bs-target');
+        //                 badgeElement.style.cursor = 'default';
+                        
+        //                 // Afficher un message de succès
+        //                 const alertDiv = document.createElement('div');
+        //                 alertDiv.className = 'alert alert-success';
+        //                 alertDiv.role = 'alert';
+        //                 alertDiv.id = 'successAlert';
+        //                 alertDiv.textContent = 'Le statut du cours a été mis à jour avec succès.';
+                        
+        //                 const container = document.querySelector('.d-flex.align-items-center.justify-content-between.mb-4');
+        //                 container.parentNode.insertBefore(alertDiv, container);
+                        
+        //                 // Faire disparaître l'alerte après 3 secondes
+        //                 setTimeout(() => {
+        //                     alertDiv.remove();
+        //                 }, 3000);
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error('Erreur:', error);
+        //             alert('Une erreur est survenue lors de la mise à jour du statut.');
+        //         });
+        //     });
+        // });
     });
 </script>
 @endpush

@@ -6,6 +6,7 @@ use App\Models\Cours;
 use App\Http\Requests\StoreCoursRequest;
 use App\Http\Requests\UpdateCoursRequest;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,16 +15,24 @@ class CoursController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($status)
     {
-      
-    $user = Auth::user();
-    $formateur = $user->formateur;
-    $courses = $formateur ? $formateur->cours()->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+        $user = Auth::user();
+        $formateur = $user->formateur;
+        if($status == 'all'){
+            $courses = $formateur ? $formateur->cours()->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+        
+        }else if($status == 'draft'){
+        $courses = $formateur ? $formateur->cours()->where('status','draft')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
 
-    return view('instructor.courses.index', compact('courses'));
+        }else if($status == 'pending'){
+            $courses = $formateur ? $formateur->cours()->where('status','pending')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+        }else{
+            $courses = $formateur ? $formateur->cours()->where('status','published')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+        }
+        return view('instructor.courses.index', compact('courses'));
     }
-
+   
     /**
      * Show the form for creating a new resource.
      */
@@ -126,6 +135,25 @@ class CoursController extends Controller
         // Redirect back with a success message
         return redirect()->route('instructor.course.index')->with('success', 'Le cours a été mis à jour avec succès.');
     }
+
+    public function updateStatus($id)
+    {
+        $course = Cours::findOrFail($id);
+    
+        // Vérifie le statut actuel et le change en conséquence
+        if ($course->status === 'draft') {
+            $course->status = 'pending';
+        } elseif ($course->status === 'pending') {
+            $course->status = 'draft';
+        }
+    
+        $course->save();
+    
+        return redirect()->back()->with('success', 'Le statut du cours a été mis à jour.');
+    }
+    
+    
+
     
 
     /**
