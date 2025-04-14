@@ -16,10 +16,14 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
+    
         if (Auth::check() && Auth::user()->role_id == $role) {
 
             return $next($request);
         }
-        return redirect()->route('home')->with("error", "Vous n'avez pas la permission d'accéder à cette page.");
+        return redirect()->route('home')->with([
+            'error' => "Vous n'avez pas la permission d'accéder à cette page.",
+            'isRole' => true,
+        ]);   
     }
 }

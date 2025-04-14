@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Middleware\CheckStatus;
 use App\Models\Content;
 use Illuminate\Routing\Route as RoutingRoute;
 
@@ -76,7 +77,7 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
         Route::resource('categories', CategoryController::class);
     });
     //Route pour afficher le tableau de bord de l'instructeur
-    Route::middleware([CheckRole::class . ':2'])->group(function () {
+    Route::middleware([CheckRole::class . ':2',CheckStatus::class])->group(function () {
         Route::prefix('instructor')->name('instructor.')->group(function () {
             // Route pour afficher le tableau de bord de l'instructeur
             Route::get('dashboard', function () {
@@ -89,8 +90,7 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
             Route::post('/content', [ContentController::class, 'store'])->name('content.store');
             Route::delete('/contents/{content}', [ContentController::class, 'destroy'])->name('contents.destroy');
             Route::get('/contents/{content}', [ContentController::class, 'edit'])->name('contents.edit');
-
-            
+            Route::put('/contents/{content}', [ContentController::class, 'update'])->name('contents.update');
 
             Route::get('contents/create', [ContentController::class, 'create'])->name('contents.create');
             Route::get('contents/review', [ContentController::class, 'review'])->name('contents.review');

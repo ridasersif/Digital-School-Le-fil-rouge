@@ -6,6 +6,7 @@ use App\Models\Content;
 use App\Http\Requests\StoreContentRequest;
 use App\Http\Requests\UpdateContentRequest;
 use App\Models\Cours;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
@@ -85,6 +86,7 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
+      
         return view('instructor.courses.contents.edit', compact('content')); 
     }
 
@@ -93,14 +95,84 @@ class ContentController extends Controller
      */
     public function update(UpdateContentRequest $request, Content $content)
     {
-        //
+        if (Auth::user()->id !== $content->cours->formateur_id) {
+             abort(403, 'Unauthorized action.');
+        }
+        $type = $request->type;
+        $contentPath = null;
+        $duree = null;
+    
+        if ($type === 'video') {
+            $duree = $request->input('duree_video');
+           
+            if ($request->hasFile('chemin_video')) {
+              
+                if ($content->chemin && file_exists(storage_path('app/public/' . $content->chemin))) {
+                    unlink(storage_path('app/public/' . $content->chemin));
+                }
+             
+                $contentPath = $request->file('chemin_video')->store('content/videos', 'public');
+            } else {
+              
+                $contentPath = $content->chemin;
+            }
+        }
+       
+        elseif ($type === 'pdf') {
+           
+            if ($request->hasFile('chemin_pdf')) {
+                
+                if ($content->chemin && file_exists(storage_path('app/public/' . $content->chemin))) {
+                    unlink(storage_path('app/public/' . $content->chemin));
+                }
+               
+                $contentPath = $request->file('chemin_pdf')->store('content/pdf', 'public');
+            } else {
+               
+                $contentPath = $content->chemin;
+            }
+        }
+      
+        else {
+            $duree = $request->input('duree_lien');
+            $contentPath = $request->input('chemin_lien');
+        }
+    
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            if ($content->image && file_exists(storage_path('app/public/' . $content->image))) {
+                unlink(storage_path('app/public/' . $content->image));
+            }
+            $imagePath = $request->file('image')->store('content/images', 'public');
+        } else {
+            $imagePath = $content->image;
+        }
+
+        $content->update([
+            'titre' => $request->input('titre'),
+            'description' => $request->input('description'),
+            'type' => $type, 
+            'chemin' => $contentPath, 
+            'image' => $imagePath,
+            'duree' => $duree,
+            'nombre_pages' => $type === 'pdf' ? $request->input('nombre_pages_pdf') : null,
+            'cours_id' => $request->input('cours_id'),
+        ]);
+    
+        return redirect()
+            ->route('instructor.course.show', ['course' => $request->input('cours_id')])
+            ->with('success', 'Contenu mis à jour avec succès.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Content $content)
     {
+        if (Auth::user()->id !== $content->cours->formateur_id) {
+            abort(403, 'Unauthorized action.');
+       }
         $courseId = $content->cours_id;
         if ($content->chemin){
             Storage::disk('public')->delete($content->chemin);

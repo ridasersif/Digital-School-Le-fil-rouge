@@ -167,21 +167,31 @@
             <input type="hidden" name="type" id="contentType" value="video">
             <input type="hidden" name="cours_id" value="{{ $course->id }}">
         
-           
             <div class="mb-3">
                 <label class="form-label">Titre du contenu</label>
-                <input type="text" class="form-control" name="titre" required>
+                <input type="text" class="form-control @error('titre') is-invalid @enderror" name="titre" value="{{ old('titre') }}" >
+                @error('titre')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="mb-3">
+
+             {{-- Description --}}
+             <div class="mb-3">
                 <label class="form-label">Description (optionnelle)</label>
-                <textarea class="form-control" name="description" rows="3"></textarea>
+                <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3">{{ old('description') }}</textarea>
+                @error('description')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
         
           
             <div id="videoInputs" class="content-inputs active">
                 <div class="mb-3">
                     <label class="form-label">Fichier vidéo</label>
-                    <input type="file" class="form-control" name="chemin_video" id="videoFile" accept="video/*">
+                    <input type="file" class="form-control @error('chemin_video') is-invalid @enderror" name="chemin_video" id="videoFile" accept="video/*">
+                    @error('chemin_video')
+                         <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                     <div id="videoPreview" class="file-preview">
                         <p class="text-muted">La vidéo s'affichera ici après l'avoir sélectionnée</p>
                     </div>
@@ -189,9 +199,12 @@
                 <div class="optional-field">
                     <label class="form-label">Durée de la vidéo (optionnel)</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="duree_video" placeholder="Durée en minutes">
+                        <input type="number" class="form-control @error('duree_video') is-invalid @enderror" name="duree_video" placeholder="Durée en minutes">
                         <span class="input-group-text">minutes</span>
                     </div>
+                    @error('duree_video')
+                         <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
         
@@ -199,22 +212,32 @@
             <div id="pdfInputs" class="content-inputs">
                 <div class="mb-3">
                     <label class="form-label">Fichier PDF</label>
-                    <input type="file" class="form-control" name="chemin_pdf" id="pdfFile" accept=".pdf">
+                    <input type="file" class="form-control @error('chemin_pdf') is-invalid @enderror" name="chemin_pdf" id="pdfFile" accept=".pdf">
+                    @error('chemin_pdf')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                     <div id="pdfPreview" class="file-preview">
                         <p class="text-muted">Les informations du PDF s'afficheront ici</p>
                     </div>
                 </div>
                 <div class="optional-field">
                     <label class="form-label">Nombre de pages (optionnel)</label>
-                    <input type="number" class="form-control" name="nombre_pages_pdf" placeholder="Nombre de pages">
+                    <input type="number" class="form-control @error('nombre_pages_pdf') is-invalid @enderror" name="nombre_pages_pdf" value="{{ old('nombre_pages_pdf') }}">
+                    @error('nombre_pages_pdf')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
+
         
            
             <div id="linkInputs" class="content-inputs">
                 <div class="mb-3">
                     <label class="form-label">URL du lien</label>
-                    <input type="url" class="form-control" name="chemin_lien" id="linkUrl" placeholder="https://...">
+                    <input type="text" class="form-control @error('chemin_lien') is-invalid @enderror" name="chemin_lien" value="{{ old('chemin_lien') }}" placeholder="https://...">
+                    @error('chemin_lien')
+                       <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                     <div id="linkPreview" class="file-preview">
                         <p class="text-muted">L'aperçu du lien s'affichera ici</p>
                     </div>
@@ -222,19 +245,22 @@
                 <div class="optional-field">
                     <label class="form-label">Durée du contenu (optionnel)</label>
                     <div class="input-group">
-                        <input type="number" name="duree_lien" class="form-control" placeholder="Durée en minutes">
+                        <input type="number" name="duree_lien" class="form-control @error('duree_lien') is-invalid @enderror" value="{{ old('duree_lien') }}">
                         <span class="input-group-text">minutes</span>
                     </div>
+                    @error('duree_lien')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
         
           
             <div class="mb-3">
                 <label class="form-label">Image miniature</label>
-                <input type="file" class="form-control" name="image" id="contentImage" accept="image/*">
-                <div id="imagePreviewContainer" class="image-preview-container">
-                    <img id="imagePreview" class="thumbnail-preview">
-                </div>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" accept="image/*">
+                @error('image')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
         
           
@@ -249,6 +275,9 @@
               <!-- louding -->
              @include('partials.loadingForm')
         </form>
+{{-- ****************************************** --}}
+       
+        
         
     </div>
 </div>

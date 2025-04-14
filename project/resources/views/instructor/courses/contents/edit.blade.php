@@ -150,7 +150,8 @@
 
 <div class="card">
     <div class="card-body p-4">
-        <form id="contentForm" class="loadingForm" action="" method="POST" enctype="multipart/form-data">
+        <form id="contentForm" class="loadingForm" action="{{ route('instructor.contents.update', $content->id) }}" method="POST" enctype="multipart/form-data">
+
             @csrf
             @method('PUT')
         
@@ -167,15 +168,20 @@
             </div>
         
             <input type="hidden" name="type" id="contentType" value="{{ $content->type }}">
-            {{-- <input type="hidden" name="cours_id" value="{{ $course->id }}"> --}}
-        
+            <input type="hidden" name="cours_id" value="{{ $content->cours_id }}">        
             <div class="mb-3">
                 <label class="form-label">Titre du contenu</label>
-                <input type="text" class="form-control" name="titre" value="{{ $content->titre }}" required>
+                <input type="text" class="form-control @error('titre') is-invalid @enderror" name="titre" value="{{ old('titre', $content->titre) }}" >
+                @error('titre')
+                 <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label class="form-label">Description (optionnelle)</label>
-                <textarea class="form-control" name="description" rows="3">{{ $content->description }}</textarea>
+                <textarea class="form-control @error('titre') is-invalid @enderror" name="description" rows="3">{{ old('description', $content->description )}}</textarea>
+                @error('description')
+                    <div class="invalid-feedback">{{ $message }}</div>
+               @enderror
             </div>
         
             <div id="videoInputs" class="content-inputs {{ $content->type == 'video' ? 'active' : '' }}">
@@ -188,7 +194,10 @@
                     </div>
                     @endif
                     <label class="form-label">Fichier vidéo {{ $content->type == 'video' ? '(laisser vide pour conserver la vidéo actuelle)' : '' }}</label>
-                    <input type="file" class="form-control" name="chemin_video"  id="videoFile" accept="video/*">
+                    <input type="file" class="form-control @error('chemin_video') is-invalid @enderror" name="chemin_video"  id="videoFile" accept="video/*">
+                    @error('chemin_video')
+                     <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                     <div id="videoPreview" class="file-preview">
                         <p class="text-muted">La nouvelle vidéo s'affichera ici après l'avoir sélectionnée</p>
                     </div>
@@ -196,8 +205,11 @@
                 <div class="optional-field">
                     <label class="form-label">Durée de la vidéo (optionnel)</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="duree_video" placeholder="Durée en minutes" value="{{ $content->duree?? '' }}">
+                        <input type="number" class="form-control  @error('duree_video') is-invalid @enderror" name="duree_video" placeholder="Durée en minutes" value="{{old($content->duree?? '')  }}">
                         <span class="input-group-text">minutes</span>
+                        @error('duree_video')
+                             <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -211,21 +223,30 @@
                     </div>
                     @endif
                     <label class="form-label">Fichier PDF {{ $content->type == 'pdf' ? '(laisser vide pour conserver le PDF actuel)' : '' }}</label>
-                    <input type="file" class="form-control" name="chemin_pdf" id="pdfFile" accept=".pdf">
+                    <input type="file" class="form-control @error('chemin_pdf') is-invalid @enderror " name="chemin_pdf" id="pdfFile" accept=".pdf">
+                    @error('chemin_pdf')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                   @enderror
                     <div id="pdfPreview" class="file-preview">
                         <p class="text-muted">Les informations du nouveau PDF s'afficheront ici</p>
                     </div>
                 </div>
                 <div class="optional-field">
                     <label class="form-label">Nombre de pages (optionnel)</label>
-                    <input type="number" class="form-control" name="nombre_pages_pdf" placeholder="Nombre de pages" value="{{ $content->nombre_pages_pdf ?? '' }}">
+                    <input type="number" class="form-control  @error('nombre_pages_pdf') is-invalid @enderror" name="nombre_pages_pdf" placeholder="Nombre de pages" value="{{ old($content->nombre_pages_pdf ?? '')}}">
+                    @error('nombre_pages_pdf')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                   @enderror
                 </div>
             </div>
         
             <div id="linkInputs" class="content-inputs {{ $content->type == 'link' ? 'active' : '' }}">
                 <div class="mb-3">
                     <label class="form-label">URL du lien</label>
-                    <input type="url" class="form-control" name="chemin_lien" id="linkUrl" placeholder="https://..." value="{{ $content->chemin?? '' }}">
+                    <input type="text" class="form-control @error('chemin_lien') is-invalid @enderror" name="chemin_lien" id="linkUrl" placeholder="https://..." value="{{ old($content->chemin?? '' )}}">
+                    @error('chemin_lien')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                   @enderror
                     <div id="linkPreview" class="file-preview">
                         @if($content->type == 'link' && $content->chemin)
                         <p><i class="fas fa-link fa-lg text-info"></i> <strong>Lien actuel:</strong></p>
@@ -238,8 +259,11 @@
                 <div class="optional-field">
                     <label class="form-label">Durée du contenu (optionnel)</label>
                     <div class="input-group">
-                        <input type="number" name="duree_lien" class="form-control" placeholder="Durée en minutes" value="{{ $content->duree?? '' }}">
+                        <input type="number" name="duree_lien" class="form-control @error('duree_lien') is-invalid @enderror" placeholder="Durée en minutes" value="{{ $content->duree?? '' }}">
                         <span class="input-group-text">minutes</span>
+                        @error('duree_lien')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                       @enderror
                     </div>
                 </div>
             </div>
@@ -252,7 +276,10 @@
                     <img src="{{ asset('storage/'.$content->image) }}" class="thumbnail-preview">
                 </div>
                 @endif
-                <input type="file" class="form-control" name="image" id="contentImage" accept="image/*">
+                <input type="file" class="form-control @error('image') is-invalid @enderror " name="image" id="contentImage" accept="image/*">
+                @error('image')
+                <div class="invalid-feedback">{{ $message }}</div>
+               @enderror
                 <div id="imagePreviewContainer" class="image-preview-container" style="display: none;">
                     <img id="imagePreview" class="thumbnail-preview">
                 </div>
