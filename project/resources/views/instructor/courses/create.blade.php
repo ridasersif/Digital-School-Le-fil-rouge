@@ -34,7 +34,7 @@
 
     <div class="d-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0">{{ $isUpdate ? 'Modifier le cours' : 'Créer un cours' }}</h1>
-        <a href="{{ route('instructor.course.index') }}" class="btn btn-sm btn-primary shadow-sm">
+        <a href="{{ route('course.index') }}" class="btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-arrow-left me-1"></i> Retour à la liste
         </a>
     </div>
@@ -153,7 +153,7 @@
 
                 <!-- Bouton d'enregistrement -->
                 <div class="text-center d-flex justify-content-between">
-                    <a class="btn btn-backe btn-outline-secondary" href="{{ route('instructor.course.index') }}">
+                    <a class="btn btn-backe btn-outline-secondary" href="{{ route('course.index') }}">
                         <i class="fas fa-arrow-left me-2"></i>Retour
                     </a>
                     <button type="submit" class="btn btn-primary">

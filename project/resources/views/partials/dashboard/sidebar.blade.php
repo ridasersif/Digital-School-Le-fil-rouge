@@ -33,28 +33,46 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#categorySubmenu" aria-expanded="false">
-                    <i class="fas fa-fw fa-layer-group"></i>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#coursesSubmenu" aria-expanded="false">
+                    <i class="fas fa-fw fa-book"></i>
                     <span class="nav-text">Cours</span>
                     <i class="fas fa-angle-down submenu-indicator ms-auto"></i>
                 </a>
-                <div id="categorySubmenu" class="collapse submenu">
+                <div id="coursesSubmenu" class="collapse submenu">
                     <ul class="nav flex-column submenu-items">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-plus-circle fa-sm"></i>
-                                <span class="nav-text">Ajouter</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+            
+                        <li class="nav-item {{ request()->is('course.all') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'all']) }}">
                                 <i class="fas fa-list fa-sm"></i>
-                                <span class="nav-text">Voir les catégories</span>
+                                <span class="nav-text">Tous les cours</span>
                             </a>
                         </li>
+            
+                        <li class="nav-item {{ request()->is('course.draft') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'draft']) }}">
+                                <i class="fas fa-pencil-alt fa-sm"></i>
+                                <span class="nav-text">Brouillons</span>
+                            </a>
+                        </li>
+            
+                        <li class="nav-item {{ request()->is('course.pending') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'pending']) }}">
+                                <i class="fas fa-hourglass-half fa-sm"></i>
+                                <span class="nav-text">En attente</span>
+                            </a>
+                        </li>
+            
+                        <li class="nav-item {{ request()->is('icourse.published') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'published']) }}">
+                                <i class="fas fa-check-circle fa-sm"></i>
+                                <span class="nav-text">Publiés</span>
+                            </a>
+                        </li>
+            
                     </ul>
                 </div>
             </li>
+            
 
             <!-- Dropdown Utilisateurs -->
             <li class="nav-item ">
@@ -135,43 +153,7 @@
             </li>
 
             <!-- Dropdown Cours -->
-            {{-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#coursesSubmenu" aria-expanded="false">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span class="nav-text">Cours</span>
-                    <i class="fas fa-angle-down submenu-indicator ms-auto"></i>
-                </a>
-                <div id="coursesSubmenu" class="collapse submenu">
-                    <ul class="nav flex-column submenu-items">
-                        <li class="nav-item {{ request()->routeIs('instructor.courses.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.index') }}">
-                                <i class="fas fa-list fa-sm"></i>
-                                <span class="nav-text">Tous les cours</span>
-                            </a>
-                        </li>
-        
-                        <li class="nav-item {{ request()->routeIs('instructor.course.AllCoursDrafts') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.AllCoursDrafts') }}">
-                                <i class="fas fa-pencil-alt fa-sm"></i>
-                                <span class="nav-text">Brouillons</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('instructor.course.AllCoursPending') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.AllCoursPending') }}">
-                                <i class="fas fa-hourglass-half fa-sm"></i>
-                                <span class="nav-text">En attente</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('instructor.courses.AllCoursPublished') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.AllCoursPublished') }}">
-                                <i class="fas fa-check-circle fa-sm"></i>
-                                <span class="nav-text">Publiés</span>
-                            </a>
-                        </li>
-                       
-                    </ul>
-                </div>
-            </li> --}}
+           
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#coursesSubmenu" aria-expanded="false">
                     <i class="fas fa-fw fa-book"></i>
@@ -181,29 +163,29 @@
                 <div id="coursesSubmenu" class="collapse submenu">
                     <ul class="nav flex-column submenu-items">
             
-                        <li class="nav-item {{ request()->is('instructor.course.all') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.byStatus', ['status' => 'all']) }}">
+                        <li class="nav-item {{ request()->is('course.all') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'all']) }}">
                                 <i class="fas fa-list fa-sm"></i>
                                 <span class="nav-text">Tous les cours</span>
                             </a>
                         </li>
             
-                        <li class="nav-item {{ request()->is('instructor.course.draft') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.byStatus', ['status' => 'draft']) }}">
+                        <li class="nav-item {{ request()->is('course.draft') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'draft']) }}">
                                 <i class="fas fa-pencil-alt fa-sm"></i>
                                 <span class="nav-text">Brouillons</span>
                             </a>
                         </li>
             
-                        <li class="nav-item {{ request()->is('instructor.course.pending') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.byStatus', ['status' => 'pending']) }}">
+                        <li class="nav-item {{ request()->is('course.pending') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'pending']) }}">
                                 <i class="fas fa-hourglass-half fa-sm"></i>
                                 <span class="nav-text">En attente</span>
                             </a>
                         </li>
             
-                        <li class="nav-item {{ request()->is('instructor.course.published') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('instructor.course.byStatus', ['status' => 'published']) }}">
+                        <li class="nav-item {{ request()->is('icourse.published') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('course.byStatus', ['status' => 'published']) }}">
                                 <i class="fas fa-check-circle fa-sm"></i>
                                 <span class="nav-text">Publiés</span>
                             </a>

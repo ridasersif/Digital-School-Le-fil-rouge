@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Middleware\CheckStatus;
+use App\Http\Middleware\CheckAdminOrInstructor;
 use App\Models\Content;
 use Illuminate\Routing\Route as RoutingRoute;
 
@@ -52,6 +53,25 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
     Route::post('/update-Avatar', [ProfileController::class, 'updateAvatar'])->name('update.Avatar');
     Route::post('/delete-Avatar', [ProfileController::class, 'deleteAvatar'])->name('delete.Avatar');
 
+ 
+
+    Route::middleware([ CheckAdminOrInstructor::class, ])->group(function () {
+    
+        Route::get('/course/{status}', [CoursController::class, 'index'])
+            ->whereIn('status', ['all', 'draft', 'pending', 'published'])
+            ->name('course.byStatus');
+    
+        Route::get('/course', function () {
+            return redirect()->route('course.byStatus', ['status' => 'all']);
+        })->name('course.index');
+    
+        Route::post('/course/update-status/{id}', [CoursController::class, 'updateStatus'])
+            ->name('course.updateStatus');
+            Route::get('/course/{course}', [CoursController::class, 'show'])->name('course.show');
+    });
+    
+    
+
 
     Route::middleware([CheckRole::class . ':1'])->group(function () {
        
@@ -76,6 +96,7 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
         //Route pour gérer les catégories
         Route::resource('categories', CategoryController::class);
     });
+    
     //Route pour afficher le tableau de bord de l'instructeur
     Route::middleware([CheckRole::class . ':2',CheckStatus::class])->group(function () {
         Route::prefix('instructor')->name('instructor.')->group(function () {
@@ -83,29 +104,23 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
             Route::get('dashboard', function () {
                 return view('instructor.statistics');
             })->name('index');
-            // Route pour gere les cours de l'instructeur
-            // Route::get('course/AllCoursDrafts', [CoursController::class,'AllCoursDrafts'])->name('course.AllCoursDrafts');
-            // Route::get('course/AllCoursPending', [CoursController::class,'AllCoursPending'])->name('course.AllCoursPending');
-            // Route::get('course/AllCoursPublished', action: [CoursController::class,'AllCoursPublished'])->name('course.AllCoursPublished');
-            // Route::resource('course', CoursController::class);
-         
-
+           
             // Route dynamique par statut
-            Route::get('course/{status}', [CoursController::class, 'index'])
-                ->whereIn('status', ['all', 'draft', 'pending', 'published'])
-                ->name('course.byStatus');
+            // Route::get('course/{status}', [CoursController::class, 'index'])
+            //     ->whereIn('status', ['all', 'draft', 'pending', 'published'])
+            //     ->name('course.byStatus');
 
-            // Redirect /instructor/course vers tous les cours
-            Route::get('course', function () {
-                return redirect()->route('instructor.course.byStatus', ['status' => 'all']);
-            })->name('course.index');
+            // // Redirect /instructor/course vers tous les cours
+            // Route::get('course', function () {
+            //     return redirect()->route('instructor.course.byStatus', ['status' => 'all']);
+            // })->name('course.index');
 
             // CRUD Resource pour les cours
-            Route::resource('course', CoursController::class)->except(['index']);
+
+            Route::resource('course', CoursController::class)->except(['index','show']);
 
 
-
-            Route::post('/instructor/course/update-status/{id}', [CoursController::class, 'updateStatus'])->name('course.updateStatus');
+            // Route::post('/course/update-status/{id}', [CoursController::class, 'updateStatus'])->name('course.updateStatus');
            
             Route::get('/content/create/{cours_id}', [ContentController::class, 'create'])->name('content.create');
             Route::post('/content', [ContentController::class, 'store'])->name('content.store');

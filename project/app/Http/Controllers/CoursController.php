@@ -17,20 +17,34 @@ class CoursController extends Controller
      */
     public function index($status)
     {
-        $user = Auth::user();
-        $formateur = $user->formateur;
-        if($status == 'all'){
-            $courses = $formateur ? $formateur->cours()->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
-        
-        }else if($status == 'draft'){
-        $courses = $formateur ? $formateur->cours()->where('status','draft')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
-
-        }else if($status == 'pending'){
-            $courses = $formateur ? $formateur->cours()->where('status','pending')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
-        }else{
-            $courses = $formateur ? $formateur->cours()->where('status','published')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+         $user = Auth::user();
+        if($user->role_id == 2){
+            $formateur = $user->formateur;
+            if($status == 'all'){
+                $courses = $formateur ? $formateur->cours()->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+            
+            }else if($status == 'draft'){
+            $courses = $formateur ? $formateur->cours()->where('status','draft')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+    
+            }else if($status == 'pending'){
+                $courses = $formateur ? $formateur->cours()->where('status','pending')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+            }else{
+                $courses = $formateur ? $formateur->cours()->where('status','published')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100) : collect();
+            }
+            return view('instructor.courses.index', compact('courses'));
         }
-        return view('instructor.courses.index', compact('courses'));
+        if($user->role_id == 1){
+            if($status == 'all'){
+                $courses = Cours::where('status', '!=', 'draft')->with(['contents', 'formateur.user.profile'])->withCount('contents')->orderBy('created_at', 'desc')->paginate(100);
+                // dd($courses);
+            }else if($status == 'pending'){
+                $courses = Cours::where('status','pending')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100);
+            }else if($status == 'published'){
+                $courses = Cours::where('status','published')->withCount('contents')->orderBy('created_at', 'desc')->paginate(100);    
+           }
+            return view('admin.courses.index', compact('courses'));
+
+        } 
     }
    
     /**
@@ -70,27 +84,36 @@ class CoursController extends Controller
         ]);
 
         
-        return redirect()->route('instructor.course.index')->with('success', 'Le cours a été enregistré dans la base de données, mais il est encore vide. Vous pouvez ajouter du contenu plus tard.');
+        return redirect()->route('course.index')->with('success', 'Le cours a été enregistré dans la base de données, mais il est encore vide. Vous pouvez ajouter du contenu plus tard.');
 
     }
-
+   
     /**
      * Display the specified resource.
      */
     public function show(Cours $course)
     {
-        // Vérifier que l'utilisateur connecté est bien le formateur de ce cours
-        $user = Auth::user();
-        $formateur = $user->formateur;
+         // Vérifier que l'utilisateur connecté est bien le formateur de ce cours
+         $user = Auth::user();
+        if($user->role_id == 2){
+            $formateur = $user->formateur;
         
-        if ($formateur && $formateur->id === $course->formateur_id) {
-            $course->load('contents');
-            // dd($course);
-            return view('instructor.courses.show', compact('course'));
+            if ($formateur && $formateur->id === $course->formateur_id) {
+                $course->load('contents');
+                // dd($course);
+                return view('instructor.courses.show', compact('course'));
+            }
+            // Rediriger si l'utilisateur n'est pas autorisé
+            return redirect()->route('instructor.courses.index')
+                ->with('error', 'Vous n\'êtes pas autorisé à voir ce cours.');
+          
         }
-        // Rediriger si l'utilisateur n'est pas autorisé
-        return redirect()->route('instructor.courses.index')
-            ->with('error', 'Vous n\'êtes pas autorisé à voir ce cours.');
+        if($user->role_id == 1){
+            $course->load(['contents', 'formateur.user.profile', 'category']);
+            return view('admin.courses.show', compact('course'));
+           
+
+        } 
     }
 
     /**
@@ -133,29 +156,35 @@ class CoursController extends Controller
         ]);
     
         // Redirect back with a success message
-        return redirect()->route('instructor.course.index')->with('success', 'Le cours a été mis à jour avec succès.');
+        return redirect()->route('course.index')->with('success', 'Le cours a été mis à jour avec succès.');
     }
 
     public function updateStatus($id)
     {
         $course = Cours::findOrFail($id);
-    
-        // Vérifie le statut actuel et le change en conséquence
-        if ($course->status === 'draft') {
-            $course->status = 'pending';
-        } elseif ($course->status === 'pending') {
-            $course->status = 'draft';
+        if(Auth::user()->role_id == 2){
+             // Vérifie le statut actuel et le change en conséquence
+            if ($course->status === 'draft') {
+                $course->status = 'pending';
+            } elseif ($course->status === 'pending') {
+                $course->status = 'draft';
+            }
         }
-    
+        // $table->enum('status', ['draft', 'pending', 'published'])->default('draft');
+
+        if(Auth::user()->role_id == 1){
+             // Vérifie le statut actuel et le change en conséquence
+            if ($course->status === 'pending') {
+                $course->status = 'published';
+            } elseif ($course->status === 'published') {
+                $course->status = 'pending';
+            }
+        }
+       
         $course->save();
     
         return redirect()->back()->with('success', 'Le statut du cours a été mis à jour.');
     }
-    
-    
-
-    
-
     /**
      * Remove the specified resource from storage.
      */
@@ -169,7 +198,7 @@ class CoursController extends Controller
             Storage::disk('public')->delete($course->image);
         }
         $course->delete();
-        return redirect()->route('instructor.course.index')->with('success', 'Le cours a été supprimé avec succès.');
+        return redirect()->route('course.index')->with('success', 'Le cours a été supprimé avec succès.');
     }
     
 }

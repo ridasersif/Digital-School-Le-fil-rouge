@@ -143,7 +143,7 @@
 @section('courses')
 <div class="d-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0">Modifier un cours</h1>
-    <a href="{{ route('instructor.course.index') }}" class="btn btn-sm btn-primary shadow-sm">
+    <a href="{{ route('course.index') }}" class="btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-list"></i> Liste des cours
     </a>
 </div>

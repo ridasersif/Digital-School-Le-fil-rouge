@@ -697,7 +697,7 @@
                 <h1 class="page-title">Détails du cours</h1>
                 <p class="page-subtitle">Visualisez toutes les informations de votre cours</p>
             </div>
-            <a href="{{ route('instructor.course.index') }}" class="back-button">
+            <a href="{{ route('course.index') }}" class="back-button">
                 <i class="fas fa-arrow-left"></i> Retour à la liste
             </a>
         </div>
