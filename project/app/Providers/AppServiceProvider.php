@@ -8,6 +8,8 @@ use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Profile\ProfileRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\CoursInterface;
+use App\Repositories\CoursRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(CategoryInterface::class,CategoryRepository::class);
         $this->app->bind(ProfileInterface::class,ProfileRepository::class);
+        $this->app->bind(CoursInterface::class, CoursRepository::class);
     }
 
     /**
