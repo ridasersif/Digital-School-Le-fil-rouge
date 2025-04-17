@@ -96,6 +96,16 @@
 
                 <!-- Prix -->
                 <div class="mb-3">
+                    <label class="form-label">Prix barré (MAD)</label>
+                    <input type="number" name="old_price"
+                           class="form-control @error('old_price') is-invalid @enderror"
+                           placeholder="Ex: 199" min="0"
+                           value="{{ old('old_price', $course->old_price ?? '') }}">
+                    @error('old_price')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Prix du cours (MAD)</label>
                     <input type="number" name="price"
                            class="form-control @error('price') is-invalid @enderror"
@@ -149,7 +159,9 @@
                 </div>
 
                 <!-- Formateur ID -->
-                <input type="hidden" name="formateur_id" value="{{ auth()->user()->id }}">
+                <input type="hidden" name="formateur_id" value="{{ Auth::user()->formateur->id }}">
+
+                {{-- <input type="hidden" name="" value="{{ auth()->user()->id }}"> --}}
 
                 <!-- Bouton d'enregistrement -->
                 <div class="text-center d-flex justify-content-between">

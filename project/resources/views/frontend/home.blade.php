@@ -2,9 +2,66 @@
 @extends('layouts.frontend')
 @section('title', 'Home Page')
 @push('style')
-{{--  --}}
+
+    <style>
+        .custom-alert {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+            max-width: 400px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-size: 15px;
+            opacity: 0.95;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .custom-alert i {
+            font-size: 18px;
+        }
+        .custom-alert-success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .custom-alert-info {
+            background-color: #cff4fc;
+            color: #055160;
+        }
+        .custom-alert-error {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+    </style>
+
 @endpush
+
 @section('contents')
+
+    @if (session('success'))
+        <div class="custom-alert custom-alert-success" id="alert-message">
+            <i class="fas fa-check-circle"></i>
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('info'))
+        <div class="custom-alert custom-alert-info" id="alert-message">
+            <i class="fas fa-info-circle"></i>
+            {{ session('info') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="custom-alert custom-alert-error" id="alert-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            {{ session('error') }}
+        </div>
+    @endif
     <!-- Hero Section -->
     <section class="hero-section text-center">
         <div class="container">
@@ -85,20 +142,46 @@
         </div>
     </section>
 
+    
+
     <!-- Featured Courses -->
-    <section class="py-5 bg-light" id="cours">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Cours populaires</h2>
-                <a href="#" class="btn btn-outline-primary">Voir tous les cours</a>
-            </div>
-            <div class="row g-4">
-                <!-- Course 1 -->
+<section class="py-5 bg-light" id="cours">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Cours populaires</h2>
+            <a href="" class="btn btn-outline-primary">Voir tous les cours</a>
+        </div>
+        <div class="row g-4">
+            @forelse($cours as $course)
+               
+        
                 <div class="col-md-6 col-lg-3">
                     <div class="card course-card">
-                        <span class="badge bg-primary category-badge">Développement Web</span>
-                        <img src="/https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="card-img-top course-image" alt="Cours">
+                        <!-- Catégorie -->
+                        <span class="badge bg-primary category-badge">
+                            {{ $course->category->nom ?? 'Catégorie inconnue' }}
+                        </span>
+        
+                        <!-- Image du cours -->
+                        {{-- <img src="{{ asset('storage/' . $course->image) }}" class="card-img-top course-image" alt="Cours"> --}}
+                        <a href="{{ route('courses.show', $course->id) }}">
+                            {{-- <img src="{{ asset('storage/' . $course->image) }}" class="card-img-top course-image" alt="Cours"> --}}
+                            @if($course->image)
+                                <a href="{{ route('courses.show', $course->id) }}">
+                                    <img src="{{ asset('storage/' . $course->image) }}" class="card-img-top course-image" alt="Cours">
+                                </a>
+                            @else
+                                <a href="{{ route('courses.show', $course->id) }}">
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 160px; background-color: #f0f0f0;">
+                                        <i class="fas fa-image fa-3x text-muted"></i>
+                                    </div>
+                                </a>
+                            @endif
+
+                        </a>
+
                         <div class="card-body">
+                            <!-- Bestseller + Étoiles -->
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="badge bg-light text-dark">Bestseller</span>
                                 <div>
@@ -106,99 +189,87 @@
                                     <small>4.8 (245)</small>
                                 </div>
                             </div>
-                            <h5 class="card-title">Formation complète développeur web 2025</h5>
-                            <p class="card-text small text-muted">Par Jean Dupont</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold">39,99 €</span>
-                                <span class="text-decoration-line-through text-muted">129,99 €</span>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent border-top-0">
-                            <a href="#" class="btn btn-primary w-100">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
+        
+                            <!-- Titre du cours -->
+                            <h5 class="card-title">{{ $course->titre }}</h5>
+                         
+                                 <!-- Formateur -->
+                                <p class="card-text small text-muted">
+                                    Par {{ $course->formateur->user->name }}
+                                </p>
 
-                <!-- Course 2 -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card course-card">
-                        <span class="badge bg-primary category-badge">IA</span>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="card-img-top course-image" alt="Cours">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-danger text-white">Nouveau</span>
-                                <div>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <small>4.9 (128)</small>
-                                </div>
-                            </div>
-                            <h5 class="card-title">Maîtrisez l'intelligence artificielle avec Python</h5>
-                            <p class="card-text small text-muted">Par Marie Martin</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold">49,99 €</span>
-                                <span class="text-decoration-line-through text-muted">149,99 €</span>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent border-top-0">
-                            <a href="#" class="btn btn-primary w-100">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Course 3 -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card course-card">
-                        <span class="badge bg-primary category-badge">Business</span>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="card-img-top course-image" alt="Cours">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-light text-dark">Populaire</span>
-                                <div>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <small>4.7 (315)</small>
-                                </div>
-                            </div>
-                            <h5 class="card-title">Lancer votre entreprise en ligne: Guide complet</h5>
-                            <p class="card-text small text-muted">Par Sophie Bernard</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold">29,99 €</span>
-                                <span class="text-decoration-line-through text-muted">99,99 €</span>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent border-top-0">
-                            <a href="#" class="btn btn-primary w-100">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Course 4 -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card course-card">
-                        <span class="badge bg-primary category-badge">Design</span>
-                        <img src="/api/placeholder/400/220" class="card-img-top course-image" alt="Cours">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-light text-dark">Tendance</span>
-                                <div>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <small>4.6 (189)</small>
-                                </div>
-                            </div>
-                            <h5 class="card-title">UX/UI Design: De débutant à expert</h5>
-                            <p class="card-text small text-muted">Par Lucas Petit</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold">44,99 €</span>
-                                <span class="text-decoration-line-through text-muted">119,99 €</span>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent border-top-0">
-                            <a href="#" class="btn btn-primary w-100">Ajouter au panier</a>
+                                @php
+                                    $user = Auth::user();
+                                    $etudiant = $user->etudiant ?? null;
+                                    $isInscrit = false;
+                        
+                                    if ($etudiant) {
+                                        $isInscrit = \App\Models\Inscription::where('etudiant_id', $etudiant->id)
+                                                    ->where('cours_id', $course->id)
+                                                ->exists();
+                
+                                    }
+                                @endphp
+                            @if (Auth::check())
+                                        <!-- Bouton dynamique -->
+                                @if($isInscrit)
+                                    <form action="{{ route('student.panier.ajouter', $course->id) }}" method="POST">
+                                        @csrf
+                                        {{-- <button type="submit" class="btn btn-primary w-100">
+                                            <i class="fas fa-cart-plus me-1"></i> Ajouter au panier
+                                        </button> --}}
+                                        <button  class="btn btn-success w-100"> Voir le cours </button>
+                                    
+                                    </form>
+                                
+                                @else
+                                    <form action="{{ route('student.panier.ajouter', $course->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary w-100"> Ajouter au panier</button>
+                                    </form>
+                                @endif
+                            
+                            @else
+                               
+                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                    Ajouter au panier
+                                </button>
+                            @endif
+                           
                         </div>
                     </div>
                 </div>
+            @empty
+                <p>Aucun cours trouvé.</p>
+            @endforelse
+        </div>
+        
+    </div>
+     <!-- Modal pour login  -->
+     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Authentification requise</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+            Pour ajouter ce cours au panier, vous devez être connecté.
+            </div>
+            <div class="modal-footer">
+            <a href="{{ route('login') }}" class="btn btn-primary">Se connecter</a>
+            <a href="{{ route('register') }}" class="btn btn-secondary">Créer un compte</a>
             </div>
         </div>
-    </section>
+        </div>
+    </div>
+</section>
+       
+  
+
+
+
 
     <!-- Instructors Section -->
     <section id="Instructors" class="py-5">
@@ -366,5 +437,14 @@
 @endsection
 
 @push('script')
-{{--  --}}
+<script>
+      // Hide alert after 3 seconds
+      setTimeout(() => {
+        const alert = document.getElementById('alert-message');
+        if (alert) {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 300); // remove after fade
+        }
+    }, 3000);
+</script>
 @endpush

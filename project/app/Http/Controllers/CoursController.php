@@ -21,6 +21,8 @@ class CoursController extends Controller
         $this->coursRepository = $coursRepository;
     }
 
+
+   
     public function index($status)
     {
         $courses = $this->coursRepository->getCoursesByStatusForUser($status);

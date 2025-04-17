@@ -80,7 +80,7 @@
 
                     @if(auth()->user()->role_id == 3)
                         <li class="nav-item mx-1">
-                            <a class="nav-link text-dark position-relative " href="/mes-cours">
+                            <a class="nav-link text-dark position-relative " href="{{ route('student.myCourses') }}">
                                 <i class="fas fa-book-open me-1"  style="color: #6d28d2;" ></i> Mes cours
                                 <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x"  style="background-color: #6d28d2;" ></span>
                             </a>
@@ -203,52 +203,18 @@
                     </div>
                 </li>
                <!-- Panier -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-dark position-relative" href="#" id="panierDropdown" role="button" data-bs-toggle="dropdown">
+               @if (auth()->user()->role_id == 3)
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-dark position-relative" href="{{route('student.panier.afficher')}}" >
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #6d28d2;">
-                            1
+                            {{ $nombreDeCours }}
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-message-notifiction dropdown-menu-end p-0 shadow-lg border-0">
-                        <div class="p-3 text-white" style="background-color: #6d28d2;">
-                            <h6 class="mb-0"><i class="fas fa-shopping-cart me-2"></i> Panier</h6>
-                        </div>
-                        <div style="max-height: 400px; overflow-y: auto;">
-                            <a class="dropdown-item p-3 border-bottom" href="#">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                        <img src="/api/placeholder/40/40" class="rounded-circle" alt="Profile">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <div class="d-flex justify-content-between">
-                                            <h6 class="mb-0">Ahmed Benani</h6>
-                                            <small class="text-muted">58m</small>
-                                        </div>
-                                        <p class="small mb-0 text-truncate">Produit ajouté au panier</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item p-3" href="#">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                        <img src="/api/placeholder/40/40" class="rounded-circle" alt="Profile">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <div class="d-flex justify-content-between">
-                                            <h6 class="mb-0">Laila Moussaoui</h6>
-                                            <small class="text-muted">1j</small>
-                                        </div>
-                                        <p class="small mb-0 text-truncate">Produit ajouté récemment</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="text-center p-2 border-top">
-                            <a href="#" class="text-primary small">Voir tous</a>
-                        </div>
-                    </div>
                 </li>
+               
+               @endif
+               
                 <!-- Profil Utilisateur -->
                 <li class="nav-item dropdown me-3">
                     {{-- auth()->user()->profile && --}}

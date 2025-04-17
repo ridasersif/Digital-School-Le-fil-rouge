@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Etudiant;
 use App\Models\Formateur;
+use App\Models\Profile;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -36,6 +37,9 @@ class SocialiteController extends Controller
                     'social_type' => 'google',
                     'password' => Hash::make('password'),
                     'role_id' => 4
+                ]);
+                Profile::create([
+                    'user_id'=>$user->id,
                 ]);
                 Auth::login($newUser);
                 return redirect()->route('select-role');

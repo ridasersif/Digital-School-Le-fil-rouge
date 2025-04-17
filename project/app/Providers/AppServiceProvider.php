@@ -10,6 +10,8 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\CoursInterface;
 use App\Repositories\CoursRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +31,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+            View::composer('*', function ($view) {
+                $user = Auth::user();
+                $nombreDeCours = 0;
+        
+                if ($user && $user->etudiant) {
+                    $nombreDeCours = $user->etudiant->panier()->count();
+                }
+        
+                $view->with('nombreDeCours', $nombreDeCours);
+            });
+            
+       
     }
+    
 }

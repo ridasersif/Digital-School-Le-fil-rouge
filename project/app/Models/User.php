@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Formateur::class);
     }
+    public function etudiant()
+    {
+        return $this->hasOne(Etudiant::class);
+    }
+
 }

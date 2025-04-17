@@ -67,7 +67,7 @@ class ContentController extends Controller
             'cours_id' => $request->input('cours_id'),
         ]);
         return redirect()
-            ->route('instructor.course.show', ['course' => $request->input('cours_id')])
+            ->route('course.show', ['course' => $request->input('cours_id')])
             ->with('success', 'Contenu ajouté avec succès.');
     }
     

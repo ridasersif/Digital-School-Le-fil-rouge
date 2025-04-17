@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\Etudiant;
 use App\Models\Formateur;
+use App\Models\Profile;
 
 class AuthController extends Controller
 {
@@ -40,6 +41,9 @@ class AuthController extends Controller
             'password'=>Hash::make($request->password),
             'role_id'=>$role,
             'status'=>$status,
+        ]);
+        Profile::create([
+            'user_id'=>$user->id,
         ]);
         if ($role ==2) {
             Formateur::create([

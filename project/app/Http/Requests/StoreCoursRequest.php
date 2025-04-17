@@ -26,8 +26,9 @@ class StoreCoursRequest extends FormRequest
             'description' => 'required|string|max:1000',
             'category_id' => 'required|integer|exists:categories,id', 
             'price' => 'required|numeric|min:0', 
+            'old_price' => 'nullable|numeric|gt:price', // old_price > price
             'video_intro' => 'nullable|mimes:mp4,mov,avi,wmv|max:50000', 
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
             'formateur_id' => 'required|exists:users,id', 
         ];
     }
@@ -45,6 +46,7 @@ class StoreCoursRequest extends FormRequest
             'price.required' => 'Le prix du cours est obligatoire.',
             'video_intro.mimes' => 'Le format de la vidéo d’introduction n\'est pas valide.',
             'image.mimes' => 'Le format de l\'image de couverture n\'est pas valide.',
+            'old_price.gt' => 'Le prix barré doit être supérieur au prix actuel.',
         ];
     }
 }

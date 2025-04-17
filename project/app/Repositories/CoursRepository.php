@@ -48,6 +48,7 @@ class CoursRepository implements CoursInterface
 
     public function storeCourse(Request $request)
     {
+      
         $videoPath = $request->hasFile('video_intro')
             ? $request->file('video_intro')->store('cours/videos', 'public')
             : null;
@@ -55,12 +56,13 @@ class CoursRepository implements CoursInterface
         $imagePath = $request->hasFile('image')
             ? $request->file('image')->store('cours/images', 'public')
             : null;
-
+        // dd($request->all());
         return Cours::create([
             'titre' => $request->input('titre'),
             'description' => $request->input('description'),
             'category_id' => $request->input('category_id'),
             'price' => $request->input('price'),
+            'old_price' => $request->input('old_price'),
             'video_intro' => $videoPath,
             'image' => $imagePath,
             'formateur_id' => $request->input('formateur_id'),
@@ -101,6 +103,7 @@ class CoursRepository implements CoursInterface
             'description' => $request->input('description'),
             'category_id' => $request->input('category_id'),
             'price' => $request->input('price'),
+            'old_price' => $request->input('old_price'),
             'video_intro' => $videoPath,
             'image' => $imagePath,
         ]);
@@ -130,4 +133,5 @@ class CoursRepository implements CoursInterface
         $course->save();
         return $course;
     }
+   
 }

@@ -18,7 +18,8 @@ class Cours extends Model
         'status',
         'formateur_id',
         'category_id',
-        'price'
+        'price',
+        'old_price'
     ];
 
     public function formateur()
@@ -35,4 +36,15 @@ class Cours extends Model
     {
         return $this->hasMany(Content::class)->latest();
     }
+    public function paniers()
+    {
+        return $this->belongsToMany(Etudiant::class, 'panier')->withTimestamps();
+    }
+    public function inscriptions()
+    {
+        return $this->belongsToMany(Etudiant::class, 'inscriptions', 'cours_id', 'etudiant_id')
+                    ->withPivot('status')
+                    ->withTimestamps();
+    }
+
 }

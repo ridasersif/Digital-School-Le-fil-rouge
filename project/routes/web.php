@@ -12,6 +12,10 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PanierController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StudentController;
 use App\Http\Middleware\CheckStatus;
 use App\Http\Middleware\CheckAdminOrInstructor;
 use App\Models\Content;
@@ -22,12 +26,16 @@ Route::get('/test', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('frontend.home');
-})->name('home');
+Route::get('/', [HomeController::class,'getAllCoursPublished'])->name('home');
+Route::get('/courses/{id}', [HomeController::class, 'show'])->name('courses.show');
 
 
+Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 
+
+Route::post('/panier/ajouter/{cours}', [PanierController::class, 'ajouter'])->name('panier.ajouter');
 
 Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -104,23 +112,8 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
             Route::get('dashboard', function () {
                 return view('instructor.statistics');
             })->name('index');
-           
-            // Route dynamique par statut
-            // Route::get('course/{status}', [CoursController::class, 'index'])
-            //     ->whereIn('status', ['all', 'draft', 'pending', 'published'])
-            //     ->name('course.byStatus');
-
-            // // Redirect /instructor/course vers tous les cours
-            // Route::get('course', function () {
-            //     return redirect()->route('instructor.course.byStatus', ['status' => 'all']);
-            // })->name('course.index');
-
-            // CRUD Resource pour les cours
 
             Route::resource('course', CoursController::class)->except(['index','show']);
-
-
-            // Route::post('/course/update-status/{id}', [CoursController::class, 'updateStatus'])->name('course.updateStatus');
            
             Route::get('/content/create/{cours_id}', [ContentController::class, 'create'])->name('content.create');
             Route::post('/content', [ContentController::class, 'store'])->name('content.store');
@@ -131,6 +124,19 @@ Route::middleware([CheckAuthentication::class, 'auth'])->group(function () {
             Route::get('contents/create', [ContentController::class, 'create'])->name('contents.create');
             Route::get('contents/review', [ContentController::class, 'review'])->name('contents.review');
 
+        });
+    });
+    //Route pour les etudiant 
+    Route::middleware([CheckRole::class . ':3',CheckStatus::class])->group(function () {
+        Route::prefix('student')->name('student.')->group(function () {
+            Route::post('/panier/ajouter/{cours}', [PanierController::class, 'ajouter'])->name('panier.ajouter');
+            Route::get('/panier/afficher', [PanierController::class, 'afficherPanier'])->name('panier.afficher');
+            Route::delete('/panier/delete/{cours}', [PanierController::class, 'delete'])->name('panier.delete');
+            Route::delete('/panier/vider', [PanierController::class, 'vider'])->name('panier.vider');
+            //route poue le paiement
+            Route::post('/paiement/valider', [PaymentController::class, 'validerPaiement'])->name('paiement.valider');
+            Route::get('my-courses', [StudentController::class,'index'])->name('myCourses');
+            Route::get('my-courses/{id}', [StudentController::class,'show'])->name('myCourses.show'); 
         });
     });
 });
