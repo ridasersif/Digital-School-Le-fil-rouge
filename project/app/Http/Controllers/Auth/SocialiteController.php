@@ -39,12 +39,13 @@ class SocialiteController extends Controller
                     'role_id' => 4
                 ]);
                 Profile::create([
-                    'user_id'=>$user->id,
+                    'user_id' => $newUser->id,
                 ]);
                 Auth::login($newUser);
                 return redirect()->route('select-role');
             }
         } catch (\Exception $e) {
+            dd($e->getMessage());
           
             return redirect()->route('login')->with('error', 'error de Google: ' . $e->getMessage());
         }

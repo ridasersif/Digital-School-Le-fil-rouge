@@ -34,7 +34,7 @@ class AddUserRoleSeeder extends Seeder
         $faker = Faker::create();
         $users = [];
 
-        for ($i = 1; $i <= 200; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             $users[] = [
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
