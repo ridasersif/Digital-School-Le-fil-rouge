@@ -129,6 +129,16 @@ Route::middleware([CheckRoleUser::class])->group(function () {
         });
         //Route pour les etudiant 
         Route::middleware([CheckRole::class . ':3',CheckStatus::class])->group(function () {
+
+           
+            Route::get('/payer-maintenant', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
+            Route::get('/payment-intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.intent');
+            Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+            Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+            Route::get('/payment/get-courses', [PaymentController::class, 'getCourses'])->name('payment.get.courses');
+
+
+            
             Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
             Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
             Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');

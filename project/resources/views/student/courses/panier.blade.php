@@ -199,16 +199,15 @@
                         <span class="fw-bold">Total:</span>
                         <span class="fw-bold fs-4">{{ number_format($cours->sum('price'), 2) }} MAD</span>
                     </div>
-                    {{-- <form action="{{ route('student.paiement.valider') }}" method="POST"> --}}
-                    <form action="{{ route('checkout') }}" method="GET">
+                   
+                    <form action="{{ route('payment.page') }}" method="GET">
                         @csrf
-                    
-                            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
-                                <i class="fas fa-lock me-2"></i> Payer maintenant
-                            </button>
-                       
-                       
+                        <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                            <i class="fas fa-lock me-2"></i> Payer maintenant
+                        </button>
                     </form>
+                    
+                    
                     
                     
                     <p class="text-center text-muted small mb-0">Vous ne serez pas encore débité</p>
@@ -216,10 +215,7 @@
                     <hr>
                     
                     <div class="d-flex justify-content-center gap-1">
-                        {{-- <img src="https://t4.ftcdn.net/jpg/04/16/93/07/240_F_416930739_UeumuMO5QhZOXIAc09s7gz6JSPT97duS.jpg" alt="Visa" class="img-fluid">
-                        <img src="/api/placeholder/40/30" alt="Mastercard" class="img-fluid">
-                        <img src="/api/placeholder/40/30" alt="PayPal" class="img-fluid">
-                        <img src="/api/placeholder/40/30" alt="Apple Pay" class="img-fluid"> --}}
+                       
 
                         <img src="{{asset('assets/images/cartePaiment/imag2.png')}}" width="70px" height="50px" alt="Visa" class="img-fluid">
                         <img src="{{asset('assets/images/cartePaiment/imag1.png')}}" width="70px" height="50px" alt="Mastercard" class="img-fluid">
