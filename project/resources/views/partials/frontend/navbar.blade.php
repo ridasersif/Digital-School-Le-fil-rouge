@@ -49,7 +49,7 @@
                 </li>
 
                 <li class="nav-item mx-1">
-                    <a class="nav-link text-dark position-relative {{ request()->path() == '/#cours' ? 'active' : '' }}" href="#cours">
+                    <a class="nav-link text-dark position-relative {{ request()->path() == '/touteCourses' ? 'active' : '' }}" href="{{ route('home.getAllCourses') }}">
                         Cours
                         <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x"  style="background-color: #6d28d2;"></span>
 
@@ -110,8 +110,12 @@
                         </a>
                     </li>
                 @else
-                 <!-- Notifications -->
-                 <li class="nav-item dropdown me-3">
+               
+              
+               @if (auth()->user()->role_id == 3)
+               
+                  <!-- Notifications -->
+                  <li class="nav-item dropdown me-3">
                     <a class="nav-link text-dark position-relative" href="#" id="alertsDropdown" role="button" data-bs-toggle="dropdown">
                         <i class="fas fa-bell fa-lg"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #6d28d2;">
@@ -202,9 +206,8 @@
                         </div>
                     </div>
                 </li>
-               <!-- Panier -->
-               @if (auth()->user()->role_id == 3)
-                <li class="nav-item mx-1">
+                 <!-- Panier -->
+                 <li class="nav-item mx-1">
                     <a class="nav-link text-dark position-relative" href="{{route('student.panier.afficher')}}" >
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #6d28d2;">

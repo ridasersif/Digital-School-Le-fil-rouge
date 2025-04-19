@@ -46,5 +46,8 @@ class Cours extends Model
                     ->withPivot('status')
                     ->withTimestamps();
     }
-
+    public function avis()
+    {
+        return $this->hasMany(Avis::class);
+    }
 }

@@ -35,4 +35,9 @@ class Etudiant extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    public function avis()
+    {
+        return $this->hasMany(Avis::class);
+    }
+
 }

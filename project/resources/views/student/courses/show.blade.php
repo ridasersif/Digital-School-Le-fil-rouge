@@ -1,11 +1,28 @@
-
-
-
-
 <!-- student/courses/show.blade.php -->
 @extends('layouts.frontend')
 
 @section('contents')
+
+@if (session('success'))
+<div class="custom-alert custom-alert-success" id="alert-message">
+    <i class="fas fa-check-circle"></i>
+    {{ session('success') }}
+</div>
+@endif
+
+@if (session('info'))
+<div class="custom-alert custom-alert-info" id="alert-message">
+    <i class="fas fa-info-circle"></i>
+    {{ session('info') }}
+</div>
+@endif
+
+@if (session('error'))
+<div class="custom-alert custom-alert-error" id="alert-message">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{ session('error') }}
+</div>
+@endif
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Course Content Sidebar -->
@@ -58,7 +75,7 @@
         <!-- Main Content Area -->
         <div class="col-lg-9">
             <!-- Course Header -->
-            <div class="card shadow-sm mb-4">
+            {{-- <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
@@ -80,7 +97,35 @@
                         </div>
                     </div>
                 </div>
+            </div> --}}
+            <!-- Course Header -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h2 class="mb-1">{{ $course->titre }}</h2>
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-primary me-2">{{ $course->category->nom }}</span>
+                    <span class="text-muted">{{ $course->contents_count }} lessons</span>
+                </div>
             </div>
+            <div class="d-flex flex-column align-items-end">
+                <div class="instructor-preview d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#instructorModal">
+                    <img src="{{ asset('storage/' . $course->formateur->user->profile->avatar) }}" 
+                        class="rounded-circle me-2" alt="Instructor" style="width:40px; height:40px; object-fit:cover;">
+                    <div>
+                        <small class="text-muted d-block">Instructor</small>
+                        <strong>{{ $course->formateur->user->name }}</strong>
+                    </div>
+                </div>
+                <!-- Add Review Button -->
+                <button class="btn btn-outline-primary mt-3" data-bs-toggle="modal" data-bs-target="#addReviewModal">
+                    <i class="bi bi-star-fill"></i> Add Review
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
             
             <!-- Content Display Area -->
             <div class="card shadow-sm mb-4">
@@ -271,10 +316,93 @@
 </div>
 @endforeach
 
+
+<!-- Modal d'ajout d'avis -->
+<div class="modal fade" id="addReviewModal" tabindex="-1" aria-labelledby="addReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="addReviewModalLabel">Ajouter un avis</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <form method="POST" action="{{ route('avis.store', $course->id) }}">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="cours_id" value="{{ $course->id }}">
+
+                    <!-- Notation par étoiles -->
+                    <div class="mb-3">
+                        <label class="form-label">Note</label>
+                        <div class="star-rating d-flex flex-row-reverse justify-content-start">
+
+                            @for ($i = 5; $i >= 1; $i--)
+                                <input type="radio" id="star{{ $i }}" name="note" value="{{ $i }}" class="d-none">
+                                <label for="star{{ $i }}" class="star-label fs-3 mx-1" style="cursor: pointer;">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                </label>
+                            @endfor
+
+                        </div>
+                    </div>
+
+                    <!-- Commentaire -->
+                    <div class="mb-3">
+                        <label for="commentaire" class="form-label">Votre commentaire</label>
+                        <textarea class="form-control" id="commentaire" name="commentaire" rows="4" placeholder="Partagez votre expérience avec ce cours..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Boutons -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Envoyer l'avis</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
 @endsection
 
 @push('style')
 <style>
+      .custom-alert {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+            max-width: 400px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-size: 15px;
+            opacity: 0.95;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .custom-alert i {
+            font-size: 18px;
+        }
+        .custom-alert-success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .custom-alert-info {
+            background-color: #cff4fc;
+            color: #055160;
+        }
+        .custom-alert-error {
+            background-color: #f8d7da;
+            color: #842029;
+        }
     .sidebar-course {
         height: calc(100vh - 100px);
         overflow-y: auto;
@@ -325,6 +453,28 @@
         visibility: visible;
         opacity: 1;
     }
+    /* Star Rating Styles */
+.star-label {
+    cursor: pointer;
+    color: #ccc;
+    transition: all 0.2s;
+}
+
+.star-label:hover i,
+.star-label:hover ~ .star-container .star-label i {
+    color: #ffc107;
+    transform: scale(1.2);
+}
+
+input[type="radio"]:checked + .star-label i,
+input[type="radio"]:checked + .star-label ~ .star-container .star-label i {
+    color: #ffc107;
+}
+
+.star-container {
+    display: inline-block;
+    direction: rtl;
+}
     
    
 </style>
@@ -391,5 +541,29 @@
             loadContent(contentId);
         }
     });
+
+
+  
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.star-label');
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const inputId = this.getAttribute('for');
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.checked = true;
+
+                    // facultatif: mettre à jour les couleurs
+                    stars.forEach(s => s.querySelector('i').classList.remove('text-warning'));
+                    for (let i = 1; i <= input.value; i++) {
+                        let activeStar = document.querySelector(`#star${i} + label i`);
+                        if (activeStar) activeStar.classList.add('text-warning');
+                    }
+                }
+            });
+        });
+    });
+
+
 </script>
 @endpush

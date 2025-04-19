@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\AvisController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PaymentController;
@@ -27,9 +28,11 @@ Route::get('/test', function () {
     return view('welcome');
 });
 
+Route::post('/cours/{cours}/avis', [AvisController::class, 'store'])->name('avis.store');
 
 Route::middleware([CheckRoleUser::class])->group(function () {
     Route::get('/', [HomeController::class,'getAllCoursPublished'])->name('home');
+    Route::get('/touteCourses', [HomeController::class,'getAllCourses'])->name('home.getAllCourses');
     Route::get('/courses/{id}', [HomeController::class, 'show'])->name('courses.show');
 
 
@@ -138,7 +141,7 @@ Route::middleware([CheckRoleUser::class])->group(function () {
             Route::get('/payment/get-courses', [PaymentController::class, 'getCourses'])->name('payment.get.courses');
 
 
-            
+
             Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
             Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
             Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');

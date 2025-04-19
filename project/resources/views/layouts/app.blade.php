@@ -30,6 +30,16 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
         })();
+     
+      // Hide alert after 3 seconds
+      setTimeout(() => {
+        const alert = document.getElementById('alert-message');
+        if (alert) {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 300); // remove after fade
+        }
+    }, 3000);
+
     </script>
 
     

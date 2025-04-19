@@ -1,67 +1,15 @@
 
 @extends('layouts.frontend')
-@section('title', 'Home Page')
+@section('title', 'Toute les courses populaires')
 @push('style')
 
-    <style>
-        .custom-alert {
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            z-index: 1050;
-            min-width: 300px;
-            max-width: 400px;
-            padding: 15px 20px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            font-size: 15px;
-            opacity: 0.95;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .custom-alert i {
-            font-size: 18px;
-        }
-        .custom-alert-success {
-            background-color: #d1e7dd;
-            color: #0f5132;
-        }
-        .custom-alert-info {
-            background-color: #cff4fc;
-            color: #055160;
-        }
-        .custom-alert-error {
-            background-color: #f8d7da;
-            color: #842029;
-        }
-    </style>
+   
 
 @endpush
 
 @section('contents')
 
-    @if (session('success'))
-        <div class="custom-alert custom-alert-success" id="alert-message">
-            <i class="fas fa-check-circle"></i>
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session('info'))
-        <div class="custom-alert custom-alert-info" id="alert-message">
-            <i class="fas fa-info-circle"></i>
-            {{ session('info') }}
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="custom-alert custom-alert-error" id="alert-message">
-            <i class="fas fa-exclamation-triangle"></i>
-            {{ session('error') }}
-        </div>
-    @endif
+   
     <!-- Hero Section -->
     <section class="hero-section text-center">
         <div class="container">
@@ -78,29 +26,7 @@
         </div>
     </section>
   
-    <!-- Categories Section -->
-    <section id="Categories" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Explorez nos catégories populaires</h2>
-            <div class="row g-4">
-    
-                @foreach ($categories as $category)
-                    <div class="col-6 col-md-4 col-lg-2">
-                        
-                        <div class="card text-center h-100">
-                            <div class="card-body">
-                                
-                                <iconify-icon icon="{{ $category->icon }}" class="fas  fa-3x mb-3" style="color: #6d28d2;" ></iconify-icon>
-                                <h5 class="card-title">{{ $category->nom }}</h5>
-                                <p class="card-text small">{{ $category->cours_count }} cours</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-    
-            </div>
-        </div>
-    </section>
+   
     
 
     
@@ -110,7 +36,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Cours populaires</h2>
-            <a href="{{route('home.getAllCourses')}}" class="btn btn-outline-primary">Voir tous les cours</a>
+            <a href="" class="btn btn-outline-primary">Voir tous les cours</a>
         </div>
         <div class="row g-4">
             @forelse($cours as $course)
@@ -207,31 +133,8 @@
         </div>
         
     </div>
-     <!-- Modal pour login  -->
-     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="loginModalLabel">Authentification requise</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-            <div class="modal-body">
-            Pour ajouter ce cours au panier, vous devez être connecté.
-            </div>
-            <div class="modal-footer">
-            <a href="{{ route('login') }}" class="btn btn-primary">Se connecter</a>
-            <a href="{{ route('register') }}" class="btn btn-secondary">Créer un compte</a>
-            </div>
-        </div>
-        </div>
-    </div>
+   
 </section>
-       
-  
-
-
-
-
     <!-- Instructors Section -->
     <section id="Instructors" class="py-5">
         <div class="container">
@@ -398,14 +301,5 @@
 @endsection
 
 @push('script')
-<script>
-      // Hide alert after 3 seconds
-      setTimeout(() => {
-        const alert = document.getElementById('alert-message');
-        if (alert) {
-            alert.style.opacity = '0';
-            setTimeout(() => alert.remove(), 300); // remove after fade
-        }
-    }, 3000);
-</script>
+
 @endpush
