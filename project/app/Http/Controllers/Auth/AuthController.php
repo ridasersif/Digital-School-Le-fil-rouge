@@ -29,11 +29,12 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $role = $request->role;
-        if ($role== 3) {
+        if ($role== 3 || $role==4) {
             $status = 'active';
         } elseif ($role == 2) {
             $status = 'inactive';
         }
+       
 
         $user =User::create([
             'name'=>$request->name,

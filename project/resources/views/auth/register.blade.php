@@ -70,7 +70,7 @@
                 <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" >
                     <option value="" disabled selected>Sélectionnez votre rôle</option>
                     @foreach ($roles as $role)
-                        @if ($role->id!=1)
+                        @if ($role->id!=1 && $role->id!=4)
                             <option value="{{ $role->id }}" {{ old('role') == $role->id ? 'selected' : '' }}>
                                 {{ $role->name }} 
                             </option>

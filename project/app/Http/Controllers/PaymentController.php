@@ -78,13 +78,13 @@ public function success()
         }
     }
     $etudiant->panier()->detach();
-    return redirect()->route('student.panier.afficher')->with('success', 'Paiement Stripe effectué avec succès !');
+    return redirect()->route('student.myCourses')->with('success', 'Paiement Stripe effectué avec succès !');
 }
 
 
 public function cancel()
 {
-    return redirect()->route('etudiant.mes-cours')->with('error', 'Paiement annulé.');
+    return redirect()->route('student.panier.mycours')->with('error', 'Paiement annulé.');
 }
 
 

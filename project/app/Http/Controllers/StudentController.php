@@ -12,7 +12,7 @@ class StudentController extends Controller
     {
         $student = Auth::user()->etudiant;
 
-        $courses = $student->cours()->with('formateur.user.profile','contents','category') ->withCount('contents')->paginate(2);
+        $courses = $student->cours()->with('formateur.user.profile','contents','category') ->withCount('contents')->paginate(3);
              // dd($courses->toSql());
         return view('student.courses.mycours', compact('courses'));
     }
