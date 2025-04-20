@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AvisController;
+use App\Http\Controllers\CertificatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PaymentController;
@@ -27,6 +28,9 @@ use Illuminate\Routing\Route as RoutingRoute;
 Route::get('/test', function () {
     return view('welcome');
 });
+
+
+
 
 Route::post('/cours/{cours}/avis', [AvisController::class, 'store'])->name('avis.store');
 
@@ -139,8 +143,11 @@ Route::middleware([CheckRoleUser::class])->group(function () {
             Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
             Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
             Route::get('/payment/get-courses', [PaymentController::class, 'getCourses'])->name('payment.get.courses');
+            Route::get('/certificat/{cours}/download', [CertificatController::class, 'download'])->name('certificat.download');
 
-
+            Route::post('/contents/{id}/viewed', [ContentController::class, 'markAsViewed'])
+            ->middleware('auth')
+            ->name('contents.viewed'); 
 
             Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
             Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');

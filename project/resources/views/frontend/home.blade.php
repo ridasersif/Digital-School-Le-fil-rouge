@@ -172,15 +172,15 @@
                 
                                     }
                                 @endphp
-                            @if (Auth::check())
+                            @if ($etudiant)
                                         <!-- Bouton dynamique -->
                                 @if($isInscrit)
-                                    <form action="{{ route('student.panier.ajouter', $course->id) }}" method="POST">
+                                    <form action="{{route('student.myCourses.show',$course->id)}}" method="git">
                                         @csrf
                                         {{-- <button type="submit" class="btn btn-primary w-100">
                                             <i class="fas fa-cart-plus me-1"></i> Ajouter au panier
                                         </button> --}}
-                                        <button  class="btn btn-success w-100"> Voir le cours </button>
+                                        <button  class="btn btn-success w-100"> Commencer à apprendre </button>
                                     
                                     </form>
                                 
@@ -191,11 +191,7 @@
                                     </form>
                                 @endif
                             
-                            @else
-                               
-                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                    Ajouter au panier
-                                </button>
+                          
                             @endif
                            
                         </div>

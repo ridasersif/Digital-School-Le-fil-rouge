@@ -39,5 +39,15 @@ class Etudiant extends Model
     {
         return $this->hasMany(Avis::class);
     }
+    public function certificats()
+    {
+        return $this->hasMany(Certificat::class);
+    }
+    public function contents()
+    {
+        return $this->belongsToMany(Content::class, 'content_etudiant')->withPivot('viewed_at');
+    }
+
+
 
 }

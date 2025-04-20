@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateContentRequest;
 use App\Models\Cours;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
@@ -49,6 +50,9 @@ class ContentController extends Controller
         } else {
             $duree = $request->input('duree_lien');
             $contentPath = $request->input('chemin_lien');
+            if (!preg_match('/^https?:\/\//', $contentPath)) {
+                $contentPath = 'https://' . $contentPath;
+            }
         }
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -76,10 +80,7 @@ class ContentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Content $content)
-    {
-        
-    }
+  
 
     /**
      * Show the form for editing the specified resource.
@@ -95,7 +96,8 @@ class ContentController extends Controller
      */
     public function update(UpdateContentRequest $request, Content $content)
     {
-        if (Auth::user()->id !== $content->cours->formateur_id) {
+       
+        if (Auth::user()->formateur->id !== $content->cours->formateur_id) {
              abort(403, 'Unauthorized action.');
         }
         $type = $request->type;
@@ -136,6 +138,9 @@ class ContentController extends Controller
         else {
             $duree = $request->input('duree_lien');
             $contentPath = $request->input('chemin_lien');
+            if (!preg_match('/^https?:\/\//', $contentPath)) {
+                $contentPath = 'https://' . $contentPath;
+            }
         }
     
         $imagePath = null;
@@ -160,7 +165,7 @@ class ContentController extends Controller
         ]);
     
         return redirect()
-            ->route('instructor.course.show', ['course' => $request->input('cours_id')])
+            ->route('course.show', ['course' => $request->input('cours_id')])
             ->with('success', 'Contenu mis à jour avec succès.');
     }
     
@@ -170,9 +175,10 @@ class ContentController extends Controller
      */
     public function destroy(Content $content)
     {
-        if (Auth::user()->id !== $content->cours->formateur_id) {
+        if (Auth::user()->formateur->id !== $content->cours->formateur_id) {
             abort(403, 'Unauthorized action.');
-       }
+        }
+   
         $courseId = $content->cours_id;
         if ($content->chemin){
             Storage::disk('public')->delete($content->chemin);
@@ -182,7 +188,31 @@ class ContentController extends Controller
         }
         $content->delete();
         return redirect()
-        ->route('instructor.course.show', ['course' => $courseId])
+        ->route('course.show', ['course' => $courseId])
         ->with('success', 'Contenu supprimé avec succès.');
     }
+
+
+public function markAsViewed($id, Request $request)
+{
+    $user = Auth::user();
+
+
+    if (!$user->etudiant) {
+        return response()->json(['message' => 'Non autorisé'], 403);
+    }
+
+    $etudiant = $user->etudiant;
+    $content = Content::findOrFail($id);
+
+   
+    $alreadyViewed = $etudiant->contents()->where('content_id', $id)->exists();
+
+    if (!$alreadyViewed) {
+        $etudiant->contents()->attach($content->id, ['viewed_at' => now()]);
+    }
+
+    return response()->json(['message' => '✅ Le contenu a été marqué comme lu']);
+}
+
 }

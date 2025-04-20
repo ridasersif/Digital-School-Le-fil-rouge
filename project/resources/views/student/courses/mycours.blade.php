@@ -219,7 +219,7 @@
                                     </span>
                                 </div>
                                 
-                                <a href="{{route('student.myCourses.show',$course->id)}}" class="btn btn-primary mt-3">Start Learning</a>
+                                <a href="{{route('student.myCourses.show',$course->id)}}" class="btn btn-primary mt-3">Commencer à apprendre</a>
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <a href="" class="btn btn-primary">Start Learning</a>
+                                    <a href="{{route('student.myCourses.show',$course->id)}}" class="btn btn-primary">Commencer à apprendre</a>
                                 </div>
                             </div>
                         </div>

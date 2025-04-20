@@ -8,35 +8,12 @@
 @endpush
 
 @section('contents')
-
-   
-    <!-- Hero Section -->
-    <section class="hero-section text-center">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-4">Développez vos compétences avec SersifAcademy</h1>
-            <p class="lead mb-5">Découvrez plus de 10 000 cours dispensés par des experts dans leur domaine</p>
-            <div class="d-flex justify-content-center">
-                <form class="col-md-6">
-                    <div class="input-group input-group-lg">
-                        <input type="text" class="form-control" placeholder="Que souhaitez-vous apprendre?">
-                        <button class="btn btn-primary px-4" type="submit">Rechercher</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-  
-   
-    
-
-    
-
     <!-- Featured Courses -->
 <section class="py-5 bg-light" id="cours">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Cours populaires</h2>
-            <a href="" class="btn btn-outline-primary">Voir tous les cours</a>
+         
         </div>
         <div class="row g-4">
             @forelse($cours as $course)
@@ -98,15 +75,12 @@
                 
                                     }
                                 @endphp
-                            @if (Auth::check())
+                            @if ($etudiant)
                                         <!-- Bouton dynamique -->
                                 @if($isInscrit)
-                                    <form action="{{ route('student.panier.ajouter', $course->id) }}" method="POST">
+                                    <form action="{{route('student.myCourses.show',$course->id)}}" method="get">
                                         @csrf
-                                        {{-- <button type="submit" class="btn btn-primary w-100">
-                                            <i class="fas fa-cart-plus me-1"></i> Ajouter au panier
-                                        </button> --}}
-                                        <button  class="btn btn-success w-100"> Voir le cours </button>
+                                        <button  class="btn btn-success w-100">Commencer à apprendre </button>
                                     
                                     </form>
                                 
@@ -119,9 +93,7 @@
                             
                             @else
                                
-                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                    Ajouter au panier
-                                </button>
+                               
                             @endif
                            
                         </div>
@@ -135,169 +107,7 @@
     </div>
    
 </section>
-    <!-- Instructors Section -->
-    <section id="Instructors" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Nos instructeurs d'élite</h2>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center h-100">
-                        <img src="/api/placeholder/150/150" class="rounded-circle mx-auto mt-4" width="100" height="100" alt="Instructeur">
-                        <div class="card-body">
-                            <h5 class="card-title">Jean Dupont</h5>
-                            <p class="card-text text-muted">Développeur Web Senior</p>
-                            <p class="card-text">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <small class="text-muted">(4.9)</small>
-                            </p>
-                            <p class="card-text small">12 cours · 45,000+ étudiants</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center h-100">
-                        <img src="/api/placeholder/150/150" class="rounded-circle mx-auto mt-4" width="100" height="100" alt="Instructeur">
-                        <div class="card-body">
-                            <h5 class="card-title">Marie Martin</h5>
-                            <p class="card-text text-muted">Experte en IA</p>
-                            <p class="card-text">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star-half-alt text-warning"></i>
-                                <small class="text-muted">(4.8)</small>
-                            </p>
-                            <p class="card-text small">8 cours · 32,000+ étudiants</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center h-100">
-                        <img src="/api/placeholder/150/150" class="rounded-circle mx-auto mt-4" width="100" height="100" alt="Instructeur">
-                        <div class="card-body">
-                            <h5 class="card-title">Sophie Bernard</h5>
-                            <p class="card-text text-muted">Consultante en stratégie</p>
-                            <p class="card-text">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <small class="text-muted">(4.9)</small>
-                            </p>
-                            <p class="card-text small">10 cours · 38,000+ étudiants</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center h-100">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle mx-auto mt-4" width="100" height="100" alt="Instructeur">
-                        <div class="card-body">
-                            <h5 class="card-title">Lucas Petit</h5>
-                            <p class="card-text text-muted">Designer UX/UI</p>
-                            <p class="card-text">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star-half-alt text-warning"></i>
-                                <small class="text-muted">(4.7)</small>
-                            </p>
-                            <p class="card-text small">15 cours · 42,000+ étudiants</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Testimonials -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Ce que disent nos étudiants</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </div>
-                            <p class="card-text">"Cette plateforme a complètement transformé ma carrière. Les cours sont incroyablement bien structurés et les instructeurs sont des experts dans leur domaine."</p>
-                            <div class="d-flex align-items-center mt-3">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
-                                <div>
-                                    <h6 class="mb-0">Sarah Durand</h6>
-                                    <small class="text-muted">Développeuse Web</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </div>
-                            <p class="card-text">"J'ai suivi plusieurs cours sur l'IA et je suis impressionné par la qualité du contenu. J'ai pu appliquer directement ces connaissances dans mon travail quotidien."</p>
-                            <div class="d-flex align-items-center mt-3">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
-                                <div>
-                                    <h6 class="mb-0">Thomas Leroy</h6>
-                                    <small class="text-muted">Data Scientist</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star-half-alt text-warning"></i>
-                            </div>
-                            <p class="card-text">"Le cours sur le lancement d'entreprise en ligne m'a donné toutes les clés pour démarrer mon activité. Je recommande vivement cette plateforme à tous les entrepreneurs en herbe."</p>
-                            <div class="d-flex align-items-center mt-3">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
-                                <div>
-                                    <h6 class="mb-0">Claire Moreau</h6>
-                                    <small class="text-muted">Entrepreneure</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-5 text-white text-center" style="background-color: #6d28d2;">
-
-        <div class="container">
-            <h2 class="mb-4">Prêt à développer vos compétences?</h2>
-            <p class="lead mb-4">Rejoignez plus de 500 000 étudiants qui apprennent déjà sur notre plateforme</p>
-            <a href="#" class="btn btn-light btn-lg px-4 me-2">Commencer gratuitement</a>
-            <a href="all-courses.html" class="btn btn-outline-light btn-lg px-4">Voir tous les cours</a>
-        </div>
-    </section>
 @endsection
 
 @push('script')

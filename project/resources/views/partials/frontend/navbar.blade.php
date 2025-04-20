@@ -30,22 +30,14 @@
                     </a>
                 </li>
                 
-                <li class="nav-item dropdown mx-1">
-                    <a class="nav-link text-dark position-relative dropdown-toggle" href="categries" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">
+                <li class="nav-item  mx-1">
+                    <a class="nav-link text-dark position-relative " href="categries" >
                         Catégories
                         <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x"  style="background-color: #6d28d2;"></span>
 
 
                     </a>
-                    <ul class="dropdown-menu shadow-lg border-0">
-                        <li><a class="dropdown-item py-2" href="#"><i class="fas fa-code me-2 text-primary"></i> Développement Web</a></li>
-                        <li><a class="dropdown-item py-2" href="#"><i class="fas fa-robot me-2 text-info"></i> Intelligence Artificielle</a></li>
-                        <li><a class="dropdown-item py-2" href="#"><i class="fas fa-chart-line me-2 text-success"></i> Business</a></li>
-                        <li><a class="dropdown-item py-2" href="#"><i class="fas fa-paint-brush me-2 text-warning"></i> Design</a></li>
-                        <li><a class="dropdown-item py-2" href="#"><i class="fas fa-bullhorn me-2 text-danger"></i> Marketing</a></li>
-                        <li><hr class="dropdown-divider mx-3"></li>
-                        <li><a class="dropdown-item py-2 text-primary fw-bold" href="all-courses.html"><i class="fas fa-ellipsis-h me-2"></i> Toutes les catégories</a></li>
-                    </ul>
+            
                 </li>
 
                 <li class="nav-item mx-1">
@@ -55,14 +47,6 @@
 
 
                     </a>                                            
-                </li>
-                <li class="nav-item mx-1">
-                    <a class="nav-link position-relative text-dark " href="#">
-                        Blog
-                        <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x"  style="background-color: #6d28d2;"></span>
-
-
-                    </a>
                 </li>
 
                 @auth

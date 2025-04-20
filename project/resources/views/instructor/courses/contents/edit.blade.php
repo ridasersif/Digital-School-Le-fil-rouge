@@ -243,7 +243,7 @@
             <div id="linkInputs" class="content-inputs {{ $content->type == 'link' ? 'active' : '' }}">
                 <div class="mb-3">
                     <label class="form-label">URL du lien</label>
-                    <input type="text" class="form-control @error('chemin_lien') is-invalid @enderror" name="chemin_lien" id="linkUrl" placeholder="https://..." value="{{ old($content->chemin?? '' )}}">
+                    <input type="text" class="form-control @error('chemin_lien') is-invalid @enderror" name="chemin_lien" id="linkUrl" placeholder="https://..." value="{{ old($content->chemin ?? '' )}}">
                     @error('chemin_lien')
                     <div class="invalid-feedback">{{ $message }}</div>
                    @enderror

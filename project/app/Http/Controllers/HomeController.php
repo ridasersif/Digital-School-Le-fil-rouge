@@ -47,5 +47,18 @@ class HomeController extends Controller
     
         return view('frontend.allCourses', compact('cours'));
     }
+    public function getAllCategories()
+    {
+        $categories = Category::withCount(['cours' => function ($query) {
+                $query->where('status', 'published');
+            }])
+            ->whereHas('cours', function ($query) {
+                $query->where('status', 'published');
+            })
+            ->orderByDesc('cours_count')
+            ->get();
+    
+        return view('frontend.categories', compact('categories'));
+    }
    
 }
