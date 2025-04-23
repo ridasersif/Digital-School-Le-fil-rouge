@@ -24,7 +24,6 @@ class Etudiant extends Model
     {
         return $this->belongsToMany(Cours::class, 'panier')->withTimestamps();
     }
-   
 
     public function inscriptions()
     {
@@ -47,7 +46,7 @@ class Etudiant extends Model
     {
         return $this->belongsToMany(Content::class, 'content_etudiant')->withPivot('viewed_at');
     }
-
-
-
 }
+
+
+

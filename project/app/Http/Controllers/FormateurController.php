@@ -5,62 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Formateur;
 use App\Http\Requests\StoreFormateurRequest;
 use App\Http\Requests\UpdateFormateurRequest;
+use Illuminate\Support\Facades\Auth;
 
 class FormateurController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function mesAvis(){
+        $formateur = Formateur::where('user_id', Auth::id())->first();
+        if (!$formateur) {
+            return back()->with('error', 'Formateur non trouvé.');
+        }
+        $coursAvecAvis = $formateur->cours()->with(['avis.etudiant.user.profile'])->get();
+      
+        return view('instructor.avis.index', compact('coursAvecAvis'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFormateurRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Formateur $formateur)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formateur $formateur)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFormateurRequest $request, Formateur $formateur)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Formateur $formateur)
-    {
-        //
-    }
+   
 }

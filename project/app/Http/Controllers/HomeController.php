@@ -43,7 +43,7 @@ class HomeController extends Controller
             ->with(['category', 'formateur.user.profile'])
             ->withCount('contents')
             ->orderBy('created_at', 'desc')
-            ->paginate(6);
+            ->paginate(8);
     
         return view('frontend.allCourses', compact('cours'));
     }

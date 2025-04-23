@@ -21,8 +21,8 @@
         <ul class="nav flex-column">
             <li class="nav-item {{ request()->routeIs('admin.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.index') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span class="nav-text">Tableau de bord</span>
+                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <span class="nav-text">Statistiques</span>
                 </a>
             </li>
             <li class="nav-item {{ request()->routeIs('categories.index') ? 'active' : '' }}">
@@ -105,20 +105,14 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-bar"></i>
-                    <span class="nav-text">Statistiques</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-money-bill"></i>
                     <span class="nav-text">Paiements</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('admin.avis') }}">
                     <i class="fas fa-fw fa-comments"></i>
-                    <span class="nav-text">Commentaires</span>
+                    <span class="nav-text">Avis</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -238,9 +232,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('instructor.mesAvis') }}">
                     <i class="fas fa-fw fa-comments"></i>
-                    <span class="nav-text">Commentaires</span>
+                    <span class="nav-text">Avis</span>
                 </a>
             </li>
             <li class="nav-item">

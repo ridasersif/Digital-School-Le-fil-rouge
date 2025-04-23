@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Avis;
 use App\Models\User;
 use App\Repositories\Admin\AdminRepository;
 use Illuminate\Http\Request;
@@ -59,4 +60,13 @@ class AdminController extends Controller
             'badge_class' => $user->status === 'active' ? 'success' : 'danger',
         ]);
     }
+    public function gatAllAvis()
+    {
+        $avis = Avis::with(['cours.formateur.user.profile', 'etudiant.user.profile'])->latest()->get();
+        // dd($avis);
+
+        return view('admin.avis.index', compact('avis'));
+    }
+
+   
 }

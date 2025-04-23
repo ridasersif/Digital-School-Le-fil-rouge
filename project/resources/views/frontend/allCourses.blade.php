@@ -103,8 +103,13 @@
                 <p>Aucun cours trouvé.</p>
             @endforelse
         </div>
+     
         
     </div>
+    <div class="pagination mt-4">
+        {{ $cours->links() }}
+    </div>
+    
    
 </section>
 

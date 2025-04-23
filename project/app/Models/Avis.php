@@ -16,7 +16,6 @@ class Avis extends Model
     {
         return $this->belongsTo(Etudiant::class);
     }
-
     public function cours()
     {
         return $this->belongsTo(Cours::class);

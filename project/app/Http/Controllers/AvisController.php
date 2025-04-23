@@ -38,4 +38,12 @@ class AvisController extends Controller
         ]);
         return back()->with('success', 'Merci pour votre avis !');
     }
+    public function delete($id)
+    {
+        $avis = Avis::findOrFail($id);
+        $avis->delete();
+
+        return redirect()->back()->with('success', 'L\'avis a été supprimé avec succès.');
+    }
+    
 }
