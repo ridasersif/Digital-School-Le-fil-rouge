@@ -14,35 +14,20 @@
     </div>
    <!-- Statistics globale-->
     <div class="container statistics-globale">
-        <!-- Statistics Cards -->
-    <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card statistics-card primary h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Revenus (Mensuel)
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold">42,500 MAD</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+       <!-- Statistics Cards -->
+       <div class="row">
+          
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card statistics-card success h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Revenus (Annuel)
+                                Revenus 
                             </div>
-                            <div class="h5 mb-0 font-weight-bold">357,000 MAD</div>
+                            <div class="h5 mb-0 font-weight-bold">
+                                {{ number_format($revenue, 0, ',', ' ') }} MAD
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -51,44 +36,45 @@
                 </div>
             </div>
         </div>
-        
+    
+      
+    
+       
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card statistics-card info h-100 py-2">
+            <div class="card statistics-card primary h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tâches</div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold">75%</div>
-                                </div>
-                                <div class="col">
-                                    <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 75%"></div>
-                                    </div>
-                                </div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Etudiants 
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold">
+                                {{ $studentsCount }}
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+    
+      
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card statistics-card warning h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Demandes en attente
+                                Cours 
                             </div>
-                            <div class="h5 mb-0 font-weight-bold">18</div>
+                            <div class="h5 mb-0 font-weight-bold">
+                                {{ $coursCount }}
+                            </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="fas fa-book-open fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

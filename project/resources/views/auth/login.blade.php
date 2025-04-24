@@ -6,7 +6,9 @@
     <div class="card-body">
         <div class="text-center mb-4">
             <div class="auth-logo">
-                <i class="fas fa-graduation-cap me-2"></i>{{ config('app.name', 'E-Learning') }}
+                <img src="{{ asset('storage/avatars/sersifAcademy.png') }}" width="30" height="30" style="border-radius: 50%; ">
+
+               </i>{{ config('app.name', 'E-Learning') }}
             </div>
             <h4>Connexion à votre compte</h4>
         </div>

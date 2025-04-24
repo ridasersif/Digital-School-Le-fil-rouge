@@ -66,7 +66,7 @@
     <section class="hero-section text-center">
         <div class="container">
             <h1 class="display-4 fw-bold mb-4">Développez vos compétences avec SersifAcademy</h1>
-            <p class="lead mb-5">Découvrez plus de 10 000 cours dispensés par des experts dans leur domaine</p>
+            <p class="lead mb-5">Découvrez plus de {{9000+$totalCours}} cours dispensés par des experts dans leur domaine</p>
             <div class="d-flex justify-content-center">
                 <form class="col-md-6">
                     <div class="input-group input-group-lg">
@@ -147,7 +147,10 @@
                                 <span class="badge bg-light text-dark">Bestseller</span>
                                 <div>
                                     <i class="fas fa-star text-warning"></i>
-                                    <small>4.8 (245)</small>
+                                    <small>
+                                        {{ number_format($course->avis_avg_note, 1) }} 
+                                        ({{ $course->avis_count }})
+                                    </small>
                                 </div>
                             </div>
         
@@ -309,84 +312,59 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Ce que disent nos étudiants</h2>
-            <div class="row g-4">
+   <!-- Testimonials -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Ce que disent nos étudiants</h2>
+        <div class="row g-4">
+            @foreach ($avis as $avi)
                 <div class="col-md-4">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="mb-3">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
+                                @php
+                                    $note = round($avi->note);
+                                @endphp
+
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $note)
+                                        <i class="fas fa-star text-warning"></i>
+                                    @else
+                                        <i class="far fa-star text-warning"></i>
+                                    @endif
+                                @endfor
                             </div>
-                            <p class="card-text">"Cette plateforme a complètement transformé ma carrière. Les cours sont incroyablement bien structurés et les instructeurs sont des experts dans leur domaine."</p>
+
+                            <p class="card-text">"{{ $avi->commentaire }}"</p>
+
                             <div class="d-flex align-items-center mt-3">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
+                                @php
+                                    $profile = $avi->etudiant->user->profile ?? null;
+                                    $avatar = $profile && $profile->avatar ? asset('storage/' . $profile->avatar) : 'https://via.placeholder.com/50x50?text=User';
+                                @endphp
+
+                                <img src="{{ $avatar }}" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
+
                                 <div>
-                                    <h6 class="mb-0">Sarah Durand</h6>
-                                    <small class="text-muted">Développeuse Web</small>
+                                    <h6 class="mb-0">{{ $avi->etudiant->user->name }}</h6>
+                                    <small class="text-muted">{{ $profile?->metier ?? 'Étudiant' }}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </div>
-                            <p class="card-text">"J'ai suivi plusieurs cours sur l'IA et je suis impressionné par la qualité du contenu. J'ai pu appliquer directement ces connaissances dans mon travail quotidien."</p>
-                            <div class="d-flex align-items-center mt-3">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
-                                <div>
-                                    <h6 class="mb-0">Thomas Leroy</h6>
-                                    <small class="text-muted">Data Scientist</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star-half-alt text-warning"></i>
-                            </div>
-                            <p class="card-text">"Le cours sur le lancement d'entreprise en ligne m'a donné toutes les clés pour démarrer mon activité. Je recommande vivement cette plateforme à tous les entrepreneurs en herbe."</p>
-                            <div class="d-flex align-items-center mt-3">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGJSSN5-gXh3p-I8g9UqSFkOeYSOe3QWqH-R3v5nsDKTBI-5kepOnHXny1LofLOQiFwUU&usqp=CAU" class="rounded-circle me-3" width="50" height="50" alt="Étudiant">
-                                <div>
-                                    <h6 class="mb-0">Claire Moreau</h6>
-                                    <small class="text-muted">Entrepreneure</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- CTA Section -->
     <section class="py-5 text-white text-center" style="background-color: #6d28d2;">
 
         <div class="container">
             <h2 class="mb-4">Prêt à développer vos compétences?</h2>
-            <p class="lead mb-4">Rejoignez plus de 500 000 étudiants qui apprennent déjà sur notre plateforme</p>
+            <p class="lead mb-4">Rejoignez plus de {{50000+$totalEtudiants}} étudiants qui apprennent déjà sur notre plateforme</p>
             <a href="#" class="btn btn-light btn-lg px-4 me-2">Commencer gratuitement</a>
             <a href="all-courses.html" class="btn btn-outline-light btn-lg px-4">Voir tous les cours</a>
         </div>
@@ -395,13 +373,15 @@
 
 @push('script')
 <script>
-      // Hide alert after 3 seconds
+     
       setTimeout(() => {
         const alert = document.getElementById('alert-message');
         if (alert) {
             alert.style.opacity = '0';
-            setTimeout(() => alert.remove(), 300); // remove after fade
+            setTimeout(() => alert.remove(), 300); 
         }
     }, 3000);
 </script>
 @endpush
+
+                

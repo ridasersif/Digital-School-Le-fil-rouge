@@ -8,6 +8,7 @@ use App\Models\Formateur;
 use App\Models\Etudiant;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Faker\Factory as Faker;
 
 class AddUserRoleSeeder extends Seeder
@@ -15,8 +16,7 @@ class AddUserRoleSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-
-      
+        
         $admin = User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
@@ -24,9 +24,7 @@ class AddUserRoleSeeder extends Seeder
             'role_id' => 1,
         ]);
         $this->createProfile($admin->id, $faker);
-       
 
-       
         for ($i = 1; $i <= 10; $i++) {
             $formateur = User::create([
                 'name' => 'Formateur ' . $i,
@@ -42,9 +40,7 @@ class AddUserRoleSeeder extends Seeder
                
             ]);
         }
-
-      
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $etudiant = User::create([
                 'name' => 'Etudiant ' . $i,
                 'email' => 'etudiant' . $i . '@gmail.com',
@@ -63,12 +59,13 @@ class AddUserRoleSeeder extends Seeder
 
     private function createProfile($userId, $faker)
     {
+        $avatar = collect(Storage::files('public/avatars'));
         Profile::create([
             'user_id' => $userId,
             'phone' => $faker->phoneNumber,
             'address' => $faker->address,
             'bio' => $faker->sentence(10),
-            'avatar' => 'profiles/default.png',
+            'avatar' => 'avatars/' . basename($avatar->random()),
         ]);
     }
 }

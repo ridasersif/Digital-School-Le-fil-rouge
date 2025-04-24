@@ -23,7 +23,7 @@ class CoursRepository implements CoursInterface
                 ->when($status !== 'all', fn($query) => $query->where('status', $status))
                 ->withCount('contents')
                 ->orderBy('created_at', 'desc')
-                ->paginate(100) : collect();
+                ->paginate(10) : collect();
         }
     
         if ($user->role_id == 1) {
@@ -38,7 +38,7 @@ class CoursRepository implements CoursInterface
                     ->with(['contents', 'formateur.user.profile'])
                     ->withCount('contents')
                     ->orderBy('created_at', 'desc')
-                    ->paginate(100);
+                    ->paginate(10);
         }
     
         return collect();

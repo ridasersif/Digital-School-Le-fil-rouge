@@ -50,7 +50,11 @@
                                 <span class="badge bg-light text-dark">Bestseller</span>
                                 <div>
                                     <i class="fas fa-star text-warning"></i>
-                                    <small>4.8 (245)</small>
+                                  
+                                    <small>
+                                        {{ number_format($course->avis_avg_note, 1) }} 
+                                        ({{ $course->avis_count }})
+                                    </small>
                                 </div>
                             </div>
         

@@ -20,7 +20,7 @@
     @if (Auth::user()->role_id === 1)
         <ul class="nav flex-column">
             <li class="nav-item {{ request()->routeIs('admin.index') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.index') }}">
+                <a class="nav-link" href="{{ route('admin.statistiqueForadmin') }}">
                     <i class="fas fa-fw fa-chart-bar"></i>
                     <span class="nav-text">Statistiques</span>
                 </a>
@@ -104,7 +104,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('admin.payments') }}">
                     <i class="fas fa-fw fa-money-bill"></i>
                     <span class="nav-text">Paiements</span>
                 </a>
@@ -132,11 +132,12 @@
     @if (Auth::user()->role_id === 2)
         <ul class="nav flex-column">
             <li class="nav-item {{ request()->routeIs('instructor.index') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('instructor.index') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span class="nav-text">Tableau de bord</span>
+                <a class="nav-link" href="{{ route('instructor.statistiqueForInstructor') }}">
+                    <i class="fas fa-fw fa-chart-bar"></i>
+                    <span class="nav-text">Statistiques</span>
                 </a>
             </li>
+           
 
             <!-- Dropdown Cours -->
            
@@ -184,49 +185,17 @@
 
             <!-- Dropdown Utilisateurs -->
             <li class="nav-item ">
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#usersSubmenu" aria-expanded="false">
+                <a class="nav-link " href="{{route('instructor.etudiantsInscrits')}}" >
                     <i class="fas fa-fw fa-users"></i>
                     <span class="nav-text">Utilisateurs</span>
-                    <i class="fas fa-angle-down submenu-indicator ms-auto"></i>
+                   
                 </a>
-                <div id="usersSubmenu" class="collapse submenu">
-                    <ul class="nav flex-column submenu-items">
-                        <li class="nav-item {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.users.index') }}">
-                                <i class="fas fa-users fa-sm"></i>
-                                <span class="nav-text">Tous les utilisateurs</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('admin.students.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.students.index') }}">
-                                <i class="fas fa-user-graduate fa-sm"></i>
-                                <span class="nav-text">Étudiants</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('admin.instructors.index') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.instructors.index') }}">
-                                <i class="fas fa-chalkboard-teacher fa-sm"></i>
-                                <span class="nav-text">Formateurs</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('admin.users.inactive') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.users.inactive') }}">
-                                <i class="fas fa-user-slash fa-sm "></i>
-                                <span class="nav-text">Utilisateurs inactifs</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+               
             </li>
 
+           
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-bar"></i>
-                    <span class="nav-text">Statistiques</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('instructor.payments') }}">
                     <i class="fas fa-fw fa-money-bill"></i>
                     <span class="nav-text">Paiements</span>
                 </a>
@@ -237,12 +206,7 @@
                     <span class="nav-text">Avis</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span class="nav-text">Paramètres</span>
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('home') }}">
                     <i class="fas fa-fw fa-home"></i>

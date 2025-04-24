@@ -18,4 +18,12 @@ class Inscription extends Model
     {
         return $this->hasOne(Payment::class);
     }
+    public function etudiant()
+    {
+        return $this->belongsTo(Etudiant::class); 
+    }
+    public function cours()
+    {
+        return $this->belongsTo(Cours::class); 
+    }
 }
