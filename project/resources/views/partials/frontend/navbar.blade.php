@@ -3,7 +3,10 @@
 
         <!-- Logo avec animation au hover -->
         <a class="navbar-brand fw-bold text-dark d-flex align-items-center" href="index.html" style="transition: all 0.3s;">
-            <i class="fas fa-graduation-cap me-2" style="font-size: 1.5rem; color: #6d28d2;"></i>
+          
+            <img src="{{ asset('storage/avatars/sersifAcademy.png') }}" width="30" height="30" style="border-radius: 50%; margin-right: 5px;">
+           
+
             <span class="brand-text">Sersif</span><span class="brand-text-alt" style="color: #495057;">Academy</span>
         </a>
 
@@ -54,7 +57,7 @@
                     @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
                         <li class="nav-item mx-1">
                             <a class="nav-link position-relative text-dark" 
-                            href="{{ auth()->user()->role_id == 1 ? route('admin.index') : route('instructor.index') }}">
+                            href="{{ auth()->user()->role_id == 1 ? route('admin.statistiqueForadmin') : route('instructor.statistiqueForInstructor') }}">
                                 <i class="fas fa-tachometer-alt me-1" style="color: #6d28d2;"></i>
                                 Dashboard
                                 <span class="span-actev position-absolute bottom-0 start-50 translate-middle-x" style="background-color: #6d28d2;"></span>

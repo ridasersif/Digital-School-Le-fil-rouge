@@ -133,8 +133,8 @@
                             <h6 class="fw-bold">Information sur le formateur</h6>
                             <div class="user-info formateur-info">
                                 <div class="d-flex align-items-center mb-2">
-                                    @if($a->cours->formateur->user->image)
-                                        <img src="{{ asset('storage/' . $a->cours->formateur->user->image) }}" 
+                                    @if($a->cours->formateur->user->profile && $a->cours->formateur->user->profile->avatar)
+                                        <img src="{{ asset('storage/' . $a->cours->formateur->user->profile->avatar) }}" 
                                             alt="Photo de profil" 
                                             class="rounded-circle me-3" 
                                             style="width: 40px; height: 40px; object-fit: cover;">

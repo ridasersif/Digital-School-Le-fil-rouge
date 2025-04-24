@@ -15,15 +15,15 @@ class PaymentController extends Controller
 {
     public function showPaymentPage()
     {
-        // Récupérer l'étudiant connecté et ses cours dans le panier
+       
         $etudiant = Auth::user()->etudiant;
         $panierCours = $etudiant->panier;
         
-        // Passer ces données directement à la vue
+      
         return view('student.courses.payment', compact('panierCours'));
     }
     
-    // Cette méthode peut être conservée pour la compatibilité avec d'autres fonctionnalités
+   
     public function getCourses()
     {
         $etudiant = Auth::user()->etudiant;
@@ -43,7 +43,7 @@ class PaymentController extends Controller
             ];
         }
         
-        // Calculer le résumé des prix
+      
         $totalOld = $paniers->sum(function ($cours) {
             return $cours->old_price ? $cours->old_price : $cours->price;
         });
@@ -78,7 +78,7 @@ class PaymentController extends Controller
         
         $paymentIntent = PaymentIntent::create([
             'amount' => $amount,
-            'currency' => 'mad', // Dirham marocain
+            'currency' => 'mad', 
             'metadata' => [
                 'etudiant_id' => $etudiant->id,
             ],
@@ -94,35 +94,67 @@ class PaymentController extends Controller
     {
         $etudiant = Auth::user()->etudiant;
         $paniers = $etudiant->panier;
-        
+    
+        $totalAmount = $paniers->sum('price'); 
+    
         foreach ($paniers as $panier) {
             $existing = Inscription::where('etudiant_id', $etudiant->id)
                 ->where('cours_id', $panier->id)
                 ->first();
-            
+    
             if (!$existing) {
                 $inscription = Inscription::create([
                     'etudiant_id' => $etudiant->id,
                     'cours_id' => $panier->id,
                     'status' => 'accepted'
                 ]);
-                
+    
                 Payment::create([
                     'inscription_id' => $inscription->id,
                     'payment_method' => 'stripe',
                     'status' => 'payé',
-                    'transaction_id' => Str::uuid()
+                    'transaction_id' => Str::uuid(),
+                    'amount' => $panier->price 
                 ]);
             }
         }
         
+    
         $etudiant->panier()->detach();
-        
+    
         return redirect()->route('student.myCourses')->with('success', 'Paiement réussi ! Vous avez maintenant accès à vos cours.');
     }
+    
 
     public function cancel()
     {
         return redirect()->route('student.panier')->with('error', 'Le paiement a été annulé.');
     }
+
+    public function getAllPaymentsForAdmin()
+    {
+       
+        $payments = Payment::with([
+            'inscription.etudiant.user',  
+            'inscription.cours.formateur.user' 
+        ])->orderBy('created_at', 'desc') 
+        ->get();
+        return view('admin.payments.index', compact('payments'));
+    }
+    
+
+public function getPaymentsForFormateur()
+{
+    $formateur = Auth::user()->formateur;
+
+    $payments = Payment::whereHas('inscription.cours', function ($query) use ($formateur) {
+        $query->where('formateur_id', $formateur->id);
+    })->with([
+        'inscription.etudiant.user',
+        'inscription.cours.formateur.user'
+    ])->orderBy('created_at', 'desc')->get();
+
+    return view('instructor.payments.index', compact('payments'));
+}
+
 }

@@ -19,6 +19,7 @@ use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\StudentController;
 use App\Http\Middleware\CheckStatus;
 use App\Http\Middleware\CheckAdminOrInstructor;
@@ -36,9 +37,10 @@ Route::get('/test', function () {
 Route::post('/cours/{cours}/avis', [AvisController::class, 'store'])->name('avis.store');
 
 Route::middleware([CheckRoleUser::class])->group(function () {
-    Route::get('/', [HomeController::class, 'getAllCoursPublished'])->name('home');
+    Route::get('/', [HomeController::class, 'showHomePageData'])->name('home');
     Route::get('/touteCourses', [HomeController::class, 'getAllCourses'])->name('home.getAllCourses');
     Route::get('/courses/{id}', [HomeController::class, 'show'])->name('courses.show');
+
 
 
 
@@ -94,9 +96,8 @@ Route::middleware([CheckRoleUser::class])->group(function () {
 
             //route pour afficher le tableau de bord de l'administrateur
             Route::prefix('admin')->name('admin.')->group(function () {
-                Route::get('dashboard', function () {
-                    return view('admin.statistics');
-                })->name('index');
+               
+                Route::get('dashboard',[StatistiqueController::class,'statistiqueForadmin'])->name('statistiqueForadmin');
                 // Route pour afficher tous les utilisateurs
                 Route::get('/users', [AdminController::class, 'showAllUsers'])->name('users.index');
                 // Route pour afficher tous les enseignants (asatida)
@@ -113,6 +114,8 @@ Route::middleware([CheckRoleUser::class])->group(function () {
                 Route::get('avis',[AdminController::class,'gatAllAvis'])-> name('avis');
                 // Route to delete a review
                 Route::delete('/avis/delete/{id}', [AvisController::class, 'delete'])->name('avis.destroy');
+
+                Route::get('/payments', [PaymentController::class, 'getAllPaymentsForAdmin'])->name('payments');
             });
             //Route pour gérer les catégories
             Route::resource('categories', CategoryController::class);
@@ -122,9 +125,8 @@ Route::middleware([CheckRoleUser::class])->group(function () {
         Route::middleware([CheckRole::class . ':2', CheckStatus::class])->group(function () {
             Route::prefix('instructor')->name('instructor.')->group(function () {
                 // Route pour afficher le tableau de bord de l'instructeur
-                Route::get('dashboard', function () {
-                    return view('instructor.statistics');
-                })->name('index');
+                Route::get('dashboard',[StatistiqueController::class,'statistiqueForInstructor'])->name('statistiqueForInstructor');
+
 
                 Route::resource('course', CoursController::class)->except(['index', 'show']);
 
@@ -138,6 +140,12 @@ Route::middleware([CheckRoleUser::class])->group(function () {
                 Route::get('contents/review', [ContentController::class, 'review'])->name('contents.review');
                 //Route pour les Avis de foprmateur
                 Route::get('mesAvis',[FormateurController::class,'mesAvis'])-> name('mesAvis');
+
+               
+                Route::get('/payments', [PaymentController::class, 'getPaymentsForFormateur'])->name('payments');
+
+                Route::get('etudiantsInscrits',[FormateurController::class,'etudiantsInscrits'])->name('etudiantsInscrits');
+
             });
         });
         //Route pour les etudiant 

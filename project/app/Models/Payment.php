@@ -14,6 +14,7 @@ class Payment extends Model
         'payment_method',
         'status',
         'transaction_id',
+        'amount',
     ];
     public function inscription()
     {

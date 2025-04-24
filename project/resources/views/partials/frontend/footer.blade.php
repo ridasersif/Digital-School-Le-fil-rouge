@@ -3,7 +3,8 @@
         <div class="row g-4">
             <div class="col-lg-4 mb-4 mb-lg-0">
                 <h5 class="text-white mb-4">
-                    <i class="fas fa-graduation-cap me-2"></i>EduPlateforme
+                    <img src="{{ asset('storage/avatars/sersifAcademy.png') }}" width="30" height="30" style="border-radius: 50%; margin-right: 5px;">
+                    Sersif Academy
                 </h5>
                 <p class="text-white-50">Nous offrons des cours de qualité pour vous aider à maîtriser de nouvelles compétences et à avancer dans votre carrière.</p>
                 <div class="d-flex mt-4">
